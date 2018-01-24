@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:eios"
+             x:Class="eios.MasterPage"
+             Title="Content">
+    <ContentPage.Content>
+        <StackLayout>
+            <local:MenuListView x:Name="menuTop" VerticalOptions="StartAndExpand">
+                <local:MenuListView.ItemsSource>
+                    <x:Array Type="{x:Type local:MasterPageItem}">
+                        <local:MasterPageItem Title="Занятия" TargetType="{x:Type local:OccupationsPage}" />
+                        <local:MasterPageItem Title="Мой профиль" TargetType="{x:Type local:ProfilePage}" />
+                        <local:MasterPageItem Title="Настройки" TargetType="{x:Type local:SettingsPage}" />
+                    </x:Array>
+                </local:MenuListView.ItemsSource>
+            </local:MenuListView>
+            <local:MenuListView x:Name="menuBottom" VerticalOptions="End">
+                <local:MenuListView.ItemsSource>
+                    <x:Array Type="{x:Type local:MasterPageItem}">
+                        <local:MasterPageItem Title="Помощь" TargetType="{x:Type local:HelpPage}" />
+                        <local:MasterPageItem Title="О программе" TargetType="{x:Type local:AboutPage}" />
+                        <local:MasterPageItem Title="Выход" />
+                    </x:Array>
+                </local:MenuListView.ItemsSource>
+            </local:MenuListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

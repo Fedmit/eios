@@ -18,13 +18,12 @@ namespace eios
             NavigationPage.SetHasNavigationBar(this, false);
 		}
 
-        async Task OnLoginButtonClicked(Object sender, AssemblyLoadEventArgs args)
+        void OnLoginButtonClicked(Object sender, AssemblyLoadEventArgs args)
         {
             var isValid = true;
             if (isValid)
             {
-                Navigation.InsertPageBefore(new MainPage(), this);
-                await Navigation.PopAsync();
+                Application.Current.MainPage = new MainPage();
             }
         }
 	}
