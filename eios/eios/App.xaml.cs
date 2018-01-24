@@ -13,7 +13,7 @@ namespace eios
 		{
 			InitializeComponent();
 
-			MainPage = new eios.MainPage();
+            MainPage = new NavigationPage(new SplashPage());
 		}
 
 		protected override void OnStart ()

@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:eios"
              x:Class="eios.MainPage">
 
-	<Label Text="Welcome to Xamarin.Forms!" 
+	<Label Text="Main Page" 
            VerticalOptions="Center" 
            HorizontalOptions="Center" />
 
