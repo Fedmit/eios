@@ -40,6 +40,7 @@
       <DependentUpon>MenuListView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Occupation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OccupationsPage.xaml.cs">
       <DependentUpon>OccupationsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
