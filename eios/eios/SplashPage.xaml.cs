@@ -21,7 +21,7 @@ namespace eios
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            await Task.Delay(50000);//убрать 0
+            await Task.Delay(5000);//убрать 0
             Navigation.InsertPageBefore(new LoginPage(), this);
             await Navigation.PopAsync();
         }

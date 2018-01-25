@@ -9,30 +9,38 @@
            
 
         <StackLayout Padding="0,0,0,5">
-        
-            
+
+            <Image Source="Resources/pguloogo.png" 
+                   Aspect="AspectFit"
+                   Margin="10"/>
             <Label Text="ЭИОС ПГУ"
-                
+                   FontSize="Medium"
+                TextColor="Black"
                 HorizontalOptions="CenterAndExpand"
-                  Margin="0,30,0,0"
+                  Margin="0,20,0,0"
+                   
                 
                    />
             
             <Label Text="Журнал посещаемости"
-                   Margin="0,0,0,150"
+                   TextColor="Black"
+                   FontSize="Medium"
+                   Margin="0,0,0,160"
                    HorizontalOptions="CenterAndExpand"
                    VerticalOptions="CenterAndExpand"
+                   
                    />
             <Label Text="Центор проектного творчества"
-                 
+                    FontSize="Micro"     
                    HorizontalOptions="CenterAndExpand"
                    VerticalOptions="CenterAndExpand"
-                   Margin="0,0,0,10"
+                   Margin="0,0,0,5"
                    
                    />
             <Label Text="2018"
                    HorizontalOptions="CenterAndExpand"
-                   Margin="0,0,0,5"
+                   Margin="0,0,0,1"
+                   FontSize="Micro"
                      />
 
         </StackLayout>
