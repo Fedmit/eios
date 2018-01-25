@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms" 
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local="clr-namespace:eios"
+            x:Class="eios.BedgeView">
+    <local:CircleView 
+        x:Name="circle"
+        BackgroundColor="#2783d9"
+        CornerRadius="50"
+        VerticalOptions="Center" 
+        HorizontalOptions="Center" />
+    <Label 
+        x:Name="label"
+        TextColor="White"
+        VerticalOptions="Center" 
+        HorizontalOptions="Center" 
+        VerticalTextAlignment="Center" 
+        HorizontalTextAlignment="Center" 
+        FontSize="12" />
+</Grid>

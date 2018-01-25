@@ -1,14 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:eios"
              x:Class="eios.OccupationsPage">
     <ContentPage.Content>
         <StackLayout>
-            <ListView x:Name="listView">
+            <ListView x:Name="listView" RowHeight="60">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Label Text="{Binding Name}" />
+                            <StackLayout Orientation="Horizontal" Margin="20,0,20,0" Spacing="20">
+                                <local:BedgeView Text="9:50" Size="50" />
+                                <Label Text="{Binding Name}" VerticalOptions="Center" FontSize="16" />
+                                <Label Text="{Binding Aud}" VerticalOptions="Center" HorizontalOptions="EndAndExpand" />
+                            </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
