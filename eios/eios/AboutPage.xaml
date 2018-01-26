@@ -3,10 +3,45 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="eios.AboutPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="About Page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout BackgroundColor="#ffffff">
+            <Image Source="PSU.jpg"
+                   HorizontalOptions="Center"
+                   Margin="0,30,0,10"
+                    WidthRequest="100" 
+                   HeightRequest="100"
+                   Aspect="AspectFit"/>
+            <Label Text="ЭИОС ПГУ"
+                   HorizontalOptions="Center"
+                   Font="18"
+                   TextColor="#000000"/>
+            <Label Text="Журнал посещаемости"
+                   HorizontalOptions="Center"
+                   Font="18"
+                   TextColor="#000000"/>
+            <Label Text="Версия 1.0.0"
+                   HorizontalOptions="Center"
+                   Font="18"
+                   TextColor="#000000"/>
+            <StackLayout BackgroundColor="#ffffff" 
+                         Margin="0,180,0,0"
+                     HorizontalOptions="Center">
+                <Image Source="Fot.jpg"
+                   HorizontalOptions="Center"
+                    WidthRequest="100" 
+                   HeightRequest="100"
+                   Aspect="AspectFit"/>
+                <Label Text="Центр проектного творчества"
+                       Margin="0,-17,0,0"
+                   HorizontalOptions="Center"
+                   Font="18"
+                   TextColor="#000000"/>
+                <Label Text="2018"
+                       Margin="0,-7,0,0"
+                   HorizontalOptions="Center"
+                   Font="18"
+                   TextColor="#000000"/>
+            </StackLayout>
         </StackLayout>
+
     </ContentPage.Content>
 </ContentPage>
