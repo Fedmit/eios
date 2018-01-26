@@ -8,9 +8,19 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
+            <ActivityIndicator
+                Margin="2"
+                WidthRequest="25"
+                HeightRequest="25"
+                IsVisible="{Binding IsBusy}"
+                IsRunning="{Binding IsBusy}" />
             <ListView
                 x:Name="listView" 
-                RowHeight="60">
+                RowHeight="60"
+                ItemsSource="{Binding OccupationsList}"
+                IsPullToRefreshEnabled="true"
+                RefreshCommand="{Binding RefreshCommand}"
+                IsRefreshing="{Binding IsRefreshing}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

@@ -25,6 +25,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)CircleView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\WebApi.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HelpPage.xaml.cs">
       <DependentUpon>HelpPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -45,7 +46,7 @@
       <DependentUpon>MenuListView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Occupation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Occupation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OccupationsPage.xaml.cs">
       <DependentUpon>OccupationsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -62,6 +63,7 @@
       <DependentUpon>SplashPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\OccupationsListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)SplashPage.xaml">
