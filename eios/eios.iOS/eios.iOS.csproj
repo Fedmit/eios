@@ -124,6 +124,9 @@
   <ItemGroup>
     <BundleResource Include="Resources\PSU.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Fot.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\eios\eios.projitems" Label="Shared" />
 </Project>

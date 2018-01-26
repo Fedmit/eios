@@ -82,6 +82,9 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\PSU.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Fot.jpg" />
+  </ItemGroup>
   <Import Project="..\eios\eios.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
