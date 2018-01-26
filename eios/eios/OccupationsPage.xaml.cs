@@ -23,6 +23,13 @@ namespace eios
 
             var occupationsViewModel = new OccupationsListViewModel();
 			BindingContext = occupationsViewModel;
-		}
+
+            listView.ItemTapped += (sender, e) =>
+            {
+                listView.SelectedItem = null;
+
+
+            };
+        }
     }
 }
