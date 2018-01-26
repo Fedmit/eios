@@ -3,9 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:eios"
              x:Class="eios.OccupationsPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="icon_refresh.png" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
-            <ListView x:Name="listView" RowHeight="60">
+            <ListView
+                x:Name="listView" 
+                RowHeight="60">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
