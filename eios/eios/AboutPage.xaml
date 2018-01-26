@@ -23,5 +23,25 @@
                    Font="14"
                    TextColor="#000000"/>
         </StackLayout>
+        <StackLayout BackgroundColor="#ffffff" >
+            <Image Source="PSU.jpg"
+                   HorizontalOptions="Center"
+                   Margin="0,30,0,10"
+                    WidthRequest="100" 
+                   HeightRequest="100"
+                   Aspect="AspectFit"/>
+            <Label Text="ЭИОС ПГУ"
+                   HorizontalOptions="Center"
+                   Font="18"
+                   TextColor="#000000"/>
+            <Label Text="Журнал посещаемости"
+                   HorizontalOptions="Center"
+                   Font="18"
+                   TextColor="#000000"/>
+            <Label Text="Версия 1.0.0"
+                   HorizontalOptions="Center"
+                   Font="14"
+                   TextColor="#000000"/>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
