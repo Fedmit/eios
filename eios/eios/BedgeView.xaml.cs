@@ -12,14 +12,6 @@ namespace eios
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class BedgeView : Grid
 	{
-        public string Text
-        {
-            set
-            {
-                label.Text = value;
-            }
-        }
-
         public int Size
         {
             set

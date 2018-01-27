@@ -6,6 +6,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="icon_refresh.png" />
     </ContentPage.ToolbarItems>
+    
     <ContentPage.Content>
         <StackLayout>
             <ActivityIndicator
@@ -25,7 +26,7 @@
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal" Margin="20,0,20,0" Spacing="20">
-                                <local:BedgeView Text="9:50" Size="50" />
+                                <local:BedgeView Size="50" />
                                 <Label Text="{Binding Name}" VerticalOptions="Center" FontSize="16" />
                                 <Label Text="{Binding Aud}" VerticalOptions="Center" HorizontalOptions="EndAndExpand" />
                             </StackLayout>

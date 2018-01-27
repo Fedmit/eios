@@ -8,7 +8,7 @@ namespace eios.Model
     class Occupation
     {
         [JsonProperty("id_occup")]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -17,6 +17,6 @@ namespace eios.Model
         public string Aud { get; set; }
 
         [JsonProperty("time")]
-        public string Time { get; set; }
+        public DateTime Time { get; set; }
     }
 }
