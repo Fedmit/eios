@@ -10,9 +10,9 @@
     <ContentPage.Content>
         <StackLayout>
             <ActivityIndicator
-                Margin="2"
-                WidthRequest="25"
-                HeightRequest="25"
+                Margin="20"
+                WidthRequest="35"
+                HeightRequest="35"
                 IsVisible="{Binding IsBusy}"
                 IsRunning="{Binding IsBusy}" />
             <ListView

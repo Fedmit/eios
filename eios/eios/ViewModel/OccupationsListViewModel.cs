@@ -68,7 +68,7 @@ namespace eios.ViewModel
 
         async Task<List<Occupation>> PopulateList()
         {
-            var occupationsList = await WebApi.Instance.GetOccupationsAsync();
+            var occupationsList = await WebApi.Instance.GetOccupationsAsync(1);
             return occupationsList;
         }
 

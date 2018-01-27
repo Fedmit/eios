@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,29 +15,28 @@ namespace eios.Data
 
         static string _baseUrl { get { return "http://q9875032.beget.tech/hp_api/api.php"; } }
 
-        public async Task<List<Occupation>> GetOccupationsAsync()
+        public async Task<List<Occupation>> GetOccupationsAsync(int id_group)
         {
-            // Это нужно изменить
-            // --------------------
-            var login = "test";
-            var password = "test1";
-            var type = "get_info";
-            var id = "1";
-            // --------------------
-
-            StringContent stringContent = new StringContent(
-                "{ \"login\": \"" + login + "\"," +
-                "  \"password\": \"" + password + "\"," +
-                "  \"type\": \"" + type + "\"," +
-                "  \"id_group\": \"" + id + "\" }",
-                UnicodeEncoding.UTF8,
-                "application/json");
+            dynamic dynamicJson = new ExpandoObject();
+            dynamicJson.login = App.Current.Properties["Login"];
+            dynamicJson.password = App.Current.Properties["Password"];
+            dynamicJson.type = "get_info";
+            dynamicJson.id_group = id_group;
+            string json = "";
+            json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
             List<Occupation> ocupations = null;
             try
             {
                 HttpClient client = new HttpClient();
-                var response = await client.PostAsync(_baseUrl, stringContent);
+                var response = await client.PostAsync(
+                    _baseUrl, 
+                    new StringContent(
+                        json, 
+                        UnicodeEncoding.UTF8, 
+                        "application/json"
+                    )
+                );
                 response.EnsureSuccessStatusCode();
 
                 var content = await response.Content.ReadAsStringAsync();
@@ -53,25 +53,25 @@ namespace eios.Data
 
         public async Task<List<Group>> GetGroupsAsync()
         {
-            // Это нужно изменить
-            // --------------------
-            var login = "test";
-            var password = "test1";
-            var type = "get_group";
-            // --------------------
-
-            StringContent stringContent = new StringContent(
-                "{ \"login\": \"" + login + "\"," +
-                "  \"password\": \"" + password + "\"," +
-                "  \"type\": \"" + type + "\" }",
-                UnicodeEncoding.UTF8,
-                "application/json");
+            dynamic dynamicJson = new ExpandoObject();
+            dynamicJson.login = App.Current.Properties["Login"];
+            dynamicJson.password = App.Current.Properties["Password"];
+            dynamicJson.type = "get_group";
+            string json = "";
+            json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
             List<Group> groups = null;
             try
             {
                 HttpClient client = new HttpClient();
-                var response = await client.PostAsync(_baseUrl, stringContent);
+                var response = await client.PostAsync(
+                    _baseUrl,
+                    new StringContent(
+                        json,
+                        UnicodeEncoding.UTF8,
+                        "application/json"
+                    )
+                );
                 response.EnsureSuccessStatusCode();
 
                 var content = await response.Content.ReadAsStringAsync();
