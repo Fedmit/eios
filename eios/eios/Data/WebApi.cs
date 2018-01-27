@@ -50,5 +50,50 @@ namespace eios.Data
 
             return ocupations;
         }
+
+        public async Task<List<Group>> GetGroupsAsync()
+        {
+            // Это нужно изменить
+            // --------------------
+            var login = "test";
+            var password = "test1";
+            var type = "get_group";
+            // --------------------
+
+            StringContent stringContent = new StringContent(
+                "{ \"login\": \"" + login + "\"," +
+                "  \"password\": \"" + password + "\"," +
+                "  \"type\": \"" + type + "\" }",
+                UnicodeEncoding.UTF8,
+                "application/json");
+
+            List<Group> groups = null;
+            try
+            {
+                HttpClient client = new HttpClient();
+                var response = await client.PostAsync(_baseUrl, stringContent);
+                response.EnsureSuccessStatusCode();
+
+                var content = await response.Content.ReadAsStringAsync();
+
+                groups = JsonConvert.DeserializeObject<List<Group>>(content);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Whooops! " + ex.Message);
+            }
+
+            return groups;
+        }
+
+        public async Task<List<Student>> GetStudentsAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task SetAttendAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
