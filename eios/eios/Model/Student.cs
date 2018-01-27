@@ -7,6 +7,10 @@ namespace eios.Model
 {
     class Student
     {
-        
+        [JsonProperty("id_student")]
+        public int Id { get; set; }
+
+        [JsonProperty("fio")]
+        public string FullName { get; set; }
     }
 }

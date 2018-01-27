@@ -14,7 +14,7 @@ namespace eios.Model
         public int IdGroup { get; set; }
 
         [JsonProperty("fio")]
-        public string Fio { get; set; }
+        public string FullName { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }

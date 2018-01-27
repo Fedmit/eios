@@ -86,9 +86,40 @@ namespace eios.Data
             return groups;
         }
 
-        public async Task<List<Student>> GetStudentsAsync()
+        public async Task<List<Student>> GetStudentsAsync(int id_group)
         {
-            throw new NotImplementedException();
+            dynamic dynamicJson = new ExpandoObject();
+            dynamicJson.login = App.Current.Properties["Login"];
+            dynamicJson.password = App.Current.Properties["Password"];
+            dynamicJson.type = "get_students";
+            dynamicJson.id_group = id_group;
+            string json = "";
+            json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
+
+            List<Student> students = null;
+            try
+            {
+                HttpClient client = new HttpClient();
+                var response = await client.PostAsync(
+                    _baseUrl,
+                    new StringContent(
+                        json,
+                        UnicodeEncoding.UTF8,
+                        "application/json"
+                    )
+                );
+                response.EnsureSuccessStatusCode();
+
+                var content = await response.Content.ReadAsStringAsync();
+
+                students = JsonConvert.DeserializeObject<List<Student>>(content);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Whooops! " + ex.Message);
+            }
+
+            return students;
         }
 
         public async Task SetAttendAsync()
