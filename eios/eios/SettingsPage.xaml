@@ -2,11 +2,15 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="eios.SettingsPage">
+
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Settings Page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <TableView Intent="Settings">
+            <TableRoot>
+                <TableSection Title="Уведомления" >
+                    <SwitchCell   Text="Поулучать уведомления о начале пары" On="True"/>
+                    <SwitchCell  Text="Напомнить отметить" On="true" />
+                </TableSection>
+            </TableRoot>
+        </TableView>
     </ContentPage.Content>
 </ContentPage>
