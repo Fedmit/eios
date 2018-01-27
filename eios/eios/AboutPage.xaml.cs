@@ -14,7 +14,7 @@ namespace eios
 	{
 		public AboutPage ()
 		{
-			InitializeComponent ();
+            InitializeComponent ();
 		}
 	}
 }

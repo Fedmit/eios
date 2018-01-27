@@ -85,6 +85,10 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\icon_refresh.png" />
+    <AndroidResource Include="Resources\drawable\PSU.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Fot.jpg" />
   </ItemGroup>
   <Import Project="..\eios\eios.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
