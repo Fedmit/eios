@@ -18,9 +18,9 @@ namespace eios
 			InitializeComponent ();
             var L_Students = new List<Student>();
             int index = 0;
-            var s1 = new Student() { sIcon = "unchecked-checkbox", sText = "Вася пупкин", sFlag = false, iIndex = index };
+            var s1 = new Student() { sIcon = "uncheck", sText = "Вася пупкин", sFlag = false, iIndex = index };
             index++;
-            var s2 = new Student() { sIcon = "unchecked-checkbox", sText = "Вася пупкин", sFlag = false, iIndex = index };
+            var s2 = new Student() { sIcon = "uncheck.png", sText = "Вася пупкин", sFlag = false, iIndex = index };
             L_Students.Add(s1);
             L_Students.Add(s2);
             studentListView.ItemTemplate = new DataTemplate(typeof(StudentsViewCell));
@@ -31,12 +31,12 @@ namespace eios
                 if (LVElement.sFlag) 
                 {
                     L_Students[LVElement.iIndex].sFlag = false;
-                    L_Students[LVElement.iIndex].sIcon = "checked-checkbox";
+                    L_Students[LVElement.iIndex].sIcon = "check.png";
                 }
                 else
                 {
                     L_Students[LVElement.iIndex].sFlag = true;
-                    L_Students[LVElement.iIndex].sIcon = "unchecked-checkbox";
+                    L_Students[LVElement.iIndex].sIcon = "uncheck.png";
                 }
                 studentListView.ItemTemplate = new DataTemplate(typeof(StudentsViewCell));
             };
