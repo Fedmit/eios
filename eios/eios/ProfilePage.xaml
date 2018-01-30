@@ -1,15 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
              x:Class="eios.ProfilePage">
     <ContentPage.Content>
         <StackLayout BackgroundColor="#F2F2F2" Spacing="30" Padding="0,60,0,0">
-            <Image
+            <controls:CircleImage
                 VerticalOptions="Start"
                 HorizontalOptions="Center"
                 BackgroundColor="White"
                 WidthRequest="100"
-                HeightRequest="100"/>
+                HeightRequest="100"
+                BorderColor="Gray"/>
             <StackLayout Spacing="5">
                 <Grid BackgroundColor="White" Padding="30,5,30,0">
                     <Grid.RowDefinitions>

@@ -13,7 +13,7 @@
                     HorizontalTextAlignment="Center"
                     FontSize="20"/>
             </StackLayout>
-            <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
+            <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" Spacing="7">
                 <Label
                     Text="Вход в систему"
                     TextColor="Black"
@@ -33,14 +33,17 @@
                     TextColor="Black"
                     WidthRequest="200"
                     VerticalOptions="Center"/>
-                <controls:CheckBox
-                    DefaultText="   Запомнить меня"
-                    TextColor="Black"
-                    FontSize="20"/>
+                <StackLayout Orientation="Horizontal">
+                    <controls:CheckBox
+                        HorizontalOptions="Center"/>
+                    <Label
+                        Text="Запомнить меня"
+                        FontSize="20"
+                        HorizontalOptions="Center"/>
+                </StackLayout>
                 <Button 
                     x:Name="loginButton"
                     Text="Войти"
-                    VerticalOptions="Center"
                     FontSize="20"
                     BackgroundColor="#1E90FF"
                     TextColor="White"
