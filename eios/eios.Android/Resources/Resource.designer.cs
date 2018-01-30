@@ -3600,27 +3600,27 @@ namespace eios.Droid
 			
 			// aapt resource value: 0x7f020053
 			public const int ad16 = 2130837587;
+
+			// aapt resource value: 0x7f02010f
+			public const int avd_hide_password_1 = 2130837775;
 			
-			// aapt resource value: 0x7f020054
-			public const int avd_hide_password = 2130837588;
+			// aapt resource value: 0x7f020110
+			public const int avd_hide_password_2 = 2130837776;
 			
-			// aapt resource value: 0x7f020113
-			public const int avd_hide_password_1 = 2130837779;
-			
-			// aapt resource value: 0x7f020114
-			public const int avd_hide_password_2 = 2130837780;
+			// aapt resource value: 0x7f020111
+			public const int avd_hide_password_3 = 2130837777;
 			
 			// aapt resource value: 0x7f020115
 			public const int avd_hide_password_3 = 2130837781;
+
+			// aapt resource value: 0x7f020112
+			public const int avd_show_password_1 = 2130837778;
 			
-			// aapt resource value: 0x7f020055
-			public const int avd_show_password = 2130837589;
+			// aapt resource value: 0x7f020113
+			public const int avd_show_password_2 = 2130837779;
 			
-			// aapt resource value: 0x7f020116
-			public const int avd_show_password_1 = 2130837782;
-			
-			// aapt resource value: 0x7f020117
-			public const int avd_show_password_2 = 2130837783;
+			// aapt resource value: 0x7f020114
+			public const int avd_show_password_3 = 2130837780;
 			
 			// aapt resource value: 0x7f020118
 			public const int avd_show_password_3 = 2130837784;
@@ -4188,6 +4188,9 @@ namespace eios.Droid
 			
 			// aapt resource value: 0x7f02010f
 			public const int PSU = 2130837775;
+			
+			// aapt resource value: 0x7f02010c
+			public const int pguloogo = 2130837772;
 			
 			static Drawable()
 			{

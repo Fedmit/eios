@@ -90,6 +90,7 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
+    <AndroidResource Include="Resources\drawable\pguloogo.png" />
     <AndroidResource Include="Resources\drawable\icon_refresh.png" />
     <AndroidResource Include="Resources\drawable\PSU.jpg" />
   </ItemGroup>
