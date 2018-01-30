@@ -23,7 +23,7 @@ namespace eios
             var isValid = true;
             if (isValid)
             {
-                Application.Current.MainPage = new MainPage();
+                Application.Current.MainPage = new StudentsPage();
             }
         }
     }

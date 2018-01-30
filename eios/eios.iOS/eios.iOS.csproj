@@ -138,6 +138,10 @@
     <BundleResource Include="Resources\Fot.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <BundleResource Include="Resources\Check.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Uncheck.jpg" />
     <BundleResource Include="Resources\pguloogo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
