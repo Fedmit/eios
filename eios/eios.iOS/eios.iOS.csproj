@@ -132,7 +132,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\icon_refresh.png" />
     <BundleResource Include="Resources\PSU.jpg" />
   </ItemGroup>
   <ItemGroup>
