@@ -11,7 +11,7 @@
     
     <local:CircleView 
         x:Name="circle"
-        BackgroundColor="#2783d9"
+        BackgroundColor="{Binding CircleColor}"
         CornerRadius="50"
         VerticalOptions="Center" 
         HorizontalOptions="Center" />
