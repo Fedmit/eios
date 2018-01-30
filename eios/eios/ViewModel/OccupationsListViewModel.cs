@@ -63,6 +63,7 @@ namespace eios.ViewModel
             {
                 IsBusy = true;
                 OccupationsList = await PopulateList();
+                await UpdateState();
                 IsBusy = false;
             });
         }
@@ -77,15 +78,20 @@ namespace eios.ViewModel
         {
             IsRefreshing = true;
 
+            await UpdateState();
+
+            IsRefreshing = false;
+        }
+
+        async Task UpdateState()
+        {
             List<Mark> marks = await WebApi.Instance.GetMarksAsync(1);
 
-            foreach(Mark mark in marks)
+            foreach (Mark mark in marks)
             {
                 var obj = OccupationsList.FirstOrDefault(x => x.Id == mark.Id);
                 if (obj != null) obj.Mark = mark.mMark;
             }
-            var lksjdflkasjdf = OccupationsList;
-            IsRefreshing = false;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
