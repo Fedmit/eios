@@ -10,12 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace eios
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class MasterPage : ContentPage
+	public partial class CompletedOccupationPage : ContentPage
 	{
-        public ListView MenuTop { get { return menuTop; } }
-        public ListView MenuBottom { get { return menuBottom; } }
-
-        public MasterPage ()
+		public CompletedOccupationPage ()
 		{
 			InitializeComponent ();
 		}

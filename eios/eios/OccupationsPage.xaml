@@ -1,12 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:eios"
              x:Class="eios.OccupationsPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="icon_refresh.png" />
+    </ContentPage.ToolbarItems>
+    
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Occupations Page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <ActivityIndicator
+                Margin="20"
+                WidthRequest="35"
+                HeightRequest="35"
+                IsVisible="{Binding IsBusy}"
+                IsRunning="{Binding IsBusy}" />
+            <ListView
+                x:Name="listView" 
+                RowHeight="60"
+                ItemsSource="{Binding OccupationsList}"
+                IsPullToRefreshEnabled="true"
+                RefreshCommand="{Binding RefreshCommand}"
+                IsRefreshing="{Binding IsRefreshing}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Margin="20,0,20,0" Spacing="20">
+                                <local:BedgeView Size="50" />
+                                <Label Text="{Binding Name}" VerticalOptions="Center" FontSize="16" />
+                                <Label Text="{Binding Aud}" VerticalOptions="Center" HorizontalOptions="EndAndExpand" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

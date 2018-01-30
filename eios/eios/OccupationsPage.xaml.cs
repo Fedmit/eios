@@ -1,6 +1,11 @@
-﻿using System;
+﻿using eios.Model;
+using eios.ViewModel;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,6 +20,16 @@ namespace eios
 		public OccupationsPage ()
 		{
 			InitializeComponent ();
-		}
-	}
+
+            var occupationsViewModel = new OccupationsListViewModel();
+			BindingContext = occupationsViewModel;
+
+            listView.ItemTapped += (sender, e) =>
+            {
+                listView.SelectedItem = null;
+
+
+            };
+        }
+    }
 }
