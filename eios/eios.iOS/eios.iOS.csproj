@@ -126,7 +126,6 @@
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.122203" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\icon_refresh.png" />
     <BundleResource Include="Resources\PSU.jpg" />
   </ItemGroup>
   <ItemGroup>
