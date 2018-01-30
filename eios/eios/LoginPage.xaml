@@ -4,8 +4,8 @@
              x:Class="eios.LoginPage"
              xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms">
     <ContentPage.Content>
-        <StackLayout Spacing="110" Padding="75" BackgroundColor="White">
-            <StackLayout Orientation="Vertical">
+        <StackLayout Padding="75,75,75,20" BackgroundColor="White">
+            <StackLayout Orientation="Vertical" VerticalOptions="StartAndExpand">
                 <Label
                     Text="ЭИОС ПГУ &#10; Журнал посещаемости"
                     TextColor="Black"
@@ -13,7 +13,7 @@
                     HorizontalTextAlignment="Center"
                     FontSize="20"/>
             </StackLayout>
-            <StackLayout Orientation="Vertical" Spacing="15">
+            <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
                 <Label
                     Text="Вход в систему"
                     TextColor="Black"
@@ -47,7 +47,7 @@
                     HeightRequest="40"
                     WidthRequest="150"/>
             </StackLayout>
-            <StackLayout>
+            <StackLayout VerticalOptions="EndAndExpand">
                 <Button
                     x:Name="forgotPassword"
                     Text="Я забыл свой пароль"

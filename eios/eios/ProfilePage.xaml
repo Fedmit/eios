@@ -5,6 +5,7 @@
     <ContentPage.Content>
         <StackLayout BackgroundColor="#F2F2F2" Spacing="30" Padding="0,60,0,0">
             <Image
+                VerticalOptions="Start"
                 HorizontalOptions="Center"
                 BackgroundColor="White"
                 WidthRequest="100"
