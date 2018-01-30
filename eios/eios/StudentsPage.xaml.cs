@@ -17,28 +17,54 @@ namespace eios
 		{
 			InitializeComponent ();
             var L_Students = new List<Student>();
+            timeLable.Text = "Время";
+            timeLable.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
+            occupationLable.Text = "Название предмета";
+            occupationLable.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
+            defaultLable.Text = "Всего : X";
+            defaultLable.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
+            onSiteLable.Text = "Присутствуют : Y";
+            onSiteLable.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
+            marked.Text = "Отметить посещаемость";
+            marked.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
+            back.Text = "Назад";
+            back.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
             int index = 0;
-            var s1 = new Student() { sIcon = "unchecked-checkbox", sText = "Вася пупкин", sFlag = false, iIndex = index };
+            var s1 = new Student() { sIcon = "Uncheck.jpg", sText = "Дмитрий Дмитриев Дмитриевич", sFlag = false, iIndex = index };
             index++;
-            var s2 = new Student() { sIcon = "unchecked-checkbox", sText = "Вася пупкин", sFlag = false, iIndex = index };
+            var s2 = new Student() { sIcon = "Uncheck.jpg", sText = "Петр Петров Петрович", sFlag = false, iIndex = index };
             L_Students.Add(s1);
             L_Students.Add(s2);
-            studentListView.ItemTemplate = new DataTemplate(typeof(StudentsViewCell));
+            studentListView.SeparatorVisibility = SeparatorVisibility.None;
+            studentListView.RowHeight = 40;
+            studentListView.ItemTemplate = new DataTemplate(() =>
+            {
+                ImageCell imageCell = new ImageCell();
+                imageCell.SetBinding(ImageCell.TextProperty, "sText");
+                imageCell.SetBinding(ImageCell.ImageSourceProperty, "sIcon");
+                return imageCell;
+            });
             studentListView.ItemsSource = L_Students;
-            studentListView.ItemTapped += async (sender, e) =>
+            studentListView.ItemTapped += (sender, e) =>
             {
                 var LVElement = (Student)e.Item;
-                if (LVElement.sFlag) 
+                if (LVElement.sFlag)
                 {
                     L_Students[LVElement.iIndex].sFlag = false;
-                    L_Students[LVElement.iIndex].sIcon = "checked-checkbox";
+                    L_Students[LVElement.iIndex].sIcon = "Check.jpg";
                 }
                 else
                 {
                     L_Students[LVElement.iIndex].sFlag = true;
-                    L_Students[LVElement.iIndex].sIcon = "unchecked-checkbox";
+                    L_Students[LVElement.iIndex].sIcon = "Uncheck.jpg";
                 }
-                studentListView.ItemTemplate = new DataTemplate(typeof(StudentsViewCell));
+                studentListView.ItemTemplate = new DataTemplate(() =>
+                {
+                    ImageCell imageCell = new ImageCell();
+                    imageCell.SetBinding(ImageCell.TextProperty, "sText");
+                    imageCell.SetBinding(ImageCell.ImageSourceProperty, "sIcon");
+                    return imageCell;
+                });
             };
 
         }
@@ -62,26 +88,6 @@ namespace eios
             throw new NotImplementedException();
         }
     }
-    class StudentsViewCell : ViewCell 
-    {
-        public StudentsViewCell() 
-        {
-            var NameLable = new Label();
-            NameLable.SetBinding(Label.TextProperty, "sText");
-            NameLable.VerticalOptions = LayoutOptions.Center;
-            NameLable.BindingContextChanged += (sender, e) =>
-            {
-            };
-            var Icon = new Image();
-            Icon.SetBinding(Image.SourceProperty, new Binding("sIcon", BindingMode.OneWay, new StringToImageConverter()));
-            Icon.HeightRequest = 15;
-            Icon.VerticalOptions = LayoutOptions.Center;
-            var s = new StackLayout();
-            s.Orientation = StackOrientation.Horizontal;     
-            s.Children.Add(Icon);
-            s.Children.Add(NameLable);
-            this.View = s;
-        }
-    }
+
 
 }

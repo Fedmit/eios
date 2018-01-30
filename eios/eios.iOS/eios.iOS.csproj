@@ -132,6 +132,12 @@
   <ItemGroup>
     <BundleResource Include="Resources\Fot.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Check.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Uncheck.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\eios\eios.projitems" Label="Shared" />
 </Project>
