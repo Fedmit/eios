@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="eios.SplashPage"
 >
-    
+
     <ContentPage.Content>
-        
-           
+
+
 
         <StackLayout Padding="0,0,0,5">
 
@@ -21,7 +21,7 @@
                    
                 
                    />
-            
+
             <Label Text="Журнал посещаемости"
                    TextColor="Black"
                    FontSize="Medium"
@@ -34,17 +34,17 @@
                     FontSize="Micro"     
                    HorizontalOptions="CenterAndExpand"
                    VerticalOptions="CenterAndExpand"
-                   Margin="0,0,0,5"
+                   Margin="3"
                    
                    />
             <Label Text="2018"
                    HorizontalOptions="CenterAndExpand"
-                   Margin="0,0,0,1"
+                   Margin="3"
                    FontSize="Micro"
                      />
 
         </StackLayout>
-        
-        
+
+
     </ContentPage.Content>
 </ContentPage>
