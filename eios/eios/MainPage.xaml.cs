@@ -19,10 +19,22 @@ namespace eios
 
         void OnItemSelected(Object sender, SelectedItemChangedEventArgs e)
         {
-            var item = e.SelectedItem as MasterPageItem;
-            if (item != null)
+            if (e.SelectedItem is MasterPageItem item)
             {
-                Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType));
+                // При нажатии на выход открываем экран с входом
+                if (item.TargetType == typeof(LoginPage))
+                {
+                    Application.Current.MainPage = new NavigationPage(new LoginPage());
+                    return;
+                }
+
+                // Открываем новый экран, если мы не выбрали текущий пункт меню
+                var current = (NavigationPage)Detail;
+                if (item.TargetType != current.CurrentPage.GetType())
+                {
+                    Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType));
+                }
+
                 masterPage.MenuTop.SelectedItem = null;
                 masterPage.MenuBottom.SelectedItem = null;
                 IsPresented = false;

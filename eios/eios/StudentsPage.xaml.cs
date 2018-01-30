@@ -10,11 +10,11 @@ using Xamarin.Forms.Xaml;
 namespace eios
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class AboutPage : ContentPage
+	public partial class StudentsPage : ContentPage
 	{
-		public AboutPage ()
+		public StudentsPage ()
 		{
-            InitializeComponent ();
+			InitializeComponent ();
 		}
 	}
 }
