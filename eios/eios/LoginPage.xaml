@@ -48,7 +48,8 @@
                     BackgroundColor="#1E90FF"
                     TextColor="White"
                     HeightRequest="40"
-                    WidthRequest="150"/>
+                    WidthRequest="150"
+                    Clicked="OnLoginButtonClicked"/>
             </StackLayout>
             <StackLayout VerticalOptions="EndAndExpand">
                 <Button
@@ -57,8 +58,7 @@
                     TextColor="Black"
                     VerticalOptions="EndAndExpand"
                     HorizontalOptions="Center"
-                    FontSize="16"
-                    Clicked="OnLoginButtonClicked"/>
+                    FontSize="16"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
