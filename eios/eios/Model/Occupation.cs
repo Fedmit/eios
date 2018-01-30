@@ -18,5 +18,7 @@ namespace eios.Model
 
         [JsonProperty("time")]
         public DateTime Time { get; set; }
+
+        public string Mark { get; set; }
     }
 }

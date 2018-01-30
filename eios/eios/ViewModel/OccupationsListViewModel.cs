@@ -3,6 +3,7 @@ using eios.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -75,7 +76,15 @@ namespace eios.ViewModel
         async Task RefreshList()
         {
             IsRefreshing = true;
-            OccupationsList = await PopulateList();
+
+            List<Mark> marks = await WebApi.Instance.GetMarksAsync(1);
+
+            foreach(Mark mark in marks)
+            {
+                var obj = OccupationsList.FirstOrDefault(x => x.Id == mark.Id);
+                if (obj != null) obj.Mark = mark.mMark;
+            }
+            var lksjdflkasjdf = OccupationsList;
             IsRefreshing = false;
         }
 

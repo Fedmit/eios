@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,6 +50,42 @@ namespace eios.Data
             }
 
             return ocupations;
+        }
+
+        public async Task<List<Mark>> GetMarksAsync(int id_group)
+        {
+            dynamic dynamicJson = new ExpandoObject();
+            dynamicJson.login = App.Current.Properties["Login"];
+            dynamicJson.password = App.Current.Properties["Password"];
+            dynamicJson.type = "get_mark";
+            dynamicJson.id_group = id_group;
+            string json = "";
+            json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
+
+            List<Mark> marks = null;
+            try
+            {
+                HttpClient client = new HttpClient();
+                var response = await client.PostAsync(
+                    _baseUrl,
+                    new StringContent(
+                        json,
+                        UnicodeEncoding.UTF8,
+                        "application/json"
+                    )
+                );
+                response.EnsureSuccessStatusCode();
+
+                var content = await response.Content.ReadAsStringAsync();
+
+                marks = JsonConvert.DeserializeObject<List<Mark>>(content);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Whooops! " + ex.Message);
+            }
+
+            return marks;
         }
 
         public async Task<List<Group>> GetGroupsAsync()
