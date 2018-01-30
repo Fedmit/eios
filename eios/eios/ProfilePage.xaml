@@ -3,10 +3,120 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="eios.ProfilePage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Profile Page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout BackgroundColor="#F2F2F2" Spacing="30" Padding="0,60,0,0">
+            <Image
+                HorizontalOptions="Center"
+                BackgroundColor="White"
+                WidthRequest="100"
+                HeightRequest="100"/>
+            <StackLayout Spacing="5">
+                <Grid BackgroundColor="White" Padding="30,5,30,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <Label 
+                        Text="Фамилия:"
+                        TextColor="Gray"
+                        Grid.Row="0"
+                        Grid.Column="0"/>
+                    <Label 
+                        x:Name="secongName"
+                        Text="Устинов"
+                        TextColor="Gray"
+                        Grid.Row="0"
+                        Grid.Column="1"/>
+                </Grid>
+                <Grid BackgroundColor="White" Padding="30,5,30,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <Label 
+                        Text="Имя:"
+                        TextColor="Gray"
+                        Grid.Row="0"
+                        Grid.Column="0"/>
+                    <Label 
+                        x:Name="firstName"
+                        Text="Артемий"
+                        TextColor="Gray"
+                        Grid.Row="0"
+                        Grid.Column="1"/>
+                </Grid>
+                <Grid BackgroundColor="White" Padding="30,5,30,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <Label 
+                        Text="Отчество:"
+                        TextColor="Gray"
+                        Grid.Row="0"
+                        Grid.Column="0"/>
+                    <Label 
+                        x:Name="middleName"
+                        Text="Андреевич"
+                        TextColor="Gray"
+                        Grid.Row="0"
+                        Grid.Column="1"/>
+                </Grid>
+                <Grid BackgroundColor="White" Padding="30,5,30,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <Label 
+                        Text="Факультет:"
+                        TextColor="Gray"
+                        Grid.Row="0"
+                        Grid.Column="0"/>
+                    <Label 
+                        x:Name="faculty"
+                        Text="ВТ"
+                        TextColor="Gray"
+                        Grid.Row="0"
+                        Grid.Column="1"/>
+                </Grid>
+                <Grid BackgroundColor="White" Padding="30,5,30,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <Label 
+                        Text="Группа:"
+                        TextColor="Gray"
+                        Grid.Row="0"
+                        Grid.Column="0"/>
+                    <Label 
+                        x:Name="group"
+                        Text="15ВО1"
+                        TextColor="Gray"
+                        Grid.Row="0"
+                        Grid.Column="1"/>
+                </Grid>
+            </StackLayout>
+            <Button
+                x:Name="exitButton"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Text=" Выйти из профиля "
+                TextColor="Black"
+                BackgroundColor="White"
+                BorderColor="Gray"
+                HeightRequest="35"
+                BorderWidth="1"
+                BorderRadius="5"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
