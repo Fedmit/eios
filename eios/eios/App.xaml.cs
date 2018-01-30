@@ -13,6 +13,9 @@ namespace eios
 		{
 			InitializeComponent();
 
+            Properties.Add("Login", "test");
+            Properties.Add("Password", "test1");
+
             MainPage = new NavigationPage(new SplashPage());
 		}
 
