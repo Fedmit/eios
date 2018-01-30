@@ -20,6 +20,7 @@
                     <x:Array Type="{x:Type local:MasterPageItem}">
                         <local:MasterPageItem Title="Помощь" TargetType="{x:Type local:HelpPage}" />
                         <local:MasterPageItem Title="О программе" TargetType="{x:Type local:AboutPage}" />
+                        <local:MasterPageItem Title="Справка" TargetType="{x:Type local:ReferencePage}" />
                         <local:MasterPageItem Title="Выход" />
                     </x:Array>
                 </local:MenuListView.ItemsSource>
