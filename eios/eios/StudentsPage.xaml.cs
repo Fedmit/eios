@@ -18,9 +18,9 @@ namespace eios
 			InitializeComponent ();
             var L_Students = new List<Student>();
             int index = 0;
-            var s1 = new Student() { sIcon = "uncheck", sText = "Вася пупкин", sFlag = false, iIndex = index };
+            var s1 = new Student() { sIcon = "Fot.jpg", sText = "Вася пупкин", sFlag = false, iIndex = index };
             index++;
-            var s2 = new Student() { sIcon = "uncheck.png", sText = "Вася пупкин", sFlag = false, iIndex = index };
+            var s2 = new Student() { sIcon = "Fot.jpg", sText = "Петя Петкин", sFlag = false, iIndex = index };
             L_Students.Add(s1);
             L_Students.Add(s2);
             studentListView.ItemTemplate = new DataTemplate(typeof(StudentsViewCell));
@@ -31,12 +31,12 @@ namespace eios
                 if (LVElement.sFlag) 
                 {
                     L_Students[LVElement.iIndex].sFlag = false;
-                    L_Students[LVElement.iIndex].sIcon = "check.png";
+                    L_Students[LVElement.iIndex].sIcon = "Fot.jpg";
                 }
                 else
                 {
                     L_Students[LVElement.iIndex].sFlag = true;
-                    L_Students[LVElement.iIndex].sIcon = "uncheck.png";
+                    L_Students[LVElement.iIndex].sIcon = "Fot.jpg";
                 }
                 studentListView.ItemTemplate = new DataTemplate(typeof(StudentsViewCell));
             };
@@ -73,8 +73,9 @@ namespace eios
             {
             };
             var Icon = new Image();
-            Icon.SetBinding(Image.SourceProperty, new Binding("sIcon", BindingMode.OneWay, new StringToImageConverter()));
+            //Icon.SetBinding(Image.SourceProperty, new Binding("sIcon", BindingMode.OneWay, new StringToImageConverter()));
             Icon.HeightRequest = 15;
+            Icon.SetBinding(Image.SourceProperty, "sIcon");
             Icon.VerticalOptions = LayoutOptions.Center;
             var s = new StackLayout();
             s.Orientation = StackOrientation.Horizontal;     
