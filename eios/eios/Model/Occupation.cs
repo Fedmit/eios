@@ -1,14 +1,20 @@
-﻿using Newtonsoft.Json;
+﻿using eios;
+using Newtonsoft.Json;
 using System;
+using Xamarin.Forms;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel;
 
 namespace eios.Model
 {
-    class Occupation
+    class Occupation : INotifyPropertyChanged
     {
-        [JsonProperty("id_occup")]
+        [JsonProperty("id")]
         public int Id { get; set; }
+
+        [JsonProperty("id_occup")]
+        public int IdOccupation { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -18,5 +24,56 @@ namespace eios.Model
 
         [JsonProperty("time")]
         public DateTime Time { get; set; }
+
+        private string _mark;
+        public string Mark
+        {
+            get { return _mark; }
+            set
+            {
+                _mark = value;
+                OnPropertyChanged(nameof(CircleColor));
+                OnPropertyChanged(nameof(TargetType));
+            }
+        }
+
+        public string CircleColor
+        {
+            get
+            {
+                switch (Mark)
+                {
+                    case "was_no": return "#f7636c";
+                    case "was_attend": return "#e0e0e0";
+                    case "is_no": return "#acd94e";
+                    case "is_attend": return "#e0e0e0";
+                    case "will": return "#77aad9";
+                    default: return "#77aad9";
+                }
+            }
+        }
+
+        public Type TargetType
+        {
+            get
+            {
+                switch (Mark)
+                {
+                    case "was_no": return typeof(StudentsPage);
+                    case "was_attend": return typeof(CompletedOccupationPage);
+                    case "is_no": return typeof(StudentsPage);
+                    case "is_attend": return typeof(CompletedOccupationPage);
+                    case "will": return null;
+                    default: return null;
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

@@ -123,10 +123,15 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>10.0.3</Version>
     </PackageReference>
+    <PackageReference Include="Xam.Plugins.Forms.ImageCircle">
+      <Version>2.0.1</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.122203" />
+    <PackageReference Include="XLabs.Forms">
+      <Version>2.0.5782</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\icon_refresh.png" />
     <BundleResource Include="Resources\PSU.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -137,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Uncheck.jpg" />
+    <BundleResource Include="Resources\pguloogo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\eios\eios.projitems" Label="Shared" />
