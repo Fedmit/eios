@@ -13,11 +13,11 @@ namespace eios
 		{
 			InitializeComponent();
             
-            if (!Application.Current.Properties.ContainsKey("Login"))
+            if (!Properties.ContainsKey("Login"))
             {
                 Properties.Add("Login", "test");
             }
-            if (!Application.Current.Properties.ContainsKey("Login"))
+            if (!Properties.ContainsKey("Password"))
             {
                 Properties.Add("Password", "test1");
             }
