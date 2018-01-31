@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using eios;
+using Newtonsoft.Json;
 using System;
 using Xamarin.Forms;
 using System.Collections.Generic;
@@ -32,6 +33,7 @@ namespace eios.Model
             {
                 _mark = value;
                 OnPropertyChanged(nameof(CircleColor));
+                OnPropertyChanged(nameof(TargetType));
             }
         }
 
@@ -47,6 +49,22 @@ namespace eios.Model
                     case "is_attend": return "#e0e0e0";
                     case "will": return "#77aad9";
                     default: return "#77aad9";
+                }
+            }
+        }
+
+        public Type TargetType
+        {
+            get
+            {
+                switch (Mark)
+                {
+                    case "was_no": return typeof(StudentsPage);
+                    case "was_attend": return typeof(CompletedOccupationPage);
+                    case "is_no": return typeof(StudentsPage);
+                    case "is_attend": return typeof(CompletedOccupationPage);
+                    case "will": return null;
+                    default: return null;
                 }
             }
         }

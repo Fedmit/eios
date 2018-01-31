@@ -3,10 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="eios.StudentsPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Students Page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Padding="15">
+
+            <Label x:Name="timeLable"
+                   Margin="10"
+                   HorizontalOptions="Center"/>
+            <Label x:Name="occupationLable"
+                   Margin="5"
+                   HorizontalOptions="Center"/>
+            <StackLayout Margin="5" Orientation="Horizontal">
+                <Label x:Name="defaultLable"
+                       HorizontalOptions="Start"/>
+                <Label x:Name="onSiteLable"
+                       HorizontalOptions="EndAndExpand"/>
+            </StackLayout>
+            <ListView x:Name="studentListView"/>
+            <Button x:Name="marked"
+                    Margin="5"/>
+            <Button x:Name="back"
+                    Margin="5"/> 
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
