@@ -16,13 +16,13 @@ namespace eios.Data
 
         static string _baseUrl { get { return "http://q9875032.beget.tech/hp_api/api.php"; } }
 
-        public async Task<List<Occupation>> GetOccupationsAsync(int id_group)
+        public async Task<List<Occupation>> GetOccupationsAsync()
         {
             dynamic dynamicJson = new ExpandoObject();
-            dynamicJson.login = App.Current.Properties["Login"];
-            dynamicJson.password = App.Current.Properties["Password"];
+            dynamicJson.login = App.Login;
+            dynamicJson.password = App.Password;
             dynamicJson.type = "get_info";
-            dynamicJson.id_group = id_group;
+            dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
             dynamicJson.date = "2018-02-01 13:46:30";
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
@@ -54,13 +54,13 @@ namespace eios.Data
             return ocupations;
         }
 
-        public async Task<List<Mark>> GetMarksAsync(int id_group)
+        public async Task<List<Mark>> GetMarksAsync()
         {
             dynamic dynamicJson = new ExpandoObject();
-            dynamicJson.login = App.Current.Properties["Login"];
-            dynamicJson.password = App.Current.Properties["Password"];
+            dynamicJson.login = App.Login;
+            dynamicJson.password = App.Password;
             dynamicJson.type = "get_mark";
-            dynamicJson.id_group = id_group;
+            dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
@@ -89,11 +89,11 @@ namespace eios.Data
             return marks;
         }
 
-        public async Task<List<Group>> GetGroupsAsync()
+        public async Task<List<Group>> GetGroupsAsync(string login, string password)
         {
             dynamic dynamicJson = new ExpandoObject();
-            dynamicJson.login = App.Current.Properties["Login"];
-            dynamicJson.password = App.Current.Properties["Password"];
+            dynamicJson.login = login;
+            dynamicJson.password = password;
             dynamicJson.type = "get_group";
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
@@ -124,13 +124,13 @@ namespace eios.Data
             return groups;
         }
 
-        public async Task<List<Student>> GetStudentsAsync(int id_group)
+        public async Task<List<Student>> GetStudentsAsync()
         {
             dynamic dynamicJson = new ExpandoObject();
-            dynamicJson.login = App.Current.Properties["Login"];
-            dynamicJson.password = App.Current.Properties["Password"];
+            dynamicJson.login = App.Login;
+            dynamicJson.password = App.Password;
             dynamicJson.type = "get_students";
-            dynamicJson.id_group = id_group;
+            dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 

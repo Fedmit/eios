@@ -92,7 +92,7 @@ namespace eios.ViewModel
 
         async Task<List<Student>> PopulateList()
         {
-            var studentsList = await WebApi.Instance.GetStudentsAsync(1);
+            var studentsList = await WebApi.Instance.GetStudentsAsync();
             return studentsList;
         }
 
