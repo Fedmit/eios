@@ -1,4 +1,5 @@
-﻿using eios.Model;
+﻿using eios.Messages;
+using eios.Model;
 using eios.ViewModel;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -37,6 +38,22 @@ namespace eios
                     await Navigation.PushAsync((Page)Activator.CreateInstance(item.TargetType));
                 }
             };
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnDisappearing();
+
+            var message = new StartLongRunningTaskMessage();
+            MessagingCenter.Send(message, "StartLongRunningTaskMessage");
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            var message = new StopLongRunningTaskMessage();
+            MessagingCenter.Send(message, "StopLongRunningTaskMessage");
         }
     }
 }

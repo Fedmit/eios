@@ -1,4 +1,5 @@
 ﻿using eios.Data;
+using eios.Messages;
 using eios.Model;
 using System;
 using System.Collections.Generic;
@@ -63,8 +64,28 @@ namespace eios.ViewModel
             {
                 IsBusy = true;
                 OccupationsList = await PopulateList();
-                await UpdateState();
+                // await UpdateState();
                 IsBusy = false;
+            });
+
+            HandleReceivedMessages();
+        }
+
+        private void HandleReceivedMessages()
+        {
+            MessagingCenter.Subscribe<MarksMessage>(this, "Marks", message => {
+                Device.BeginInvokeOnMainThread(() => {
+                    var marks = message.Message;
+
+                    if (marks != null)
+                    {
+                        foreach (Mark mark in marks)
+                        {
+                            var obj = OccupationsList.FirstOrDefault(x => x.Id == mark.Id);
+                            if (obj != null) obj.Mark = mark.mMark;
+                        }
+                    }
+                });
             });
         }
 

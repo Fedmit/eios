@@ -16,7 +16,16 @@ namespace eios
 		public SettingsPage()
 		{
 			InitializeComponent ();
-		}
+
+            //if (!Application.Current.Properties.ContainsKey("Login"))
+            //{
+            //    Application.Current.Properties.Add("Login", "test");
+            //}
+            //if (!Application.Current.Properties.ContainsKey("Password"))
+            //{
+            //    Application.Current.Properties.Add("Password", "test1");
+            //}
+        }
 
        
     }
