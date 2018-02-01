@@ -26,9 +26,15 @@ namespace eios.Data
         }
         public async Task<List<Occupation>> GetItemsAsync(int id)
         {
-            return await database.QueryAsync<Occupation>("SELECT IdOccupation, Name, Aud, Time " +
-                "FROM Occupations " +
-                "WHERE IdGroup = " + id,                                                                                                                                      null);
+            var ocup = await GetItems();
+            var result = new List<Occupation>();
+            foreach (Occupation fr in ocup)
+            {
+                Console.WriteLine("Инфа: id = " + fr.Id + " id_group =" + fr.IdGroup + " id_occup =" + fr.IdOccupation + " Name =" + fr.Name + " Aud =" + fr.Aud);
+                if (fr.IdGroup == id)
+                    result.Add(fr);
+            }
+            return result;
         }
         public async Task<int> SaveItem(Occupation item)
         {
@@ -41,6 +47,10 @@ namespace eios.Data
             {
                 return await database.InsertAsync(item);
             }
+        }
+        public async Task<List<Occupation>> GetItems()
+        {
+            return await database.Table<Occupation>().ToListAsync();
         }
     }
 }

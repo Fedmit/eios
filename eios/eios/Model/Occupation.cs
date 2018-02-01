@@ -32,7 +32,7 @@ namespace eios.Model
 
         private string _mark;
 
-       // [Column("Mark")]
+        [Ignore]
         public string Mark
         {
             get { return _mark; }
