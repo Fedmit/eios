@@ -17,8 +17,26 @@
                 <Label x:Name="onSiteLable"
                        HorizontalOptions="EndAndExpand"/>
             </StackLayout>
-            <ListView x:Name="studentListView"/>
-            <Button x:Name="marked"
+            <ListView
+                x:Name="studentListView" 
+                RowHeight="60"
+                ItemsSource="{Binding OccupationsList}"
+                IsPullToRefreshEnabled="true"
+                RefreshCommand="{Binding RefreshCommand}"
+                IsRefreshing="{Binding IsRefreshing}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Margin="20,0,20,0" Spacing="20">
+                                <local:BedgeView Size="50" />
+                                <Label Text="{Binding Name}" VerticalOptions="Center" FontSize="16" />
+                                <Label Text="{Binding Aud}" VerticalOptions="Center" HorizontalOptions="EndAndExpand" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+                <Button x:Name="marked"
                     Margin="5"/>
             <Button x:Name="back"
                     Margin="5"/> 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eios.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -10,13 +11,14 @@ using Xamarin.Forms.Xaml;
 
 namespace eios
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class StudentsPage : ContentPage
-	{
-		public StudentsPage ()
-		{
-			InitializeComponent ();
-            var L_Students = new List<Student>();
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class StudentsPage : ContentPage
+    {
+        public StudentsPage()
+        {
+            InitializeComponent();
+            var studentsViewModel = new StudentsListViewModel();
+            BindingContext = studentsViewModel;
             timeLable.Text = "Время";
             timeLable.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
             occupationLable.Text = "Название предмета";
@@ -29,12 +31,6 @@ namespace eios
             marked.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
             back.Text = "Назад";
             back.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
-            int index = 0;
-            var s1 = new Student() { sIcon = "Uncheck.jpg", sText = "Дмитрий Дмитриев Дмитриевич", sFlag = false, iIndex = index };
-            index++;
-            var s2 = new Student() { sIcon = "Uncheck.jpg", sText = "Петр Петров Петрович", sFlag = false, iIndex = index };
-            L_Students.Add(s1);
-            L_Students.Add(s2);
             studentListView.SeparatorVisibility = SeparatorVisibility.None;
             studentListView.RowHeight = 40;
             studentListView.ItemTemplate = new DataTemplate(() =>
@@ -44,7 +40,6 @@ namespace eios
                 imageCell.SetBinding(ImageCell.ImageSourceProperty, "sIcon");
                 return imageCell;
             });
-            studentListView.ItemsSource = L_Students;
             studentListView.ItemTapped += (sender, e) =>
             {
                 var LVElement = (Student)e.Item;
@@ -61,20 +56,13 @@ namespace eios
                 studentListView.ItemTemplate = new DataTemplate(() =>
                 {
                     ImageCell imageCell = new ImageCell();
-                    imageCell.SetBinding(ImageCell.TextProperty, "sText");
+                    imageCell.SetBinding(ImageCell.TextProperty, "FullName");
                     imageCell.SetBinding(ImageCell.ImageSourceProperty, "sIcon");
                     return imageCell;
                 });
             };
 
         }
-	}
-    public class Student
-    {
-        public string sIcon { get; set; } 
-        public string sText { get; set; } 
-        public bool sFlag { get; set; } 
-        public int iIndex { get; set; }
     }
     public class StringToImageConverter : IValueConverter
     {

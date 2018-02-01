@@ -76,6 +76,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\OccupationsListViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\StudentsListViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\MenuListCell.xaml.cs">
       <DependentUpon>MenuListCell.xaml</DependentUpon>
       <SubType>Code</SubType>
