@@ -18,14 +18,14 @@
                    Text="{Binding OccupationName}"
                    Margin="5"
                    HorizontalOptions="Center"/>
-            <StackLayout Margin="5" Orientation="Horizontal" Spacing="20">
+            <StackLayout Margin="5" Orientation="Horizontal">
                 <StackLayout Margin="5" Orientation="Horizontal">
                     <Label
                         Text="Всего"
                         HorizontalOptions="Start"/>
                     <Label Text="{Binding Total}" />
                 </StackLayout>
-                <StackLayout Margin="5" Orientation="Horizontal">
+                <StackLayout Margin="5" Orientation="Horizontal" HorizontalOptions="EndAndExpand">
                     <Label 
                        Text="Присутстуют"
                        HorizontalOptions="EndAndExpand"/>
@@ -49,11 +49,13 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button x:Name="marked"
+            <Button x:Name="markButton"
                     Text="Отметить посещаемость"
+                    Clicked="OnMarkClicked"
                     Margin="5"/>
-            <Button x:Name="back"
+            <Button x:Name="backButton"
                     Text="Назад"
+                    Clicked="OnBackClicked"
                     Margin="5"/> 
         </StackLayout>
     </ContentPage.Content>

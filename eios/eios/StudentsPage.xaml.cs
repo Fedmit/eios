@@ -15,12 +15,14 @@ namespace eios
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class StudentsPage : ContentPage
     {
+        StudentsListViewModel viewModel;
+
         public StudentsPage(DateTime time, string name)
         {
             InitializeComponent();
 
-            var studentsViewModel = new StudentsListViewModel(time, name);
-            BindingContext = studentsViewModel;
+            viewModel = new StudentsListViewModel(time, name);
+            BindingContext = viewModel;
 
             studentListView.ItemTapped += (sender, e) =>
             {
@@ -29,9 +31,20 @@ namespace eios
                 if (e.Item is Student item)
                 {
                     item.IsSelected = !item.IsSelected;
+                    viewModel.OnSite = viewModel.StudentsList.FindAll(s => s.IsSelected.Equals(true)).Count;
                 }
             };
 
+        }
+
+        async void OnBackClicked(Object sender, AssemblyLoadEventArgs args)
+        {
+            await Navigation.PopAsync();
+        }
+
+        void OnMarkClicked(Object sender, AssemblyLoadEventArgs args)
+        {
+            throw new NotImplementedException();
         }
     }
 }

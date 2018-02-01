@@ -4,10 +4,10 @@
              xmlns:local="clr-namespace:eios"
              xmlns:view="clr-namespace:eios.View"
              x:Class="eios.MasterPage"
-             Title="Content">
+             Title="Меню">
     <ContentPage.Content>
         <StackLayout BackgroundColor="#646973">
-            <ListView x:Name="menuTop" VerticalOptions="Start" HeightRequest="195">
+            <ListView x:Name="menuTop" VerticalOptions="Start" HeightRequest="200">
                 <ListView.Header>
                     <StackLayout Padding="40,5,0,10" Spacing="10" BackgroundColor="#545a66">
                         <Label Text="ЭИОС ПГУ" TextColor="White" />
@@ -27,7 +27,7 @@
                     </x:Array>
                 </ListView.ItemsSource>
             </ListView>
-            <ListView x:Name="menuBottom" VerticalOptions="EndAndExpand" HeightRequest="135">
+            <ListView x:Name="menuBottom" VerticalOptions="EndAndExpand" HeightRequest="180">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <view:MenuListCell Title="{Binding Title}" />

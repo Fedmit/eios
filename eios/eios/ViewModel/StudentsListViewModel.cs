@@ -34,6 +34,25 @@ namespace eios.ViewModel
             }
         }
 
+        public int Total
+        {
+            get
+            {
+                return StudentsList.Count;
+            }
+        }
+
+        int _onSite;
+        public int OnSite
+        {
+            get { return _onSite; }
+            set
+            {
+                _onSite = value;
+                OnPropertyChanged(nameof(OnSite));
+            }
+        }
+
         bool _isBusy;
         public bool IsBusy
         {
@@ -53,6 +72,7 @@ namespace eios.ViewModel
             {
                 _studentsList = value;
                 OnPropertyChanged(nameof(StudentsList));
+                OnPropertyChanged(nameof(Total));
             }
         }
 
