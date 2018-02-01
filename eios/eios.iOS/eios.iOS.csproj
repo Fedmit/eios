@@ -126,11 +126,13 @@
     <BundleResource Include="Resources\Fot.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\Check.jpg" />
+    <BundleResource Include="Resources\pguloogo.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\Uncheck.jpg" />
-    <BundleResource Include="Resources\pguloogo.png" />
+    <BundleResource Include="Resources\check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\uncheck.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json">

@@ -83,10 +83,10 @@
     <AndroidResource Include="Resources\drawable\Fot.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\uncheck.jpg" />
+    <AndroidResource Include="Resources\drawable\check.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\check.jpg" />
+    <AndroidResource Include="Resources\drawable\uncheck.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json">

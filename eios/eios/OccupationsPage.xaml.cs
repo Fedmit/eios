@@ -34,7 +34,7 @@ namespace eios
                     {
                         return;
                     }
-                    await Navigation.PushAsync((Page)Activator.CreateInstance(item.TargetType));
+                    await Navigation.PushAsync((Page)Activator.CreateInstance(item.TargetType, item.Time, item.Name));
                 }
             };
         }
