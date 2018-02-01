@@ -42,8 +42,9 @@ namespace eios.Data
                 response.EnsureSuccessStatusCode();
 
                 var content = await response.Content.ReadAsStringAsync();
-
                 ocupations = JsonConvert.DeserializeObject<List<Occupation>>(content);
+
+                ocupations.Sort((x, y) => DateTime.Compare(x.Time, y.Time));
             }
             catch (Exception ex)
             {
@@ -78,7 +79,6 @@ namespace eios.Data
                 response.EnsureSuccessStatusCode();
 
                 var content = await response.Content.ReadAsStringAsync();
-
                 marks = JsonConvert.DeserializeObject<List<Mark>>(content);
             }
             catch (Exception ex)

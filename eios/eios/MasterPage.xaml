@@ -38,7 +38,7 @@
                         <local:MasterPageItem Title="Помощь" TargetType="{x:Type local:HelpPage}" />
                         <local:MasterPageItem Title="О программе" TargetType="{x:Type local:AboutPage}" />
                         <local:MasterPageItem Title="Справка" TargetType="{x:Type local:ReferencePage}" />
-                        <local:MasterPageItem Title="Выход" />
+                        <local:MasterPageItem Title="Выход" TargetType="{x:Type local:LoginPage}"/>
                     </x:Array>
                 </ListView.ItemsSource>
             </ListView>

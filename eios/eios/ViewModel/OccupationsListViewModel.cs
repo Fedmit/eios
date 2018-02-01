@@ -87,10 +87,13 @@ namespace eios.ViewModel
         {
             List<Mark> marks = await WebApi.Instance.GetMarksAsync(1);
 
-            foreach (Mark mark in marks)
+            if (marks != null)
             {
-                var obj = OccupationsList.FirstOrDefault(x => x.Id == mark.Id);
-                if (obj != null) obj.Mark = mark.mMark;
+                foreach (Mark mark in marks)
+                {
+                    var obj = OccupationsList.FirstOrDefault(x => x.Id == mark.Id);
+                    if (obj != null) obj.Mark = mark.mMark;
+                }
             }
         }
 
