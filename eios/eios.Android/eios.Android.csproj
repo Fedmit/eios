@@ -97,10 +97,10 @@
     <AndroidResource Include="Resources\drawable\Fot.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\uncheck.jpg" />
+    <AndroidResource Include="Resources\drawable\check.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\check.jpg" />
+    <AndroidResource Include="Resources\drawable\uncheck.png" />
   </ItemGroup>
   <Import Project="..\eios\eios.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

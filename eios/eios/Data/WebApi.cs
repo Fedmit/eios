@@ -23,6 +23,7 @@ namespace eios.Data
             dynamicJson.password = App.Current.Properties["Password"];
             dynamicJson.type = "get_info";
             dynamicJson.id_group = id_group;
+            dynamicJson.date = "2018-02-01 13:46:30";
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 

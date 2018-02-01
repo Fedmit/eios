@@ -12,6 +12,28 @@ namespace eios.ViewModel
 {
     class StudentsListViewModel : INotifyPropertyChanged
     {
+        DateTime _occupationTime;
+        public DateTime OccupationTime
+        {
+            get { return _occupationTime; }
+            set
+            {
+                _occupationTime = value;
+                OnPropertyChanged(nameof(OccupationTime));
+            }
+        }
+
+        string _occupationName;
+        public string OccupationName
+        {
+            get { return _occupationName; }
+            set
+            {
+                _occupationName = value;
+                OnPropertyChanged(nameof(OccupationName));
+            }
+        }
+
         bool _isBusy;
         public bool IsBusy
         {
@@ -34,24 +56,16 @@ namespace eios.ViewModel
             }
         }
 
-        Command _refreshCommand;
-        public Command RefreshCommand
+        public StudentsListViewModel(DateTime time, string name)
         {
-            get
-            {
-                return _refreshCommand;
-            }
-        }
-
-        public StudentsListViewModel()
-        {
+            OccupationTime = time;
+            OccupationName = name;
             _studentsList = new List<Student>();
 
             Task.Run(async () =>
             {
                 IsBusy = true;
                 StudentsList = await PopulateList();
-                await UpdateState();
                 IsBusy = false;
             });
         }
@@ -60,20 +74,6 @@ namespace eios.ViewModel
         {
             var studentsList = await WebApi.Instance.GetStudentsAsync(1);
             return studentsList;
-        }
-
-        async Task UpdateState()
-        {
-            List<Student> students = await WebApi.Instance.GetStudentsAsync(1);
-
-            if (students != null)
-            {
-                foreach (Student student in students)
-                {
-                    var obj = StudentsList.FirstOrDefault(x => x.Id == student.Id);
-                    if (obj != null) obj.FullName = student.FullName;
-                }
-            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
