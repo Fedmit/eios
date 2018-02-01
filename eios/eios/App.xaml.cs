@@ -12,6 +12,15 @@ namespace eios
 		public App ()
 		{
 			InitializeComponent();
+            
+            if (!Properties.ContainsKey("Login"))
+            {
+                Properties.Add("Login", "test");
+            }
+            if (!Properties.ContainsKey("Password"))
+            {
+                Properties.Add("Password", "test1");
+            }
 
             MainPage = new NavigationPage(new SplashPage());
 		}
