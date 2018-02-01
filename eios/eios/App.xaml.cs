@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eios.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,12 +10,25 @@ namespace eios
 {
 	public partial class App : Application
 	{
-		public App ()
+        public const string DATABASE_NAME = "occupation.db";
+        public static OccupationsRepository database;
+        public static OccupationsRepository Database
+        {
+            get
+            {
+                if (database == null)
+                {
+                    database = new OccupationsRepository(DATABASE_NAME);
+                }
+                return database;
+            }
+        }
+        public App ()
 		{
 			InitializeComponent();
 
-            Properties.Add("Login", "test");
-            Properties.Add("Password", "test1");
+            Properties["Login"] = "test";
+            Properties["Password"] = "test1";
 
             MainPage = new NavigationPage(new SplashPage());
 		}

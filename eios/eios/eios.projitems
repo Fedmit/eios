@@ -29,6 +29,8 @@
       <DependentUpon>CompletedOccupationPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Data\ISQLite.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\OccupationsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\WebApi.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DateTimeToStringConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HelpPage.xaml.cs">
@@ -69,10 +71,6 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)SplashPage.xaml.cs">
       <DependentUpon>SplashPage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)StudentsPage.xaml.cs">
-      <DependentUpon>StudentsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\OccupationsListViewModel.cs" />
@@ -144,12 +142,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)View\MenuListCell.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)StudentsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
