@@ -16,5 +16,10 @@ namespace eios
 		{
 			InitializeComponent ();
 		}
-	}
+
+        async void COPageButton_isCliced(Object sender, AssemblyLoadEventArgs args)
+        {
+            await Navigation.PopAsync();
+        }
+    }
 }
