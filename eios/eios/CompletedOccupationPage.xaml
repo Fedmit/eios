@@ -4,9 +4,32 @@
              x:Class="eios.CompletedOccupationPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Completed Occupation Page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="50,90,50,0" > 
+                <Label Text="Время" FontSize="Medium" TextColor="Black"></Label>
+                <Label x:Name="Time" Text="13.45" TextColor="Black" FontSize="Medium"></Label>
+            </StackLayout>
+            <StackLayout HorizontalOptions="Center" Margin="50,10,50,0" >
+                <Label Text="Название предмета" FontSize="Medium" TextColor="Black"></Label>
+            </StackLayout>
+            <StackLayout HorizontalOptions="Center">
+                    <Label x:Name="SubjectName" Text="Информатика" TextColor="Black" FontSize="Medium"></Label>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="50,20,50,0">
+                <Label Text="Всего:" FontSize="Medium" TextColor="Black"></Label>
+                <Label x:Name="FullNumberOfStudents" Text="27"  FontSize="Medium" TextColor="Black"></Label>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="50,0,50,0">
+                <Label Text="Присутствуют:" FontSize="Medium" TextColor="Black"></Label>
+                <Label x:Name="NumberOfStudents" Text="18"  FontSize="Medium" TextColor="Black"></Label>
+            
+            </StackLayout>
+            <Label Text="Вы уже отметили посещаемость."  Margin="50,80,0,100" FontSize="Medium" TextColor="Black"></Label>
+            
+            
+            <StackLayout VerticalOptions="EndAndExpand" Margin="140,30,140,0">
+                <Button Text="Назад" BackgroundColor="#77aad9" TextColor="White" Clicked="COPageButton_isCliced"   FontSize="Small"></Button>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
