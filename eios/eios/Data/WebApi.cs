@@ -23,7 +23,7 @@ namespace eios.Data
             dynamicJson.password = App.Current.Properties["Password"];
             dynamicJson.type = "get_info";
             dynamicJson.id_group = id_group;
-            dynamicJson.date = "2018-02-01 13:46:30";
+            dynamicJson.date = "2018-02-02 13:46:30";
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
@@ -60,6 +60,7 @@ namespace eios.Data
             dynamicJson.login = App.Current.Properties["Login"];
             dynamicJson.password = App.Current.Properties["Password"];
             dynamicJson.type = "get_mark";
+            dynamicJson.date = "2018-02-02 13:46:30";
             dynamicJson.id_group = id_group;
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
@@ -134,6 +135,7 @@ namespace eios.Data
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
+
             List<Student> students = null;
             try
             {
@@ -160,9 +162,36 @@ namespace eios.Data
             return students;
         }
 
-        public async Task SetAttendAsync()
+        public async Task<bool> SetAttendAsync(int id_group, int idTimeTable, List<SelectedStudent> list)
         {
-            throw new NotImplementedException();
+            dynamic dynamicJson = new ExpandoObject();
+            dynamicJson.login = App.Current.Properties["Login"];
+            dynamicJson.password = App.Current.Properties["Password"];
+            dynamicJson.type = "set_attend";
+            dynamicJson.id_group = id_group;
+            dynamicJson.id_timetable = idTimeTable;
+            dynamicJson.data = list;
+            string json = "";
+            json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
+            try {
+                Console.WriteLine(json);
+                HttpClient client = new HttpClient();
+                var response = await client.PostAsync(
+                    _baseUrl,
+                    new StringContent(
+                        json,
+                        UnicodeEncoding.UTF8,
+                        "application/json"
+                    )
+                );
+                response.EnsureSuccessStatusCode();
+            return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Whooops! " + ex.Message);
+                return false;
+            }
         }
     }
 }
