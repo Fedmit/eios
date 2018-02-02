@@ -18,7 +18,7 @@
                 <Label x:Name="FullNumberOfStudents" Text="27"  FontSize="Medium" TextColor="Black"></Label>
             </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="50,0,50,0">
-                <Label Text="Присутствуют:" FontSize="Medium" TextColor="Black"></Label>
+                <Label Text="Отсутствуют:" FontSize="Medium" TextColor="Black"></Label>
                 <Label x:Name="NumberOfStudents" Text="18"  FontSize="Medium" TextColor="Black"></Label>
             
             </StackLayout>

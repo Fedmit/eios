@@ -12,7 +12,7 @@ namespace eios
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class CompletedOccupationPage : ContentPage
 	{
-        public CompletedOccupationPage(DateTime time, string name)
+        public CompletedOccupationPage(DateTime time, string name, int id)
 		{
 			InitializeComponent ();
 

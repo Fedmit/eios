@@ -1,50 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="eios.SplashPage"
->
-
+             x:Class="eios.SplashPage">
     <ContentPage.Content>
-
-
-
         <StackLayout Padding="0,0,0,5">
-
             <Image Source="Resources/pguloogo.png" 
-                   Aspect="AspectFit"
-                   Margin="10"/>
+                Aspect="AspectFit"
+                Margin="10"/>
             <Label Text="ЭИОС ПГУ"
-                   FontSize="Medium"
+                FontSize="Medium"
                 TextColor="Black"
                 HorizontalOptions="CenterAndExpand"
-                  Margin="0,20,0,0"
-                   
-                
-                   />
-
+                Margin="0,20,0,0" />
             <Label Text="Журнал посещаемости"
-                   TextColor="Black"
-                   FontSize="Medium"
-                   Margin="0,0,0,160"
-                   HorizontalOptions="CenterAndExpand"
-                   VerticalOptions="CenterAndExpand"
-                   
-                   />
-            <Label Text="Центор проектного творчества"
-                    FontSize="Micro"     
-                   HorizontalOptions="CenterAndExpand"
-                   VerticalOptions="CenterAndExpand"
-                   Margin="3"
-                   
-                   />
+                TextColor="Black"
+                FontSize="Medium"
+                Margin="0,0,0,160"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand" />
+            <Label Text="Центр проектного творчества"
+                FontSize="Micro"     
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand"
+                Margin="3" />
             <Label Text="2018"
-                   HorizontalOptions="CenterAndExpand"
-                   Margin="3"
-                   FontSize="Micro"
-                     />
-
+                HorizontalOptions="CenterAndExpand"
+                Margin="3"
+                FontSize="Micro" />
         </StackLayout>
-
-
     </ContentPage.Content>
 </ContentPage>

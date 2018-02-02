@@ -165,6 +165,45 @@ namespace eios.Data
             return students;
         }
 
+        public async Task<DateTime> GetDateAsync()
+        {
+            dynamic dynamicJson = new ExpandoObject();
+            dynamicJson.login = App.Login;
+            dynamicJson.password = App.Password;
+            dynamicJson.type = "get_date";
+            string json = "";
+            json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
+
+            DateTime time = new DateTime();
+            try
+            {
+                HttpClient client = new HttpClient();
+                var response = await client.PostAsync(
+                    _baseUrl,
+                    new StringContent(
+                        json,
+                        UnicodeEncoding.UTF8,
+                        "application/json"
+                    )
+                );
+                response.EnsureSuccessStatusCode();
+
+                var content = await response.Content.ReadAsStringAsync();
+                JArray arr = JArray.Parse(content);
+                string str = (string)arr[0].SelectToken("date");
+
+                time = DateTime.Parse(str);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetDateAsync() " + ex.Message);
+            }
+
+            return time;
+        }
+
+        //public async Task
+
         public async Task<bool> SetAttendAsync(int id_group, int idTimeTable, List<SelectedStudent> list)
         {
             dynamic dynamicJson = new ExpandoObject();
