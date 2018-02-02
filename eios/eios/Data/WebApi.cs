@@ -25,6 +25,7 @@ namespace eios.Data
             dynamicJson.type = "get_info";
             dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
             dynamicJson.date = App.Date.ToString("yyyy-MM-dd HH:mm:ss");
+
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
@@ -63,6 +64,7 @@ namespace eios.Data
             dynamicJson.type = "get_mark";
             dynamicJson.date = App.Date.ToString("yyyy-MM-dd HH:mm:ss");
             dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
+
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
@@ -136,6 +138,7 @@ namespace eios.Data
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
+
             List<Student> students = null;
             try
             {
@@ -162,18 +165,19 @@ namespace eios.Data
             return students;
         }
 
-        public async Task<DateTime> GetDateAsync()
+        public async Task<bool> SetAttendAsync(int id_group, int idTimeTable, List<SelectedStudent> list)
         {
             dynamic dynamicJson = new ExpandoObject();
-            dynamicJson.login = App.Login;
-            dynamicJson.password = App.Password;
-            dynamicJson.type = "get_date";
+            dynamicJson.login = App.Current.Properties["Login"];
+            dynamicJson.password = App.Current.Properties["Password"];
+            dynamicJson.type = "set_attend";
+            dynamicJson.id_group = id_group;
+            dynamicJson.id_timetable = idTimeTable;
+            dynamicJson.data = list;
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
-
-            DateTime time = new DateTime();
-            try
-            {
+            try {
+                Console.WriteLine(json);
                 HttpClient client = new HttpClient();
                 var response = await client.PostAsync(
                     _baseUrl,
@@ -184,26 +188,13 @@ namespace eios.Data
                     )
                 );
                 response.EnsureSuccessStatusCode();
-
-                var content = await response.Content.ReadAsStringAsync();
-                JArray arr = JArray.Parse(content);
-                string str = (string)arr[0].SelectToken("date");
-
-                time = DateTime.Parse(str);
+            return true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("GetDateAsync() " + ex.Message);
+                Console.WriteLine("Whooops! " + ex.Message);
+                return false;
             }
-
-            return time;
-        }
-        
-        //public async Task
-
-        public async Task SetAttendAsync()
-        {
-            throw new NotImplementedException();
         }
     }
 }
