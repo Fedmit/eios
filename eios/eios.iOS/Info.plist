@@ -20,8 +20,6 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>MinimumOSVersion</key>
-	<string>10.3</string>
 	<key>CFBundleDisplayName</key>
 	<string>eios</string>
 	<key>CFBundleIdentifier</key>
@@ -50,5 +48,7 @@
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
 	<string>eios</string>
+	<key>MinimumOSVersion</key>
+	<string>8.0</string>
 </dict>
 </plist>
