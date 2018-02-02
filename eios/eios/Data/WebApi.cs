@@ -24,7 +24,7 @@ namespace eios.Data
             dynamicJson.password = App.Password;
             dynamicJson.type = "get_info";
             dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
-            dynamicJson.date = "2018-02-01 12:53:15";
+            dynamicJson.date = App.Date.ToString("yyyy-MM-dd HH:mm:ss");
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
@@ -61,7 +61,7 @@ namespace eios.Data
             dynamicJson.login = App.Login;
             dynamicJson.password = App.Password;
             dynamicJson.type = "get_mark";
-            dynamicJson.date = "2018-02-01 12:53:15";
+            dynamicJson.date = App.Date.ToString("yyyy-MM-dd HH:mm:ss");
             dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
