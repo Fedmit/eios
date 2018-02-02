@@ -6,13 +6,11 @@
         <StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="50,90,50,0" > 
                 <Label Text="Время" FontSize="Medium" TextColor="Black"></Label>
-                <Label x:Name="Time" Text="13.45" TextColor="Black" FontSize="Medium"></Label>
+                <Label x:Name="occupationTime" TextColor="Black" FontSize="Medium"></Label>
             </StackLayout>
-            <StackLayout HorizontalOptions="Center" Margin="50,10,50,0" >
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="50,10,50,0" >
                 <Label Text="Название предмета" FontSize="Medium" TextColor="Black"></Label>
-            </StackLayout>
-            <StackLayout HorizontalOptions="Center">
-                    <Label x:Name="SubjectName" Text="Информатика" TextColor="Black" FontSize="Medium"></Label>
+                <Label x:Name="occupationName" TextColor="Black" FontSize="Medium"></Label>
             </StackLayout>
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="50,20,50,0">
@@ -20,7 +18,7 @@
                 <Label x:Name="FullNumberOfStudents" Text="27"  FontSize="Medium" TextColor="Black"></Label>
             </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="50,0,50,0">
-                <Label Text="Присутствуют:" FontSize="Medium" TextColor="Black"></Label>
+                <Label Text="Отсутствуют:" FontSize="Medium" TextColor="Black"></Label>
                 <Label x:Name="NumberOfStudents" Text="18"  FontSize="Medium" TextColor="Black"></Label>
             
             </StackLayout>

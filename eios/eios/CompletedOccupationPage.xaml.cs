@@ -12,9 +12,13 @@ namespace eios
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class CompletedOccupationPage : ContentPage
 	{
-		public CompletedOccupationPage ()
+        public CompletedOccupationPage(DateTime time, string name, int id)
 		{
 			InitializeComponent ();
+
+            occupationTime.Text = time.ToString("HH:mm");
+            occupationName.Text = name;
+
 		}
 
         async void COPageButton_isCliced(Object sender, AssemblyLoadEventArgs args)

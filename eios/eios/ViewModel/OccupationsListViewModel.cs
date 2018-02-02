@@ -70,7 +70,8 @@ namespace eios.ViewModel
 
         async Task<List<Occupation>> PopulateList()
         {
-            var occupationsList = await WebApi.Instance.GetOccupationsAsync(1);
+            App.Date = await WebApi.Instance.GetDateAsync();
+            var occupationsList = await WebApi.Instance.GetOccupationsAsync();
             return occupationsList;
         }
 
@@ -85,7 +86,7 @@ namespace eios.ViewModel
 
         async Task UpdateState()
         {
-            List<Mark> marks = await WebApi.Instance.GetMarksAsync(1);
+            List<Mark> marks = await WebApi.Instance.GetMarksAsync();
 
             if (marks != null)
             {
