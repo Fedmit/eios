@@ -19,11 +19,11 @@ namespace eios
         StudentsListViewModel viewModel;
         int IdOccupation { get; set; }
 
-        public StudentsPage(DateTime time, string name, int idOccupation)
+        public StudentsPage(DateTime date, string nameOccupation, int idOccupation)
         {
             InitializeComponent();
 
-            viewModel = new StudentsListViewModel(time, name);
+            viewModel = new StudentsListViewModel(date, nameOccupation);
             BindingContext = viewModel;
 
             IdOccupation = idOccupation;
@@ -56,8 +56,8 @@ namespace eios
                 cache.Id = st.Id;
                 resultList.Add(cache);
             }
-            await WebApi.Instance.SetAttendAsync(1, IdOccupation, resultList);
-            Application.Current.MainPage = new MainPage();
+            await WebApi.Instance.SetAttendAsync(IdOccupation, resultList);
+            await Navigation.PopAsync();
         }
     }
 }
