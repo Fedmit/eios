@@ -1,26 +1,61 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:eios"
              x:Class="eios.StudentsPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:DateTimeToStringConverter x:Key="dateTimeToString" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout Padding="15">
-
-            <Label x:Name="timeLable"
+        <StackLayout Padding="20">
+            <Label x:Name="occupationTime"
+                   Text="{Binding OccupationTime, Converter={StaticResource dateTimeToString}}"
                    Margin="10"
                    HorizontalOptions="Center"/>
-            <Label x:Name="occupationLable"
+            <Label x:Name="occupationName"
+                   Text="{Binding OccupationName}"
                    Margin="5"
                    HorizontalOptions="Center"/>
             <StackLayout Margin="5" Orientation="Horizontal">
-                <Label x:Name="defaultLable"
-                       HorizontalOptions="Start"/>
-                <Label x:Name="onSiteLable"
+                <StackLayout Margin="5" Orientation="Horizontal">
+                    <Label
+                        Text="Всего"
+                        HorizontalOptions="Start"/>
+                    <Label Text="{Binding Total}" />
+                </StackLayout>
+                <StackLayout Margin="5" Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                    <Label 
+                       Text="Присутстуют"
                        HorizontalOptions="EndAndExpand"/>
+                    <Label Text="{Binding OnSite}" />
+                </StackLayout>
             </StackLayout>
-            <ListView x:Name="studentListView"/>
-            <Button x:Name="marked"
+            <ListView
+                x:Name="studentListView"
+                ItemsSource="{Binding StudentsList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Margin="20,0,20,0" Spacing="20">
+                                <Image 
+                                    Source="{Binding IconSource}"
+                                    HeightRequest="20"
+                                    WidthRequest="20"/>
+                                <Label Text="{Binding FullName}" VerticalOptions="Center"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button x:Name="markButton"
+                    Text="Отметить посещаемость"
+                    Clicked="OnMarkClicked"
                     Margin="5"/>
-            <Button x:Name="back"
+            <Button x:Name="backButton"
+                    Text="Назад"
+                    Clicked="OnBackClicked"
                     Margin="5"/> 
         </StackLayout>
     </ContentPage.Content>
