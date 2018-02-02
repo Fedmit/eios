@@ -12,6 +12,7 @@ namespace eios
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
+        public bool mark=false;
         public LoginPage()
         {
             InitializeComponent();
@@ -26,5 +27,20 @@ namespace eios
                 Application.Current.MainPage = new MainPage();
             }
         }
+
+        void ButtonClicked(Object sender, AssemblyLoadEventArgs args)
+        {
+            if (mark == false)
+            {
+                mark = true;
+                rem.Image = "ch.png";
+            }
+            else
+            {
+                mark = false;
+                rem.Image = "unch.png";
+            }
+        }
+
     }
 }
