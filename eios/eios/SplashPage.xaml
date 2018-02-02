@@ -1,57 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="eios.SplashPage"
->
-
+             x:Class="eios.SplashPage">
     <ContentPage.Content>
-
-
-
         <StackLayout Padding="0,0,0,1">
-
-            <Image Source="Resources/pguloogo.png" 
-                   HorizontalOptions="CenterAndExpand"
-                   VerticalOptions="CenterAndExpand"
-                   WidthRequest="180"
-                   HeightRequest="180"
-                   Aspect="AspectFit"
-                   Margin="40,60,40,10"
-                   
-                   />
-
-            <Label Text="ЭИОС ПГУ"
-                   FontSize="Medium"
+            <Image 
+                Source="Resources/pguloogo.png" 
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand"
+                WidthRequest="180"
+                HeightRequest="180"
+                Aspect="AspectFit"
+                Margin="40,60,40,10" />
+            <Label 
+                Text="ЭИОС ПГУ"
+                FontSize="Medium"
                 TextColor="Black"
                 HorizontalOptions="CenterAndExpand"
-                  Margin="0,10,0,0"
-                   
-                
-                   />
-
-            <Label Text="Журнал посещаемости"
-                   TextColor="Black"
-                   FontSize="Medium"
-                   Margin="0,0,0,160"
-                   HorizontalOptions="CenterAndExpand"
-                   VerticalOptions="CenterAndExpand"
-                   
-                   />
-            <Label Text="Центр проектного творчества"
-                    FontSize="15"     
-                   HorizontalOptions="CenterAndExpand"
-                   VerticalOptions="CenterAndExpand"
-                   Margin="1"
-                   
-                   />
-            <Label Text="2018"
-                   HorizontalOptions="CenterAndExpand"
-                   Margin="1"
-                   FontSize="10"
-                     />
-
+                Margin="0,10,0,0" />
+            <Label 
+                Text="Журнал посещаемости"
+                TextColor="Black"
+                FontSize="Medium"
+                Margin="0,0,0,160"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand" />
+            <Label 
+                Text="Центр проектного творчества"
+                FontSize="15"     
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand"
+                Margin="1" />
+            <Label 
+                Text="2018"
+                HorizontalOptions="CenterAndExpand"
+                Margin="1"
+                FontSize="10" />
         </StackLayout>
-
-
     </ContentPage.Content>
 </ContentPage>
