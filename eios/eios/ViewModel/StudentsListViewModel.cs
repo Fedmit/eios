@@ -70,9 +70,12 @@ namespace eios.ViewModel
             get { return _studentsList; }
             set
             {
-                _studentsList = value;
-                OnPropertyChanged(nameof(StudentsList));
-                OnPropertyChanged(nameof(Total));
+                if (value != null)
+                {
+                    _studentsList = value;
+                    OnPropertyChanged(nameof(StudentsList));
+                    OnPropertyChanged(nameof(Total));
+                }
             }
         }
 

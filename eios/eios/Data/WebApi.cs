@@ -1,5 +1,6 @@
 ﻿using eios.Model;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -23,7 +24,7 @@ namespace eios.Data
             dynamicJson.password = App.Password;
             dynamicJson.type = "get_info";
             dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
-            dynamicJson.date = "2018-02-01 13:46:30";
+            dynamicJson.date = "2018-02-01 12:53:15";
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
@@ -60,6 +61,7 @@ namespace eios.Data
             dynamicJson.login = App.Login;
             dynamicJson.password = App.Password;
             dynamicJson.type = "get_mark";
+            dynamicJson.date = "2018-02-01 12:53:15";
             dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
@@ -159,6 +161,45 @@ namespace eios.Data
 
             return students;
         }
+
+        public async Task<DateTime> GetDateAsync()
+        {
+            dynamic dynamicJson = new ExpandoObject();
+            dynamicJson.login = App.Login;
+            dynamicJson.password = App.Password;
+            dynamicJson.type = "get_date";
+            string json = "";
+            json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
+
+            DateTime time = new DateTime();
+            try
+            {
+                HttpClient client = new HttpClient();
+                var response = await client.PostAsync(
+                    _baseUrl,
+                    new StringContent(
+                        json,
+                        UnicodeEncoding.UTF8,
+                        "application/json"
+                    )
+                );
+                response.EnsureSuccessStatusCode();
+
+                var content = await response.Content.ReadAsStringAsync();
+                JArray arr = JArray.Parse(content);
+                string str = (string)arr[0].SelectToken("date");
+
+                time = DateTime.Parse(str);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetDateAsync() " + ex.Message);
+            }
+
+            return time;
+        }
+        
+        //public async Task
 
         public async Task SetAttendAsync()
         {

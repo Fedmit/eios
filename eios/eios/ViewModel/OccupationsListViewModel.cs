@@ -70,6 +70,7 @@ namespace eios.ViewModel
 
         async Task<List<Occupation>> PopulateList()
         {
+            App.Date = await WebApi.Instance.GetDateAsync();
             var occupationsList = await WebApi.Instance.GetOccupationsAsync();
             return occupationsList;
         }
