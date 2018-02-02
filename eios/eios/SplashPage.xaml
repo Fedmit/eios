@@ -3,30 +3,39 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="eios.SplashPage">
     <ContentPage.Content>
-        <StackLayout Padding="0,0,0,5">
-            <Image Source="Resources/pguloogo.png" 
+        <StackLayout Padding="0,0,0,1">
+            <Image 
+                Source="Resources/pguloogo.png" 
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand"
+                WidthRequest="180"
+                HeightRequest="180"
                 Aspect="AspectFit"
-                Margin="10"/>
-            <Label Text="ЭИОС ПГУ"
+                Margin="40,60,40,10" />
+            <Label 
+                Text="ЭИОС ПГУ"
                 FontSize="Medium"
                 TextColor="Black"
                 HorizontalOptions="CenterAndExpand"
-                Margin="0,20,0,0" />
-            <Label Text="Журнал посещаемости"
+                Margin="0,10,0,0" />
+            <Label 
+                Text="Журнал посещаемости"
                 TextColor="Black"
                 FontSize="Medium"
                 Margin="0,0,0,160"
                 HorizontalOptions="CenterAndExpand"
                 VerticalOptions="CenterAndExpand" />
-            <Label Text="Центр проектного творчества"
-                FontSize="Micro"     
+            <Label 
+                Text="Центр проектного творчества"
+                FontSize="15"     
                 HorizontalOptions="CenterAndExpand"
                 VerticalOptions="CenterAndExpand"
-                Margin="3" />
-            <Label Text="2018"
+                Margin="1" />
+            <Label 
+                Text="2018"
                 HorizontalOptions="CenterAndExpand"
-                Margin="3"
-                FontSize="Micro" />
+                Margin="1"
+                FontSize="10" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
