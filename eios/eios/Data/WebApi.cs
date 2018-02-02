@@ -1,5 +1,6 @@
 ﻿using eios.Model;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -16,14 +17,14 @@ namespace eios.Data
 
         static string _baseUrl { get { return "http://q9875032.beget.tech/hp_api/api.php"; } }
 
-        public async Task<List<Occupation>> GetOccupationsAsync(int id_group)
+        public async Task<List<Occupation>> GetOccupationsAsync()
         {
             dynamic dynamicJson = new ExpandoObject();
-            dynamicJson.login = App.Current.Properties["Login"];
-            dynamicJson.password = App.Current.Properties["Password"];
+            dynamicJson.login = App.Login;
+            dynamicJson.password = App.Password;
             dynamicJson.type = "get_info";
-            dynamicJson.id_group = id_group;
-            dynamicJson.date = "2018-02-01 13:46:30";
+            dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
+            dynamicJson.date = App.Date.ToString("yyyy-MM-dd HH:mm:ss");
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
@@ -54,13 +55,14 @@ namespace eios.Data
             return ocupations;
         }
 
-        public async Task<List<Mark>> GetMarksAsync(int id_group)
+        public async Task<List<Mark>> GetMarksAsync()
         {
             dynamic dynamicJson = new ExpandoObject();
-            dynamicJson.login = App.Current.Properties["Login"];
-            dynamicJson.password = App.Current.Properties["Password"];
+            dynamicJson.login = App.Login;
+            dynamicJson.password = App.Password;
             dynamicJson.type = "get_mark";
-            dynamicJson.id_group = id_group;
+            dynamicJson.date = App.Date.ToString("yyyy-MM-dd HH:mm:ss");
+            dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
@@ -89,11 +91,11 @@ namespace eios.Data
             return marks;
         }
 
-        public async Task<List<Group>> GetGroupsAsync()
+        public async Task<List<Group>> GetGroupsAsync(string login, string password)
         {
             dynamic dynamicJson = new ExpandoObject();
-            dynamicJson.login = App.Current.Properties["Login"];
-            dynamicJson.password = App.Current.Properties["Password"];
+            dynamicJson.login = login;
+            dynamicJson.password = password;
             dynamicJson.type = "get_group";
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
@@ -124,13 +126,13 @@ namespace eios.Data
             return groups;
         }
 
-        public async Task<List<Student>> GetStudentsAsync(int id_group)
+        public async Task<List<Student>> GetStudentsAsync()
         {
             dynamic dynamicJson = new ExpandoObject();
-            dynamicJson.login = App.Current.Properties["Login"];
-            dynamicJson.password = App.Current.Properties["Password"];
+            dynamicJson.login = App.Login;
+            dynamicJson.password = App.Password;
             dynamicJson.type = "get_students";
-            dynamicJson.id_group = id_group;
+            dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
@@ -159,6 +161,45 @@ namespace eios.Data
 
             return students;
         }
+
+        public async Task<DateTime> GetDateAsync()
+        {
+            dynamic dynamicJson = new ExpandoObject();
+            dynamicJson.login = App.Login;
+            dynamicJson.password = App.Password;
+            dynamicJson.type = "get_date";
+            string json = "";
+            json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
+
+            DateTime time = new DateTime();
+            try
+            {
+                HttpClient client = new HttpClient();
+                var response = await client.PostAsync(
+                    _baseUrl,
+                    new StringContent(
+                        json,
+                        UnicodeEncoding.UTF8,
+                        "application/json"
+                    )
+                );
+                response.EnsureSuccessStatusCode();
+
+                var content = await response.Content.ReadAsStringAsync();
+                JArray arr = JArray.Parse(content);
+                string str = (string)arr[0].SelectToken("date");
+
+                time = DateTime.Parse(str);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetDateAsync() " + ex.Message);
+            }
+
+            return time;
+        }
+        
+        //public async Task
 
         public async Task SetAttendAsync()
         {
