@@ -70,7 +70,8 @@ namespace eios.ViewModel
 
         async Task<List<Occupation>> PopulateList()
         {
-            var occupationsList = await WebApi.Instance.GetOccupationsAsync(1);
+            App.Date = await WebApi.Instance.GetDateAsync();
+            var occupationsList = await WebApi.Instance.GetOccupationsAsync();
             return occupationsList;
         }
 
@@ -85,12 +86,15 @@ namespace eios.ViewModel
 
         async Task UpdateState()
         {
-            List<Mark> marks = await WebApi.Instance.GetMarksAsync(1);
+            List<Mark> marks = await WebApi.Instance.GetMarksAsync();
 
-            foreach (Mark mark in marks)
+            if (marks != null)
             {
-                var obj = OccupationsList.FirstOrDefault(x => x.Id == mark.Id);
-                if (obj != null) obj.Mark = mark.mMark;
+                foreach (Mark mark in marks)
+                {
+                    var obj = OccupationsList.FirstOrDefault(x => x.Id == mark.Id);
+                    if (obj != null) obj.Mark = mark.mMark;
+                }
             }
         }
 

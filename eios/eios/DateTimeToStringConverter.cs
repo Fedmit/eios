@@ -16,7 +16,7 @@ namespace eios
             }
 
             var dateTime = (DateTime)value;
-            return dateTime.ToString("hh:mm");
+            return dateTime.ToString("HH:mm");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

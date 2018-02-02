@@ -1,30 +1,36 @@
-﻿using System;
+﻿using eios.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace eios
 {
 	public partial class App : Application
 	{
-		public App ()
+        public static string Login { get; set; }
+        public static string Password { get; set; }
+        public static bool IsUserLoggedIn { get; set; }
+
+        public static DateTime Date { get; set; }
+
+        public static List<Group> Groups { get; set; }
+
+        public App ()
 		{
 			InitializeComponent();
-
-            Properties.Add("Login", "test");
-            Properties.Add("Password", "test1");
 
             MainPage = new NavigationPage(new SplashPage());
 		}
 
 		protected override void OnStart ()
 		{
-			// Handle when your app starts
-		}
+            // Handle when your app starts
+        }
 
-		protected override void OnSleep ()
+        protected override void OnSleep ()
 		{
 			// Handle when your app sleeps
 		}

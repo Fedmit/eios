@@ -1,12 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:eios"
              x:Class="eios.CompletedOccupationPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:DateTimeToStringConverter x:Key="dateTimeToString" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Completed Occupation Page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label
+                Text="{Binding Date, Converter={StaticResource dateTimeToString}}"
+                HorizontalOptions="Center"
+                TextColor="Black"
+                FontSize="Medium" />
+
+            <Label
+                Text="{Binding NameOccupation}"
+                HorizontalOptions="Center"
+                TextColor="Black"
+                FontSize="Medium" />
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="50,20,50,0">
+                <Label
+                    Text="Всего:"
+                    FontSize="Medium"
+                    TextColor="Black" />
+                <Label
+                    Text="{Binding Total}"
+                    FontSize="Medium"
+                    TextColor="Black" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="50,0,50,0">
+                <Label
+                    Text="Отсутствуют:"
+                    FontSize="Medium"
+                    TextColor="Black" />
+                <Label
+                    Text="{Binding Present}"
+                    FontSize="Medium"
+                    TextColor="Black" />
+            </StackLayout>
+            
+            <Label
+                Text="Вы уже отметили посещаемость."
+                Margin="0,80,0,100"
+                HorizontalOptions="Center"
+                FontSize="Medium"
+                TextColor="Black" />
+
+            <Button
+                Text="Назад"
+                BackgroundColor="#77aad9"
+                TextColor="White"
+                Margin="5"
+                Clicked="OnBackClicked"
+                VerticalOptions="EndAndExpand"
+                HorizontalOptions="Center"
+                FontSize="Small" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

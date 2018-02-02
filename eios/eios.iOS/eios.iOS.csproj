@@ -120,32 +120,33 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>10.0.3</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="2.5.0.122203" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\PSU.jpg" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Fot.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\Check.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Uncheck.jpg" />
     <BundleResource Include="Resources\pguloogo.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\unch.png" />
+    <BundleResource Include="Resources\check.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\ch.png" />
+    <BundleResource Include="Resources\uncheck.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\user2.png" />
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>10.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="Xam.Plugins.Forms.ImageCircle">
+      <Version>2.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Forms">
+      <Version>2.5.0.122203</Version>
+    </PackageReference>
+    <PackageReference Include="XLabs.Forms">
+      <Version>2.0.5782</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\eios\eios.projitems" Label="Shared" />

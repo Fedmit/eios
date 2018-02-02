@@ -5,7 +5,7 @@ using System.Text;
 
 namespace eios.Model
 {
-    class Group
+    public class Group
     {
         [JsonProperty("id_student")]
         public int IdStudent { get; set; }
