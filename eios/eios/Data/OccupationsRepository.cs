@@ -26,11 +26,11 @@ namespace eios.Data
         }
         public async Task<List<Occupation>> GetItemsAsync(int id)
         {
-            var ocup = await GetItems();
+            var ocup = await GetItemsAsync();
             var result = new List<Occupation>();
             foreach (Occupation fr in ocup)
             {
-                Console.WriteLine("Инфа: id = " + fr.Id + " id_group =" + fr.IdGroup + " id_occup =" + fr.IdOccupation + " Name =" + fr.Name + " Aud =" + fr.Aud);
+                Console.WriteLine("Инфа: id = " + fr.Id + " id_group =" + fr.IdGroup + " Name =" + fr.Name + " Aud =" + fr.Aud);
                 if (fr.IdGroup == id)
                     result.Add(fr);
             }
@@ -38,17 +38,14 @@ namespace eios.Data
         }
         public async Task<int> SaveItem(Occupation item)
         {
-            if (item.Id != 0)
+            var row = await database.UpdateAsync(item);
+            if (row == 0)
             {
-                await database.UpdateAsync(item);
-                return item.Id;
+                await database.InsertAsync(item);
             }
-            else
-            {
-                return await database.InsertAsync(item);
-            }
+            return row;
         }
-        public async Task<List<Occupation>> GetItems()
+        public async Task<List<Occupation>> GetItemsAsync()
         {
             return await database.Table<Occupation>().ToListAsync();
         }
