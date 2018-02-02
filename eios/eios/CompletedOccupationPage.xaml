@@ -1,33 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:eios"
              x:Class="eios.CompletedOccupationPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:DateTimeToStringConverter x:Key="dateTimeToString" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="50,90,50,0" > 
-                <Label Text="Время" FontSize="Medium" TextColor="Black"></Label>
-                <Label x:Name="occupationTime" TextColor="Black" FontSize="Medium"></Label>
-            </StackLayout>
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="50,10,50,0" >
-                <Label Text="Название предмета" FontSize="Medium" TextColor="Black"></Label>
-                <Label x:Name="occupationName" TextColor="Black" FontSize="Medium"></Label>
-            </StackLayout>
+            <Label
+                Text="{Binding Date, Converter={StaticResource dateTimeToString}}"
+                HorizontalOptions="Center"
+                TextColor="Black"
+                FontSize="Medium" />
+
+            <Label
+                Text="{Binding NameOccupation}"
+                HorizontalOptions="Center"
+                TextColor="Black"
+                FontSize="Medium" />
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="50,20,50,0">
-                <Label Text="Всего:" FontSize="Medium" TextColor="Black"></Label>
-                <Label x:Name="FullNumberOfStudents" Text="27"  FontSize="Medium" TextColor="Black"></Label>
+                <Label
+                    Text="Всего:"
+                    FontSize="Medium"
+                    TextColor="Black" />
+                <Label
+                    Text="{Binding Total}"
+                    FontSize="Medium"
+                    TextColor="Black" />
             </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="50,0,50,0">
-                <Label Text="Отсутствуют:" FontSize="Medium" TextColor="Black"></Label>
-                <Label x:Name="NumberOfStudents" Text="18"  FontSize="Medium" TextColor="Black"></Label>
-            
+                <Label
+                    Text="Отсутствуют:"
+                    FontSize="Medium"
+                    TextColor="Black" />
+                <Label
+                    Text="{Binding Present}"
+                    FontSize="Medium"
+                    TextColor="Black" />
             </StackLayout>
-            <Label Text="Вы уже отметили посещаемость."  Margin="50,80,0,100" FontSize="Medium" TextColor="Black"></Label>
             
-            
-            <StackLayout VerticalOptions="EndAndExpand" Margin="140,30,140,0">
-                <Button Text="Назад" BackgroundColor="#77aad9" TextColor="White" Clicked="COPageButton_isCliced"   FontSize="Small"></Button>
-            </StackLayout>
+            <Label
+                Text="Вы уже отметили посещаемость."
+                Margin="0,80,0,100"
+                HorizontalOptions="Center"
+                FontSize="Medium"
+                TextColor="Black" />
+
+            <Button
+                Text="Назад"
+                BackgroundColor="#77aad9"
+                TextColor="White"
+                Margin="5"
+                Clicked="OnBackClicked"
+                VerticalOptions="EndAndExpand"
+                HorizontalOptions="Center"
+                FontSize="Small" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eios.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,16 +13,15 @@ namespace eios
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class CompletedOccupationPage : ContentPage
 	{
-        public CompletedOccupationPage(DateTime time, string name, int id)
+        public CompletedOccupationPage(DateTime date, string nameOccupation, int idOccupation)
 		{
 			InitializeComponent ();
 
-            occupationTime.Text = time.ToString("HH:mm");
-            occupationName.Text = name;
+            var viewModel = new CompletedOccupationListViewModel(date, nameOccupation, idOccupation);
+            BindingContext = viewModel;
+        }
 
-		}
-
-        async void COPageButton_isCliced(Object sender, AssemblyLoadEventArgs args)
+        async void OnBackClicked(Object sender, AssemblyLoadEventArgs args)
         {
             await Navigation.PopAsync();
         }
