@@ -70,9 +70,12 @@ namespace eios.ViewModel
             get { return _studentsList; }
             set
             {
-                _studentsList = value;
-                OnPropertyChanged(nameof(StudentsList));
-                OnPropertyChanged(nameof(Total));
+                if (value != null)
+                {
+                    _studentsList = value;
+                    OnPropertyChanged(nameof(StudentsList));
+                    OnPropertyChanged(nameof(Total));
+                }
             }
         }
 
@@ -92,7 +95,7 @@ namespace eios.ViewModel
 
         async Task<List<Student>> PopulateList()
         {
-            var studentsList = await WebApi.Instance.GetStudentsAsync(1);
+            var studentsList = await WebApi.Instance.GetStudentsAsync();
             return studentsList;
         }
 
