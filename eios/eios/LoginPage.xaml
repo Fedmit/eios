@@ -11,14 +11,14 @@
                     TextColor="Black"
                     VerticalOptions="Center"
                     HorizontalTextAlignment="Center"
-                    FontSize="20"/>
+                    FontSize="18"/>
             </StackLayout>
             <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" Spacing="7">
                 <Label
                     Text="Вход в систему"
                     TextColor="Black"
                     HorizontalOptions="Center"
-                    FontSize="20"/>
+                    FontSize="18"/>
                 <Entry
                     x:Name="loginEntry"
                     Placeholder="Логин"
@@ -33,13 +33,16 @@
                     TextColor="Black"
                     WidthRequest="200"
                     VerticalOptions="Center"/>
-                <StackLayout Orientation="Horizontal">
-                    <controls:CheckBox
-                        HorizontalOptions="Center"/>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                    <Button
+                        x:Name="rem"
+                        Image="unch.png"
+                        HeightRequest="20"
+                        WidthRequest="18"
+                        Clicked="ButtonClicked"/>
                     <Label
                         Text="Запомнить меня"
-                        FontSize="20"
-                        HorizontalOptions="Center"/>
+                        FontSize="18"/>
                 </StackLayout>
                 <Button 
                     x:Name="loginButton"
@@ -58,6 +61,7 @@
                     TextColor="Black"
                     VerticalOptions="EndAndExpand"
                     HorizontalOptions="Center"
+                    BackgroundColor="White"
                     FontSize="16"/>
             </StackLayout>
         </StackLayout>

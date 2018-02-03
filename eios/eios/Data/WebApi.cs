@@ -50,7 +50,7 @@ namespace eios.Data
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Whooops! " + ex.Message);
+                Console.WriteLine("GetOccupationsAsync(): " + ex.Message);
             }
 
             return ocupations;
@@ -87,7 +87,7 @@ namespace eios.Data
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Whooops! " + ex.Message);
+                Console.WriteLine("GetMarksAsync(): " + ex.Message);
             }
 
             return marks;
@@ -122,7 +122,7 @@ namespace eios.Data
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Whooops! " + ex.Message);
+                Console.WriteLine("GetGroupsAsync(): " + ex.Message);
             }
 
             return groups;
@@ -137,7 +137,6 @@ namespace eios.Data
             dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
-
 
             List<Student> students = null;
             try
@@ -159,7 +158,7 @@ namespace eios.Data
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Whooops! " + ex.Message);
+                Console.WriteLine("GetStudentsAsync(): " + ex.Message);
             }
 
             return students;
@@ -196,25 +195,62 @@ namespace eios.Data
             }
             catch (Exception ex)
             {
-                Console.WriteLine("GetDateAsync() " + ex.Message);
+                Console.WriteLine("GetDateAsync(): " + ex.Message);
             }
 
             return time;
         }
 
-        //public async Task
+        public async Task<Attendance> GetAttendanceAsync(int idOccupation)
+        {
+            dynamic dynamicJson = new ExpandoObject();
+            dynamicJson.login = App.Login;
+            dynamicJson.password = App.Password;
+            dynamicJson.type = "get_attend_info";
+            dynamicJson.id_timetable = idOccupation;
+            dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
+            string json = "";
+            json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
-        public async Task<bool> SetAttendAsync(int id_group, int idTimeTable, List<SelectedStudent> list)
+            Attendance attendance = null;
+            try
+            {
+                HttpClient client = new HttpClient();
+                var response = await client.PostAsync(
+                    _baseUrl,
+                    new StringContent(
+                        json,
+                        UnicodeEncoding.UTF8,
+                        "application/json"
+                    )
+                );
+                response.EnsureSuccessStatusCode();
+
+                var content = await response.Content.ReadAsStringAsync();
+                JArray arr = JArray.Parse(content);
+
+                attendance = JsonConvert.DeserializeObject<Attendance>(arr[0].ToString());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetAttendanceAsync(): " + ex.Message);
+            }
+
+            return attendance;
+        }
+
+        public async Task<bool> SetAttendAsync(int idTimeTable, List<SelectedStudent> list)
         {
             dynamic dynamicJson = new ExpandoObject();
             dynamicJson.login = App.Current.Properties["Login"];
             dynamicJson.password = App.Current.Properties["Password"];
             dynamicJson.type = "set_attend";
-            dynamicJson.id_group = id_group;
+            dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
             dynamicJson.id_timetable = idTimeTable;
             dynamicJson.data = list;
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
+
             try {
                 Console.WriteLine(json);
                 HttpClient client = new HttpClient();
@@ -227,13 +263,15 @@ namespace eios.Data
                     )
                 );
                 response.EnsureSuccessStatusCode();
-            return true;
+
+                return true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Whooops! " + ex.Message);
-                return false;
+                Console.WriteLine("SetAttendAsync(): " + ex.Message);
             }
+
+            return false;
         }
     }
 }
