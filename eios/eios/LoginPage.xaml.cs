@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,6 +17,14 @@ namespace eios
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
+        }
+
+        public async Task ShowMessage(string message, string title, string buttonText)
+        {
+            await DisplayAlert(
+                title,
+                message,
+                buttonText);
         }
 
         async void OnLoginButtonClicked(Object sender, AssemblyLoadEventArgs args)
@@ -36,6 +43,7 @@ namespace eios
             }
             else
             {
+                await ShowMessage("", "Пароль или логин введены неверно!", "OK");
                 Console.WriteLine("Login failed");
             }
         }
