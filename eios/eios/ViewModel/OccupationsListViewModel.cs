@@ -62,7 +62,13 @@ namespace eios.ViewModel
             Task.Run(async () =>
             {
                 IsBusy = true;
-                OccupationsList = await PopulateList();
+                var occupationsList = await PopulateList();
+                await App.Database.CreateTable();
+                foreach (Occupation ocup in occupationsList)
+                {
+                    await App.Database.SaveItem(ocup);
+                }
+                OccupationsList = await App.Database.GetItemsAsync(1);
                 await UpdateState();
                 IsBusy = false;
             });
@@ -70,8 +76,10 @@ namespace eios.ViewModel
 
         async Task<List<Occupation>> PopulateList()
         {
-            App.Date = await WebApi.Instance.GetDateAsync();
-            var occupationsList = await WebApi.Instance.GetOccupationsAsync();
+            var occupationsList = await WebApi.Instance.GetOccupationsAsync(1);
+            
+            //App.Date = await WebApi.Instance.GetDateAsync();
+            //var occupationsList = await WebApi.Instance.GetOccupationsAsync();
             return occupationsList;
         }
 

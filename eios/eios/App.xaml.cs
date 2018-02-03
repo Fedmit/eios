@@ -1,4 +1,5 @@
 ﻿using eios.Model;
+using eios.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,19 @@ namespace eios
 {
 	public partial class App : Application
 	{
+        public const string DATABASE_NAME = "occupation.db";
+        public static OccupationsRepository database;
+        public static OccupationsRepository Database
+        {
+            get
+            {
+                if (database == null)
+                {
+                    database = new OccupationsRepository(DATABASE_NAME);
+                }
+                return database;
+            }
+        }
         public static string Login { get; set; }
         public static string Password { get; set; }
         public static bool IsUserLoggedIn { get; set; }
@@ -21,6 +35,9 @@ namespace eios
         public App ()
 		{
 			InitializeComponent();
+
+            Properties["Login"] = "test";
+            Properties["Password"] = "test1";
 
             MainPage = new NavigationPage(new SplashPage());
 		}

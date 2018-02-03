@@ -33,6 +33,8 @@
       <DependentUpon>CompletedOccupationPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Data\ISQLite.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\OccupationsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\WebApi.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DateTimeToStringConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HelpPage.xaml.cs">

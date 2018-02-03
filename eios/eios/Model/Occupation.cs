@@ -5,27 +5,34 @@ using Xamarin.Forms;
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
+using SQLite;
 
 namespace eios.Model
 {
-    class Occupation : INotifyPropertyChanged
+    [Table("Occupations")]
+    public class Occupation : INotifyPropertyChanged
     {
-        [JsonProperty("id")]
+        [JsonProperty("id"), PrimaryKey, Column("_id")]
         public int Id { get; set; }
 
-        [JsonProperty("id_occup")]
+        [JsonProperty("id_occup"), Column("IdOccupation")]
         public int IdOccupation { get; set; }
 
-        [JsonProperty("name")]
+        [Column("IdGroup")]
+        public int IdGroup { get; set; }
+
+        [JsonProperty("name"), Column("Name")]
         public string Name { get; set; }
 
-        [JsonProperty("aud")]
+        [JsonProperty("aud"), Column("Aud")]
         public string Aud { get; set; }
 
-        [JsonProperty("time")]
+        [JsonProperty("time"), Column("IdTime")]
         public DateTime Time { get; set; }
 
         private string _mark;
+
+        [Ignore]
         public string Mark
         {
             get { return _mark; }
@@ -36,7 +43,7 @@ namespace eios.Model
                 OnPropertyChanged(nameof(TargetType));
             }
         }
-
+        [Ignore]
         public string CircleColor
         {
             get
@@ -52,23 +59,23 @@ namespace eios.Model
                 }
             }
         }
-
+        [Ignore]
         public Type TargetType
         {
             get
             {
                 switch (Mark)
                 {
-                    case "was_no": return typeof(StudentsPage);
+                    case "was_no": return null;
                     case "was_attend": return typeof(CompletedOccupationPage);
-                    case "is_no": return typeof(StudentsPage);
+                    case "is_no": return null;
                     case "is_attend": return typeof(CompletedOccupationPage);
                     case "will": return null;
                     default: return null;
                 }
             }
         }
-
+       
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
