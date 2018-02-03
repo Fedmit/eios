@@ -33,17 +33,6 @@
                     TextColor="Black"
                     WidthRequest="200"
                     VerticalOptions="Center"/>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                    <Button
-                        x:Name="rem"
-                        Image="unch.png"
-                        HeightRequest="20"
-                        WidthRequest="18"
-                        Clicked="ButtonClicked"/>
-                    <Label
-                        Text="Запомнить меня"
-                        FontSize="18"/>
-                </StackLayout>
                 <Button 
                     x:Name="loginButton"
                     Text="Войти"
