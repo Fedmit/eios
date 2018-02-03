@@ -24,6 +24,10 @@
       <DependentUpon>BedgeView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ChangeStudentPage.xaml.cs">
+      <DependentUpon>ChangeStudentPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)CircleView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CompletedOccupationPage.xaml.cs">
       <DependentUpon>CompletedOccupationPage.xaml</DependentUpon>
@@ -159,6 +163,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)CompletedOccupationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)ChangeStudentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
