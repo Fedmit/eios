@@ -1,6 +1,7 @@
 ﻿using eios.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -15,13 +16,37 @@ namespace eios.Data
     {
         public static WebApi Instance { get; } = new WebApi();
 
+        public string Login
+        {
+            get
+            {
+                if (App.Current.Properties.ContainsKey("Login"))
+                {
+                    return (string)App.Current.Properties["Login"];
+                }
+                return "";
+            }
+        }
+
+        public string Password
+        {
+            get
+            {
+                if (App.Current.Properties.ContainsKey("Password"))
+                {
+                    return (string)App.Current.Properties["Password"];
+                }
+                return "";
+            }
+        }
+
         static string _baseUrl { get { return "http://q9875032.beget.tech/hp_api/api.php"; } }
 
         public async Task<List<Occupation>> GetOccupationsAsync()
         {
             dynamic dynamicJson = new ExpandoObject();
-            dynamicJson.login = App.Login;
-            dynamicJson.password = App.Password;
+            dynamicJson.login = Login;
+            dynamicJson.password = Password;
             dynamicJson.type = "get_info";
             dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
             dynamicJson.date = App.Date.ToString("yyyy-MM-dd HH:mm:ss");
@@ -59,8 +84,8 @@ namespace eios.Data
         public async Task<List<Mark>> GetMarksAsync()
         {
             dynamic dynamicJson = new ExpandoObject();
-            dynamicJson.login = App.Login;
-            dynamicJson.password = App.Password;
+            dynamicJson.login = Login;
+            dynamicJson.password = Password;
             dynamicJson.type = "get_mark";
             dynamicJson.date = App.Date.ToString("yyyy-MM-dd HH:mm:ss");
             dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
@@ -131,8 +156,8 @@ namespace eios.Data
         public async Task<List<Student>> GetStudentsAsync()
         {
             dynamic dynamicJson = new ExpandoObject();
-            dynamicJson.login = App.Login;
-            dynamicJson.password = App.Password;
+            dynamicJson.login = Login;
+            dynamicJson.password = Password;
             dynamicJson.type = "get_students";
             dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
             string json = "";
@@ -167,8 +192,8 @@ namespace eios.Data
         public async Task<DateTime> GetDateAsync()
         {
             dynamic dynamicJson = new ExpandoObject();
-            dynamicJson.login = App.Login;
-            dynamicJson.password = App.Password;
+            dynamicJson.login = Login;
+            dynamicJson.password = Password;
             dynamicJson.type = "get_date";
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
@@ -204,8 +229,8 @@ namespace eios.Data
         public async Task<Attendance> GetAttendanceAsync(int idOccupation)
         {
             dynamic dynamicJson = new ExpandoObject();
-            dynamicJson.login = App.Login;
-            dynamicJson.password = App.Password;
+            dynamicJson.login = Login;
+            dynamicJson.password = Password;
             dynamicJson.type = "get_attend_info";
             dynamicJson.id_timetable = idOccupation;
             dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
@@ -242,8 +267,8 @@ namespace eios.Data
         public async Task<bool> SetAttendAsync(int idTimeTable, List<SelectedStudent> list)
         {
             dynamic dynamicJson = new ExpandoObject();
-            dynamicJson.login = App.Current.Properties["Login"];
-            dynamicJson.password = App.Current.Properties["Password"];
+            dynamicJson.login = Login;
+            dynamicJson.password = Password;
             dynamicJson.type = "set_attend";
             dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
             dynamicJson.id_timetable = idTimeTable;
@@ -272,6 +297,21 @@ namespace eios.Data
             }
 
             return false;
+        }
+
+        public static async Task<bool> CheckNetworkConnection()
+        {
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                return false;
+            }
+
+            if (!await CrossConnectivity.Current.IsRemoteReachable("https://www.google.com"))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

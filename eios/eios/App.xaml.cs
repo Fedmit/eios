@@ -10,10 +10,6 @@ namespace eios
 {
 	public partial class App : Application
 	{
-        public static string Login { get; set; }
-        public static string Password { get; set; }
-        public static bool IsUserLoggedIn { get; set; }
-
         public static DateTime Date { get; set; }
 
         public static List<Group> Groups { get; set; }
