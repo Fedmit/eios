@@ -30,7 +30,7 @@ namespace eios.Data
             var result = new List<Occupation>();
             foreach (Occupation fr in ocup)
             {
-                Console.WriteLine("Инфа: id = " + fr.Id + " id_group =" + fr.IdGroup + " Name =" + fr.Name + " Aud =" + fr.Aud);
+                //Console.WriteLine("Инфа: id = " + fr.Id + " id_group =" + fr.IdGroup + " Name =" + fr.Name + " Aud =" + fr.Aud);
                 if (fr.IdGroup == id)
                     result.Add(fr);
             }

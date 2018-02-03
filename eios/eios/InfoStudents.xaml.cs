@@ -14,13 +14,13 @@ using Xamarin.Forms.Xaml;
 namespace eios
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class StudentsPage : ContentPage
+    public partial class InfoStudents : ContentPage
     {
         StudentsListViewModel viewModel;
         int IdOccupation { get; set; }
         DateTime date; string nameOccupation; int idOccupation;
 
-        public StudentsPage(DateTime date, string nameOccupation, int idOccupation)
+        public InfoStudents(DateTime date, string nameOccupation, int idOccupation)
         {
             this.date = date;
             this.nameOccupation = nameOccupation;
@@ -43,26 +43,6 @@ namespace eios
                 }
             };
 
-        }
-
-        async void unaviableClicked(Object sender, AssemblyLoadEventArgs args)
-        {
-            await Navigation.PopAsync();
-        }
-
-        async Task OnMarkClicked(Object sender, AssemblyLoadEventArgs args)
-        {
-            var selectedList = viewModel.StudentsList.FindAll(s => s.IsSelected.Equals(true));
-            var resultList = new List<SelectedStudent>();
-            foreach (Student st in selectedList)
-            {
-               var cache = new SelectedStudent();
-                cache.Id = st.Id;
-                resultList.Add(cache);
-            }
-            await WebApi.Instance.SetAttendAsync(IdOccupation, resultList);
-            Navigation.InsertPageBefore(new ChangeStudentPage(date, nameOccupation, idOccupation), this);
-            await Navigation.PopAsync();
         }
     }
 }

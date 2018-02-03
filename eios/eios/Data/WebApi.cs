@@ -24,7 +24,7 @@ namespace eios.Data
             dynamicJson.password = App.Password;
             dynamicJson.type = "get_info";
             dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
-            dynamicJson.date = App.Date.ToString("yyyy-MM-dd HH:mm:ss");
+            dynamicJson.date = App.Date.ToString("yyyy-MM-dd");
 
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
@@ -46,7 +46,7 @@ namespace eios.Data
                 var content = await response.Content.ReadAsStringAsync();
                 ocupations = JsonConvert.DeserializeObject<List<Occupation>>(content);
 
-                ocupations.Sort((x, y) => DateTime.Compare(x.Time, y.Time));
+                //ocupations.Sort((x, y) => DateTime.Compare(x.Time, y.Time));
             }
             catch (Exception ex)
             {

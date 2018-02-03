@@ -9,30 +9,22 @@ using SQLite;
 
 namespace eios.Model
 {
-    [Table("Occupations")]
     public class Occupation : INotifyPropertyChanged
     {
-        [JsonProperty("id"), PrimaryKey, Column("_id")]
-        public int Id { get; set; }
-
-        [JsonProperty("id_occup"), Column("IdOccupation")]
         public int IdOccupation { get; set; }
 
-        [Column("IdGroup")]
         public int IdGroup { get; set; }
 
-        [JsonProperty("name"), Column("Name")]
+        [JsonProperty("name")]
         public string Name { get; set; }
+        
+        [JsonProperty("id_lesson")]
+        public string IdLesson { get; set; }
 
-        [JsonProperty("aud"), Column("Aud")]
+        [JsonProperty("aud")]
         public string Aud { get; set; }
 
-        [JsonProperty("time"), Column("IdTime")]
-        public DateTime Time { get; set; }
-
         private string _mark;
-
-        [Ignore]
         public string Mark
         {
             get { return _mark; }
@@ -43,7 +35,6 @@ namespace eios.Model
                 OnPropertyChanged(nameof(TargetType));
             }
         }
-        [Ignore]
         public string CircleColor
         {
             get
@@ -59,7 +50,6 @@ namespace eios.Model
                 }
             }
         }
-        [Ignore]
         public Type TargetType
         {
             get
@@ -72,6 +62,25 @@ namespace eios.Model
                     case "is_attend": return typeof(CompletedOccupationPage);
                     case "will": return null;
                     default: return null;
+                }
+            }
+        }
+
+        public string Time
+        {
+            get
+            {
+                switch (IdOccupation)
+                {
+                    case 1: return "8:00";
+                    case 2: return "9:50";
+                    case 3: return "11:40";
+                    case 4: return "13:45";
+                    case 5: return "15:35";
+                    case 6: return "17:25";
+                    case 7: return "19:10";
+                    case 8: return "20:55";
+                    default: return "-";
                 }
             }
         }
