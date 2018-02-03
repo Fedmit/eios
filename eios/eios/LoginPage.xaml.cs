@@ -53,20 +53,5 @@ namespace eios
             }
             else { return false; }
         }
-
-        void ButtonClicked(Object sender, AssemblyLoadEventArgs args)
-        {
-            if (mark == false)
-            {
-                mark = true;
-                rem.Image = "ch.png";
-            }
-            else
-            {
-                mark = false;
-                rem.Image = "unch.png";
-            }
-        }
-
     }
 }
