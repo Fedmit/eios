@@ -18,9 +18,13 @@ namespace eios
     {
         StudentsListViewModel viewModel;
         int IdOccupation { get; set; }
+        DateTime date; string nameOccupation; int idOccupation;
 
         public StudentsPage(DateTime date, string nameOccupation, int idOccupation)
         {
+            this.date = date;
+            this.nameOccupation = nameOccupation;
+            this.idOccupation = idOccupation;
             InitializeComponent();
 
             viewModel = new StudentsListViewModel(date, nameOccupation);
@@ -41,22 +45,24 @@ namespace eios
 
         }
 
-        async void OnBackClicked(Object sender, AssemblyLoadEventArgs args)
+        async void unaviableClicked(Object sender, AssemblyLoadEventArgs args)
         {
             await Navigation.PopAsync();
         }
 
         async Task OnMarkClicked(Object sender, AssemblyLoadEventArgs args)
         {
-            var selectedList = viewModel.StudentsList.FindAll(s => s.IsSelected.Equals(true));
-            var resultList = new List<SelectedStudent>();
-            foreach (Student st in selectedList)
-            {
-                var cache = new SelectedStudent();
-                cache.Id = st.Id;
-                resultList.Add(cache);
-            }
-            await WebApi.Instance.SetAttendAsync(IdOccupation, resultList);
+            //var selectedList = viewModel.StudentsList.FindAll(s => s.IsSelected.Equals(true));
+            //var resultList = new List<SelectedStudent>();
+            //foreach (Student st in selectedList)
+            //{
+            //    var cache = new SelectedStudent();
+            //    cache.Id = st.Id;
+            //    resultList.Add(cache);
+            //}
+            //await WebApi.Instance.SetAttendAsync(IdOccupation, resultList);
+            //await Navigation.PopAsync();
+            Navigation.InsertPageBefore(new ChangeStudentPage(date, nameOccupation, idOccupation), this);
             await Navigation.PopAsync();
         }
     }
