@@ -298,20 +298,5 @@ namespace eios.Data
 
             return false;
         }
-
-        public static async Task<bool> CheckNetworkConnection()
-        {
-            if (!CrossConnectivity.Current.IsConnected)
-            {
-                return false;
-            }
-
-            if (!await CrossConnectivity.Current.IsRemoteReachable("https://www.google.com"))
-            {
-                return false;
-            }
-
-            return true;
-        }
     }
 }

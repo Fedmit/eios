@@ -1,6 +1,8 @@
 ﻿using eios.Model;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,8 +13,9 @@ namespace eios
 	public partial class App : Application
 	{
         public static DateTime Date { get; set; }
-
         public static List<Group> Groups { get; set; }
+
+        public static bool IsConnected { get; set; }
 
         public App ()
 		{
@@ -23,7 +26,15 @@ namespace eios
 
 		protected override void OnStart ()
 		{
-            // Handle when your app starts
+            var isConnected = CrossConnectivity.Current.IsConnected;
+            Debug.WriteLine($"Connectivity is {isConnected}");
+            IsConnected = isConnected;
+
+            CrossConnectivity.Current.ConnectivityChanged += (sender, args) =>
+            {
+                Debug.WriteLine($"Connectivity changed to {args.IsConnected}");
+                IsConnected = args.IsConnected;
+            };
         }
 
         protected override void OnSleep ()

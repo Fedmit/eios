@@ -47,21 +47,12 @@ namespace eios
         {
             base.OnAppearing();
 
-            if (await WebApi.CheckNetworkConnection())
+            if (App.IsConnected)
             {
                 await Task.Delay(5000);
 
                 if (App.Current.Properties.ContainsKey("IsLoggedIn") && (bool)App.Current.Properties["IsLoggedIn"])
                 {
-                    bool isValid = await AreCredentialsCorrect(Login, Password);
-                    if (isValid)
-                    {
-                        Application.Current.MainPage = new MainPage();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Login failed");
-                    }
                     App.Current.MainPage = new MainPage();
                 }
                 else
@@ -70,19 +61,6 @@ namespace eios
                     await Navigation.PopAsync();
                 }
             }
-        }
-
-        private async Task<bool> AreCredentialsCorrect(string login, string password)
-        {
-            var groups = await WebApi.Instance.GetGroupsAsync(login, password);
-
-            if (groups != null)
-            {
-                App.Groups = groups;
-
-                return true;
-            }
-            else { return false; }
         }
     }
 }
