@@ -48,6 +48,9 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)MasterPageItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Attendance.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\MarksMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\StartLongRunningTaskMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\StopLongRunningTaskMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Group.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Mark.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Occupation.cs" />
