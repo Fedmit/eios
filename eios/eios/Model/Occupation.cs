@@ -5,15 +5,13 @@ using Xamarin.Forms;
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
-using SQLite;
 
 namespace eios.Model
 {
     public class Occupation : INotifyPropertyChanged
     {
+        [JsonProperty("id_occup")]
         public int IdOccupation { get; set; }
-
-        public int IdGroup { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -23,6 +21,8 @@ namespace eios.Model
 
         [JsonProperty("aud")]
         public string Aud { get; set; }
+
+        public int IdGroup { get; set; }
 
         private string _mark;
         public string Mark
@@ -35,6 +35,7 @@ namespace eios.Model
                 OnPropertyChanged(nameof(TargetType));
             }
         }
+
         public string CircleColor
         {
             get
@@ -50,6 +51,7 @@ namespace eios.Model
                 }
             }
         }
+
         public Type TargetType
         {
             get

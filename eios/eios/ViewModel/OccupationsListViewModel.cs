@@ -62,23 +62,14 @@ namespace eios.ViewModel
             Task.Run(async () =>
             {
                 IsBusy = true;
-                var occupationsList = await PopulateList();
-                //await App.Database.CreateTable();
-                //foreach (occupation ocup in occupationslist)
-                //{
-                //    await app.database.saveitem(ocup);
-                //}
-                //OccupationsList = await App.Database.GetItemsAsync(1);
-                OccupationsList = occupationsList;
-                //await UpdateState();
+                OccupationsList = await PopulateList();
+                await UpdateState();
                 IsBusy = false;
             });
         }
 
         async Task<List<Occupation>> PopulateList()
         {
-            //var occupationsList = await WebApi.Instance.GetOccupationsAsync();
-            
             App.Date = await WebApi.Instance.GetDateAsync();
             var occupationsList = await WebApi.Instance.GetOccupationsAsync();
             return occupationsList;
@@ -88,24 +79,24 @@ namespace eios.ViewModel
         {
             IsRefreshing = true;
 
-            //await UpdateState();
+            await UpdateState();
 
             IsRefreshing = false;
         }
 
-        //async Task UpdateState()
-        //{
-        //    List<Mark> marks = await WebApi.Instance.GetMarksAsync();
+        async Task UpdateState()
+        {
+            List<Mark> marks = await WebApi.Instance.GetMarksAsync();
 
-        //    if (marks != null)
-        //    {
-        //        foreach (Mark mark in marks)
-        //        {
-        //            var obj = OccupationsList.FirstOrDefault(x => x.Id == mark.Id);
-        //            if (obj != null) obj.Mark = mark.mMark;
-        //        }
-        //    }
-        //}
+            if (marks != null)
+            {
+                foreach (Mark mark in marks)
+                {
+                    var obj = OccupationsList.FirstOrDefault(x => x.IdOccupation == mark.Id);
+                    if (obj != null) obj.Mark = mark.mMark;
+                }
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
