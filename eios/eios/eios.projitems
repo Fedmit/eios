@@ -24,6 +24,10 @@
       <DependentUpon>BedgeView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ChangeStudentPage.xaml.cs">
+      <DependentUpon>ChangeStudentPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)CircleView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CompletedOccupationPage.xaml.cs">
       <DependentUpon>CompletedOccupationPage.xaml</DependentUpon>
@@ -33,6 +37,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)DateTimeToStringConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HelpPage.xaml.cs">
       <DependentUpon>HelpPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)InfoStudents.xaml.cs">
+      <DependentUpon>InfoStudents.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)LoginPage.xaml.cs">
@@ -159,6 +167,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)CompletedOccupationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)ChangeStudentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)InfoStudents.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

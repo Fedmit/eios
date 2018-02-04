@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:eios"
-             x:Class="eios.StudentsPage">
+             x:Class="eios.InfoStudents">
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:DateTimeToStringConverter x:Key="dateTimeToString" />
@@ -49,21 +49,6 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <StackLayout Margin="5" Orientation="Horizontal">
-                <StackLayout Margin="5" Orientation="Horizontal">
-                    <Button x:Name="markButton"
-                        HorizontalOptions="Center"
-                        Text="Отметить"
-                        Clicked="OnMarkClicked"
-                        Margin="5"/>
-                </StackLayout>
-                <StackLayout Margin="5" Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                    <Button x:Name="unavaibleButton"
-                        Text="Пары нет"
-                        Clicked="unaviableClicked"
-                        Margin="5"/>
-                </StackLayout>
-            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

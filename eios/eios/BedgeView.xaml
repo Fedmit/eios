@@ -16,7 +16,7 @@
         VerticalOptions="Center" 
         HorizontalOptions="Center" />
     <Label
-        Text="{Binding Time, Converter={StaticResource dateTimeToString}}"
+        Text="{Binding Time}"
         x:Name="label"
         TextColor="White"
         VerticalOptions="Center" 
