@@ -3,15 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:eios"
              x:Class="eios.CompletedOccupationPage">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <local:DateTimeToStringConverter x:Key="dateTimeToString" />
-        </ResourceDictionary>
-    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
             <Label
-                Text="{Binding Date, Converter={StaticResource dateTimeToString}}"
+                Text="{Binding Time}"
                 HorizontalOptions="Center"
                 TextColor="Black"
                 FontSize="Medium" />

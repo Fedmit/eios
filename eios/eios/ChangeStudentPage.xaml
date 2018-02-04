@@ -11,7 +11,7 @@
     <ContentPage.Content>
         <StackLayout Padding="20">
             <Label x:Name="occupationTime"
-                   Text="{Binding OccupationTime, Converter={StaticResource dateTimeToString}}"
+                   Text="{Binding OccupationTime}"
                    Margin="10"
                    HorizontalOptions="Center"/>
             <Label x:Name="occupationName"

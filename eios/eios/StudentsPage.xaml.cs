@@ -17,20 +17,17 @@ namespace eios
     public partial class StudentsPage : ContentPage
     {
         StudentsListViewModel viewModel;
-        int IdOccupation { get; set; }
-        DateTime date; string nameOccupation; int idOccupation;
 
-        public StudentsPage(DateTime date, string nameOccupation, int idOccupation)
+        Occupation occupation;
+
+        public StudentsPage(Occupation occupation)
         {
-            this.date = date;
-            this.nameOccupation = nameOccupation;
-            this.idOccupation = idOccupation;
             InitializeComponent();
 
-            viewModel = new StudentsListViewModel(date, nameOccupation);
+            viewModel = new StudentsListViewModel(occupation);
             BindingContext = viewModel;
 
-            IdOccupation = idOccupation;
+            this.occupation = occupation;
 
             studentListView.ItemTapped += (sender, e) =>
             {
@@ -60,8 +57,8 @@ namespace eios
                 cache.Id = st.Id;
                 resultList.Add(cache);
             }
-            await WebApi.Instance.SetAttendAsync(IdOccupation, resultList);
-            Navigation.InsertPageBefore(new ChangeStudentPage(date, nameOccupation, idOccupation), this);
+            await WebApi.Instance.SetAttendAsync(this.occupation.IdOccupation, resultList);
+            Navigation.InsertPageBefore(new ChangeStudentPage(this.occupation), this);
             await Navigation.PopAsync();
         }
     }

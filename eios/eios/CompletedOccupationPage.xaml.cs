@@ -1,4 +1,5 @@
-﻿using eios.ViewModel;
+﻿using eios.Model;
+using eios.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,11 @@ namespace eios
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class CompletedOccupationPage : ContentPage
 	{
-        public CompletedOccupationPage(DateTime date, string nameOccupation, int idOccupation)
+        public CompletedOccupationPage(Occupation occupation)
 		{
 			InitializeComponent ();
 
-            var viewModel = new CompletedOccupationListViewModel(date, nameOccupation, idOccupation);
+            var viewModel = new CompletedOccupationListViewModel(occupation);
             BindingContext = viewModel;
         }
 

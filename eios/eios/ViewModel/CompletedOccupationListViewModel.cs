@@ -1,4 +1,5 @@
 ﻿using eios.Data;
+using eios.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,14 +10,14 @@ namespace eios.ViewModel
 {
     public class CompletedOccupationListViewModel : INotifyPropertyChanged
     {
-        DateTime _date;
-        public DateTime Date
+        string _time;
+        public string Time
         {
-            get { return _date; }
+            get { return _time; }
             set
             {
-                _date = value;
-                OnPropertyChanged(nameof(Date));
+                _time = value;
+                OnPropertyChanged(nameof(Time));
             }
         }
 
@@ -53,14 +54,14 @@ namespace eios.ViewModel
             }
         }
 
-        public CompletedOccupationListViewModel(DateTime date, string nameOccupation, int idOccupation)
+        public CompletedOccupationListViewModel(Occupation occupation)
         {
-            Date = date;
-            NameOccupation = nameOccupation;
+            Time = occupation.Time;
+            NameOccupation = occupation.Name;
 
             Task.Run(async () =>
             {
-                var attendance = await WebApi.Instance.GetAttendanceAsync(idOccupation);
+                var attendance = await WebApi.Instance.GetAttendanceAsync(occupation.IdOccupation);
 
                 if (attendance != null)
                 {

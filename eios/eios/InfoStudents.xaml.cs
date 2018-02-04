@@ -17,20 +17,17 @@ namespace eios
     public partial class InfoStudents : ContentPage
     {
         StudentsListViewModel viewModel;
-        int IdOccupation { get; set; }
-        DateTime date; string nameOccupation; int idOccupation;
 
-        public InfoStudents(DateTime date, string nameOccupation, int idOccupation)
+        Occupation occupation;
+
+        public InfoStudents(Occupation occupation)
         {
-            this.date = date;
-            this.nameOccupation = nameOccupation;
-            this.idOccupation = idOccupation;
             InitializeComponent();
 
-            viewModel = new StudentsListViewModel(date, nameOccupation);
+            viewModel = new StudentsListViewModel(occupation);
             BindingContext = viewModel;
 
-            IdOccupation = idOccupation;
+            this.occupation = occupation;
 
             studentListView.ItemTapped += (sender, e) =>
             {

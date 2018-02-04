@@ -12,8 +12,8 @@ namespace eios.ViewModel
 {
     class StudentsListViewModel : INotifyPropertyChanged
     {
-        DateTime _occupationTime;
-        public DateTime OccupationTime
+        string _occupationTime;
+        public string OccupationTime
         {
             get { return _occupationTime; }
             set
@@ -79,10 +79,10 @@ namespace eios.ViewModel
             }
         }
 
-        public StudentsListViewModel(DateTime time, string name)
+        public StudentsListViewModel(Occupation occupation)
         {
-            OccupationTime = time;
-            OccupationName = name;
+            OccupationTime = occupation.Time;
+            OccupationName = occupation.Name;
             _studentsList = new List<Student>();
 
             Task.Run(async () =>
