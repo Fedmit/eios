@@ -7,14 +7,34 @@ using SQLite;
 
 namespace eios.Model
 {
-    class Student : INotifyPropertyChanged
+    class Student
     {
         [JsonProperty("id_student")]
         public int Id { get; set; }
 
         [JsonProperty("fio")]
         public string FullName { get; set; }
+    }
 
+    class StudentAttendance : Student
+    {
+        public bool IsAbsent { get; set; }
+
+        public string Color
+        {
+            get
+            {
+                if (IsAbsent)
+                {
+                    return "#ffc9c9";
+                }
+                return "Transparent";
+            }
+        }
+    }
+
+    class StudentSelect : Student, INotifyPropertyChanged
+    {
         private bool _isSelected = false;
         public bool IsSelected
         {

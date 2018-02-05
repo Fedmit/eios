@@ -128,7 +128,7 @@ namespace eios.Data
             return groups;
         }
 
-        public async Task<List<Student>> GetStudentsAsync()
+        public async Task<List<T>> GetStudentsAsync<T>()
         {
             dynamic dynamicJson = new ExpandoObject();
             dynamicJson.login = App.Login;
@@ -138,7 +138,7 @@ namespace eios.Data
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
-            List<Student> students = null;
+            List<T> students = null;
             try
             {
                 HttpClient client = new HttpClient();
@@ -154,7 +154,7 @@ namespace eios.Data
 
                 var content = await response.Content.ReadAsStringAsync();
 
-                students = JsonConvert.DeserializeObject<List<Student>>(content);
+                students = JsonConvert.DeserializeObject<List<T>>(content);
             }
             catch (Exception ex)
             {

@@ -3,12 +3,13 @@ using eios.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace eios.ViewModel
 {
-    public class CompletedOccupationListViewModel : INotifyPropertyChanged
+    class CompletedOccupationListViewModel : INotifyPropertyChanged
     {
         string _time;
         public string Time
@@ -35,7 +36,14 @@ namespace eios.ViewModel
         int _total;
         public int Total
         {
-            get { return _total; }
+            get
+            {
+                if (StudentsList != null)
+                {
+                    return StudentsList.Count;
+                }
+                return 0;
+            }
             set
             {
                 _total = value;
@@ -43,14 +51,48 @@ namespace eios.ViewModel
             }
         }
 
-        int _present;
-        public int Present
+        int _absentTotal;
+        public int AbsentTotal
         {
-            get { return _present; }
+            get
+            {
+                if (StudentsList != null)
+                {
+                    return StudentsList.FindAll(s => s.IsAbsent.Equals(true)).Count;
+                }
+                return 0;
+            }
             set
             {
-                _present = value;
-                OnPropertyChanged(nameof(Present));
+                _absentTotal = value;
+                OnPropertyChanged(nameof(AbsentTotal));
+            }
+        }
+
+        bool _isBusy;
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set
+            {
+                _isBusy = value;
+                OnPropertyChanged(nameof(IsBusy));
+            }
+        }
+
+        List<StudentAttendance> _studentsList;
+        public List<StudentAttendance> StudentsList
+        {
+            get { return _studentsList; }
+            set
+            {
+                if (value != null)
+                {
+                    _studentsList = value;
+                    OnPropertyChanged(nameof(StudentsList));
+                    OnPropertyChanged(nameof(Total));
+                    OnPropertyChanged(nameof(AbsentTotal));
+                }
             }
         }
 
@@ -61,13 +103,26 @@ namespace eios.ViewModel
 
             Task.Run(async () =>
             {
-                var attendance = await WebApi.Instance.GetAttendanceAsync(occupation.IdOccupation);
+                IsBusy = true;
 
-                if (attendance != null)
-                {
-                    Total = attendance.Total;
-                    Present = attendance.Present;
-                }
+                //await Task.Delay(2000);
+
+                //var studentList = new List<StudentAttendance>();
+                //for (int i = 0; i < 10; i++)
+                //{
+                //    studentList.Add(new StudentAttendance()
+                //    {
+                //        Id = i,
+                //        FullName = i + " Федоров Дмитрий Алексеевич",
+                //        IsAbsent = i > 7
+                //    });
+                //}
+
+                //var attendance = await WebApi.Instance.GetAttendanceAsync(occupation.IdOccupation);
+
+                //StudentsList = studentList.OrderByDescending(student => student.IsAbsent).ToList();
+
+                IsBusy = false;
             });
         }
 

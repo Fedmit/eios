@@ -20,6 +20,11 @@ namespace eios
 
             var viewModel = new CompletedOccupationListViewModel(occupation);
             BindingContext = viewModel;
+
+            studentListView.ItemTapped += (sender, e) =>
+            {
+                studentListView.SelectedItem = null;
+            };
         }
 
         async void OnBackClicked(Object sender, AssemblyLoadEventArgs args)
