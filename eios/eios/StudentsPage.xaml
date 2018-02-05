@@ -45,19 +45,15 @@
                 </ListView.ItemTemplate>
             </ListView>
             <StackLayout Margin="5" Orientation="Horizontal">
-                <StackLayout Margin="5" Orientation="Horizontal">
-                    <Button x:Name="markButton"
+                <Button x:Name="markButton"
                         HorizontalOptions="Center"
                         Text="Отметить"
                         Clicked="OnMarkClicked"
                         Margin="5"/>
-                </StackLayout>
-                <StackLayout Margin="5" Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                    <Button x:Name="unavaibleButton"
+                <Button x:Name="unavaibleButton"
                         Text="Пары нет"
-                        Clicked="unaviableClicked"
+                        Clicked="OnUnaviableClicked"
                         Margin="5"/>
-                </StackLayout>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

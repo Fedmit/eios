@@ -33,7 +33,7 @@ namespace eios
             {
                 studentListView.SelectedItem = null;
 
-                if (e.Item is Student item)
+                if (e.Item is StudentSelect item)
                 {
                     item.IsSelected = !item.IsSelected;
                     viewModel.OnSite = viewModel.StudentsList.FindAll(s => s.IsSelected.Equals(true)).Count;
@@ -42,7 +42,7 @@ namespace eios
 
         }
 
-        async void unaviableClicked(Object sender, AssemblyLoadEventArgs args)
+        async void OnUnaviableClicked(Object sender, AssemblyLoadEventArgs args)
         {
             await Navigation.PopAsync();
         }
@@ -53,12 +53,14 @@ namespace eios
             var resultList = new List<SelectedStudent>();
             foreach (Student st in selectedList)
             {
-               var cache = new SelectedStudent();
-                cache.Id = st.Id;
+                var cache = new SelectedStudent
+                {
+                    Id = st.Id
+                };
                 resultList.Add(cache);
             }
             await WebApi.Instance.SetAttendAsync(this.occupation.IdOccupation, resultList);
-            Navigation.InsertPageBefore(new ChangeStudentPage(this.occupation), this);
+            Navigation.InsertPageBefore(new CompletedOccupationPage(this.occupation), this);
             await Navigation.PopAsync();
         }
     }
