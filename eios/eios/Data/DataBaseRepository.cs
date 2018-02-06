@@ -107,7 +107,7 @@ namespace eios.Data
                 marks[i].IdLesson = cache[i].IdLesson;
                 marks[i].Aud = cache[i].Aud;
             }
-            Set_you_occupation(marks);
+            SetYouOccupation(marks);
         }
 
         public async Task SetYouOccupation(List<Occupation> list) 
