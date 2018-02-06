@@ -20,7 +20,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Tasks\SyncronizeScheduleTask.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\OnMarksUpdatedMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\OnScheduleSyncronizedMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\StartSyncScheduleStateTaskMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\StartSyncScheduleTaskMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\StartSyncUnsentChangesTask.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\StopSyncScheduleStateTaskMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tasks\SyncScheduleStateTask.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tasks\SyncScheduleTask.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tasks\SyncUnsentChangesTask.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\BedgeView.xaml.cs">
       <DependentUpon>BedgeView.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -48,9 +56,6 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Model\MasterPageItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Attendance.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Messages\MarksMessage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Messages\StartLongRunningTaskMessage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Messages\StopLongRunningTaskMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Group.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Mark.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Occupation.cs" />

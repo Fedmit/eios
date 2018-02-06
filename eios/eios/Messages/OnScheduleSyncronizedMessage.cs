@@ -4,7 +4,8 @@ using System.Text;
 
 namespace eios.Messages
 {
-    class StartLongRunningTaskMessage
+    public class OnScheduleSyncronizedMessage
     {
+        public bool IsSuccessful { get; set; }
     }
 }

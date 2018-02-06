@@ -16,7 +16,7 @@ using eios.Tasks;
 namespace eios.Droid.Services
 {
     [Service]
-    public class SyncronizeScheduleTaskService : Service
+    public class SyncScheduleStateTaskService : Service
     {
         CancellationTokenSource _cts;
 
@@ -32,23 +32,12 @@ namespace eios.Droid.Services
             Task.Run(() => {
                 try
                 {
-                    var task = new SyncronizeScheduleTask();
-                    task.RunSyncronizeSchedule(_cts.Token).Wait();
+                    var task = new SyncScheduleStateTask();
+                    task.RunSyncScheduleState(_cts.Token).Wait();
                 }
                 catch (Android.OS.OperationCanceledException)
                 {
                 }
-                finally
-                {
-                    //if (_cts.IsCancellationRequested)
-                    //{
-                    //    var message = new CancelledMessage();
-                    //    Device.BeginInvokeOnMainThread(
-                    //        () => MessagingCenter.Send(message, "CancelledMessage")
-                    //    );
-                    //}
-                }
-
             }, _cts.Token);
 
             return StartCommandResult.Sticky;

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using eios.iOS.Services;
+using eios.Messages;
 using Foundation;
 using UIKit;
+using Xamarin.Forms;
 
 namespace eios.iOS
 {
@@ -25,7 +27,33 @@ namespace eios.iOS
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 
+            WireUpTask();
+
             return base.FinishedLaunching(app, options);
+        }
+
+        void WireUpTask()
+        {
+            SyncScheduleTaskService syncScheduleTask;
+            MessagingCenter.Subscribe<StartSyncScheduleTaskMessage>(this, "StartSyncScheduleTaskMessage", async message => {
+                syncScheduleTask = new SyncScheduleTaskService();
+                await syncScheduleTask.Start();
+            });
+
+            SyncScheduleStateTaskService syncScheduleStateTask;
+            syncScheduleStateTask = new SyncScheduleStateTaskService();
+            MessagingCenter.Subscribe<StartSyncScheduleStateTaskMessage>(this, "StartSyncScheduleStateTaskMessage", async message => {
+                await syncScheduleStateTask.Start();
+            });
+            MessagingCenter.Subscribe<StopSyncScheduleStateTaskMessage>(this, "StopSyncScheduleStateTaskMessage", message => {
+                syncScheduleStateTask.Stop();
+            });
+
+            SyncUnsentChangesTaskService syncUnsentChangesTask;
+            MessagingCenter.Subscribe<StartSyncUnsentChangesTask>(this, "StartSyncUnsentChangesTask", async message => {
+                syncUnsentChangesTask = new SyncUnsentChangesTaskService();
+                await syncUnsentChangesTask.Start();
+            });
         }
     }
 }

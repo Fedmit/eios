@@ -26,14 +26,28 @@ namespace eios.Droid
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
 
-            MessagingCenter.Subscribe<StartLongRunningTaskMessage>(this, "StartLongRunningTaskMessage", message => {
-                var intent = new Intent(this, typeof(SyncronizeScheduleTaskService));
+            WireUpTask();
+        }
+
+        void WireUpTask()
+        {
+            MessagingCenter.Subscribe<StartSyncScheduleTaskMessage>(this, "StartSyncScheduleTaskMessage", message => {
+                var intent = new Intent(this, typeof(SyncScheduleTaskService));
                 StartService(intent);
             });
 
-            MessagingCenter.Subscribe<StopLongRunningTaskMessage>(this, "StopLongRunningTaskMessage", message => {
-                var intent = new Intent(this, typeof(SyncronizeScheduleTaskService));
+            MessagingCenter.Subscribe<StartSyncScheduleStateTaskMessage>(this, "StartSyncScheduleStateTaskMessage", message => {
+                var intent = new Intent(this, typeof(SyncScheduleStateTaskService));
+                StartService(intent);
+            });
+            MessagingCenter.Subscribe<StopSyncScheduleStateTaskMessage>(this, "StopSyncScheduleStateTaskMessage", message => {
+                var intent = new Intent(this, typeof(SyncScheduleStateTaskService));
                 StopService(intent);
+            });
+
+            MessagingCenter.Subscribe<StartSyncUnsentChangesTask>(this, "StartSyncUnsentChangesTask", message => {
+                var intent = new Intent(this, typeof(SyncUnsentChangesTaskService));
+                StartService(intent);
             });
         }
     }

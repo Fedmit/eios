@@ -5,8 +5,8 @@ using System.Text;
 
 namespace eios.Messages
 {
-    class MarksMessage
+    public class OnMarksUpdatedMessage
     {
-        public List<Mark> Message { get; set; }
+        public bool IsSuccessful { get; set; }
     }
 }

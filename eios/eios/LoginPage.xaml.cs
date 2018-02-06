@@ -1,4 +1,5 @@
 ﻿using eios.Data;
+using eios.Messages;
 using eios.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,9 @@ namespace eios
             bool isValid = await AreCredentialsCorrect(login, password);
             if (isValid)
             {
+                MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
+                MessagingCenter.Send(new StartSyncUnsentChangesTask(), "StartSyncUnsentChangesTask");
+
                 App.Current.Properties["IsLoggedIn"] = true;
                 App.Current.Properties["Login"] = login;
                 App.Current.Properties["Password"] = password;

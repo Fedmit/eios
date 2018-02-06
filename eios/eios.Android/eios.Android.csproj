@@ -74,7 +74,9 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\SyncronizeScheduleTaskService.cs" />
+    <Compile Include="Services\SyncScheduleStateTaskService.cs" />
+    <Compile Include="Services\SyncScheduleTaskService.cs" />
+    <Compile Include="Services\SyncUnsentChangesTaskService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

@@ -17,5 +17,12 @@ namespace eios
 			InitializeComponent ();
 		}
 
+        async void OnExitButtonClicked(Object sender, AssemblyLoadEventArgs args)
+        {
+            App.Current.Properties["IsLoggedIn"] = false;
+            await App.Current.SavePropertiesAsync();
+
+            Application.Current.MainPage = new NavigationPage(new LoginPage());
+        }
 	}
 }

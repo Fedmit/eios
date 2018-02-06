@@ -1,4 +1,5 @@
 ﻿using eios.Data;
+using eios.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,10 +50,13 @@ namespace eios
 
             if (App.IsConnected)
             {
-                await Task.Delay(5000);
+                await Task.Delay(3000);
 
                 if (App.Current.Properties.ContainsKey("IsLoggedIn") && (bool)App.Current.Properties["IsLoggedIn"])
                 {
+                    MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
+                    MessagingCenter.Send(new StartSyncUnsentChangesTask(), "StartSyncUnsentChangesTask");
+
                     App.Current.MainPage = new MainPage();
                 }
                 else
