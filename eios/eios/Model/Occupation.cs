@@ -8,22 +8,21 @@ using System.ComponentModel;
 
 namespace eios.Model
 {
-    class Occupation : INotifyPropertyChanged
+    public class Occupation : INotifyPropertyChanged
     {
-        [JsonProperty("id")]
-        public int Id { get; set; }
-
         [JsonProperty("id_occup")]
         public int IdOccupation { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
+        
+        [JsonProperty("id_lesson")]
+        public string IdLesson { get; set; }
 
         [JsonProperty("aud")]
         public string Aud { get; set; }
 
-        [JsonProperty("time")]
-        public DateTime Time { get; set; }
+        public int IdGroup { get; set; }
 
         private string _mark;
         public string Mark
@@ -59,9 +58,9 @@ namespace eios.Model
             {
                 switch (Mark)
                 {
-                    case "was_no": return typeof(StudentsPage);
+                    case "was_no": return null;
                     case "was_attend": return typeof(CompletedOccupationPage);
-                    case "is_no": return typeof(StudentsPage);
+                    case "is_no": return null;
                     case "is_attend": return typeof(CompletedOccupationPage);
                     case "will": return null;
                     default: return null;
@@ -69,6 +68,25 @@ namespace eios.Model
             }
         }
 
+        public string Time
+        {
+            get
+            {
+                switch (IdOccupation)
+                {
+                    case 1: return "8:00";
+                    case 2: return "9:50";
+                    case 3: return "11:40";
+                    case 4: return "13:45";
+                    case 5: return "15:35";
+                    case 6: return "17:25";
+                    case 7: return "19:10";
+                    case 8: return "20:55";
+                    default: return "-";
+                }
+            }
+        }
+       
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)

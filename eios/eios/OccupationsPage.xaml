@@ -2,8 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:eios"
-             x:Class="eios.OccupationsPage">
-
+             x:Class="eios.OccupationsPage"
+             Title="17РОМАНЛОХ | 2 февраля">
+    
     <ContentPage.Content>
         <StackLayout>
             <ActivityIndicator

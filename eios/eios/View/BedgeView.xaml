@@ -3,12 +3,6 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:local="clr-namespace:eios"
             x:Class="eios.BedgeView">
-    <Grid.Resources>
-        <ResourceDictionary>
-            <local:DateTimeToStringConverter x:Key="dateTimeToString" />
-        </ResourceDictionary>
-    </Grid.Resources>
-    
     <local:CircleView 
         x:Name="circle"
         BackgroundColor="{Binding CircleColor}"
@@ -16,7 +10,7 @@
         VerticalOptions="Center" 
         HorizontalOptions="Center" />
     <Label
-        Text="{Binding Time, Converter={StaticResource dateTimeToString}}"
+        Text="{Binding Time}"
         x:Name="label"
         TextColor="White"
         VerticalOptions="Center" 

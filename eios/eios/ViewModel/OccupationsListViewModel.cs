@@ -92,7 +92,7 @@ namespace eios.ViewModel
             {
                 foreach (Mark mark in marks)
                 {
-                    var obj = OccupationsList.FirstOrDefault(x => x.Id == mark.Id);
+                    var obj = OccupationsList.FirstOrDefault(x => x.IdOccupation == mark.Id);
                     if (obj != null) obj.Mark = mark.mMark;
                 }
             }

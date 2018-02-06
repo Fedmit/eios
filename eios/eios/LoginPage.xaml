@@ -4,21 +4,21 @@
              x:Class="eios.LoginPage"
              xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms">
     <ContentPage.Content>
-        <StackLayout Padding="75,75,75,20" BackgroundColor="White">
-            <StackLayout Orientation="Vertical" VerticalOptions="StartAndExpand">
+        <StackLayout BackgroundColor="White">
+            <StackLayout Padding="40,75,40,30" Orientation="Vertical" VerticalOptions="StartAndExpand">
                 <Label
                     Text="ЭИОС ПГУ &#10; Журнал посещаемости"
                     TextColor="Black"
                     VerticalOptions="Center"
                     HorizontalTextAlignment="Center"
-                    FontSize="18"/>
+                    FontSize="20"/>
             </StackLayout>
-            <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" Spacing="7">
+            <StackLayout Padding="75,75,75,30" Orientation="Vertical" VerticalOptions="Center" Spacing="10">
                 <Label
                     Text="Вход в систему"
                     TextColor="Black"
                     HorizontalOptions="Center"
-                    FontSize="18"/>
+                    FontSize="20"/>
                 <Entry
                     x:Name="loginEntry"
                     Placeholder="Логин"
@@ -36,21 +36,21 @@
                 <Button 
                     x:Name="loginButton"
                     Text="Войти"
-                    FontSize="20"
+                    FontSize="18"
                     BackgroundColor="#1E90FF"
                     TextColor="White"
-                    HeightRequest="40"
+                    HeightRequest="42"
                     WidthRequest="150"
-                    Clicked="OnLoginButtonClicked"/>
+                    Clicked="OnLoginButtonClicked"
+                    HorizontalOptions="Center"/>
             </StackLayout>
-            <StackLayout VerticalOptions="EndAndExpand">
+            <StackLayout Padding="75,75,75,30" VerticalOptions="EndAndExpand" HorizontalOptions="Center">
                 <Button
                     x:Name="forgotPassword"
                     Text="Я забыл свой пароль"
                     TextColor="Black"
-                    VerticalOptions="EndAndExpand"
-                    HorizontalOptions="Center"
-                    BackgroundColor="White"
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
                     FontSize="16"/>
             </StackLayout>
         </StackLayout>

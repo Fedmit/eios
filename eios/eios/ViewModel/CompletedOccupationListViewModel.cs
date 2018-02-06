@@ -1,22 +1,24 @@
 ﻿using eios.Data;
+using eios.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace eios.ViewModel
 {
-    public class CompletedOccupationListViewModel : INotifyPropertyChanged
+    class CompletedOccupationListViewModel : INotifyPropertyChanged
     {
-        DateTime _date;
-        public DateTime Date
+        string _time;
+        public string Time
         {
-            get { return _date; }
+            get { return _time; }
             set
             {
-                _date = value;
-                OnPropertyChanged(nameof(Date));
+                _time = value;
+                OnPropertyChanged(nameof(Time));
             }
         }
 
@@ -34,7 +36,14 @@ namespace eios.ViewModel
         int _total;
         public int Total
         {
-            get { return _total; }
+            get
+            {
+                if (StudentsList != null)
+                {
+                    return StudentsList.Count;
+                }
+                return 0;
+            }
             set
             {
                 _total = value;
@@ -42,31 +51,78 @@ namespace eios.ViewModel
             }
         }
 
-        int _present;
-        public int Present
+        int _absentTotal;
+        public int AbsentTotal
         {
-            get { return _present; }
+            get
+            {
+                if (StudentsList != null)
+                {
+                    return StudentsList.FindAll(s => s.IsAbsent.Equals(true)).Count;
+                }
+                return 0;
+            }
             set
             {
-                _present = value;
-                OnPropertyChanged(nameof(Present));
+                _absentTotal = value;
+                OnPropertyChanged(nameof(AbsentTotal));
             }
         }
 
-        public CompletedOccupationListViewModel(DateTime date, string nameOccupation, int idOccupation)
+        bool _isBusy;
+        public bool IsBusy
         {
-            Date = date;
-            NameOccupation = nameOccupation;
+            get { return _isBusy; }
+            set
+            {
+                _isBusy = value;
+                OnPropertyChanged(nameof(IsBusy));
+            }
+        }
+
+        List<StudentAttendance> _studentsList;
+        public List<StudentAttendance> StudentsList
+        {
+            get { return _studentsList; }
+            set
+            {
+                if (value != null)
+                {
+                    _studentsList = value;
+                    OnPropertyChanged(nameof(StudentsList));
+                    OnPropertyChanged(nameof(Total));
+                    OnPropertyChanged(nameof(AbsentTotal));
+                }
+            }
+        }
+
+        public CompletedOccupationListViewModel(Occupation occupation)
+        {
+            Time = occupation.Time;
+            NameOccupation = occupation.Name;
 
             Task.Run(async () =>
             {
-                var attendance = await WebApi.Instance.GetAttendanceAsync(idOccupation);
+                IsBusy = true;
 
-                if (attendance != null)
-                {
-                    Total = attendance.Total;
-                    Present = attendance.Present;
-                }
+                //await Task.Delay(2000);
+
+                //var studentList = new List<StudentAttendance>();
+                //for (int i = 0; i < 10; i++)
+                //{
+                //    studentList.Add(new StudentAttendance()
+                //    {
+                //        Id = i,
+                //        FullName = i + " Федоров Дмитрий Алексеевич",
+                //        IsAbsent = i > 7
+                //    });
+                //}
+
+                //var attendance = await WebApi.Instance.GetAttendanceAsync(occupation.IdOccupation);
+
+                //StudentsList = studentList.OrderByDescending(student => student.IsAbsent).ToList();
+
+                IsBusy = false;
             });
         }
 

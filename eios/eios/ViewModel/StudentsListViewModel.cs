@@ -12,8 +12,8 @@ namespace eios.ViewModel
 {
     class StudentsListViewModel : INotifyPropertyChanged
     {
-        DateTime _occupationTime;
-        public DateTime OccupationTime
+        string _occupationTime;
+        public string OccupationTime
         {
             get { return _occupationTime; }
             set
@@ -64,8 +64,8 @@ namespace eios.ViewModel
             }
         }
 
-        List<Student> _studentsList;
-        public List<Student> StudentsList
+        List<StudentSelect> _studentsList;
+        public List<StudentSelect> StudentsList
         {
             get { return _studentsList; }
             set
@@ -79,23 +79,23 @@ namespace eios.ViewModel
             }
         }
 
-        public StudentsListViewModel(DateTime time, string name)
+        public StudentsListViewModel(Occupation occupation)
         {
-            OccupationTime = time;
-            OccupationName = name;
-            _studentsList = new List<Student>();
+            OccupationTime = occupation.Time;
+            OccupationName = occupation.Name;
+            _studentsList = new List<StudentSelect>();
 
             Task.Run(async () =>
             {
                 IsBusy = true;
-                StudentsList = await PopulateList();
+                StudentsList = await PopulateList<StudentSelect>();
                 IsBusy = false;
             });
         }
 
-        async Task<List<Student>> PopulateList()
+        async Task<List<T>> PopulateList<T>()
         {
-            var studentsList = await WebApi.Instance.GetStudentsAsync();
+            var studentsList = await WebApi.Instance.GetStudentsAsync<T>();
             return studentsList;
         }
 

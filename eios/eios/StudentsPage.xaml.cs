@@ -17,22 +17,23 @@ namespace eios
     public partial class StudentsPage : ContentPage
     {
         StudentsListViewModel viewModel;
-        int IdOccupation { get; set; }
 
-        public StudentsPage(DateTime date, string nameOccupation, int idOccupation)
+        Occupation occupation;
+
+        public StudentsPage(Occupation occupation)
         {
             InitializeComponent();
 
-            viewModel = new StudentsListViewModel(date, nameOccupation);
+            viewModel = new StudentsListViewModel(occupation);
             BindingContext = viewModel;
 
-            IdOccupation = idOccupation;
+            this.occupation = occupation;
 
             studentListView.ItemTapped += (sender, e) =>
             {
                 studentListView.SelectedItem = null;
 
-                if (e.Item is Student item)
+                if (e.Item is StudentSelect item)
                 {
                     item.IsSelected = !item.IsSelected;
                     viewModel.OnSite = viewModel.StudentsList.FindAll(s => s.IsSelected.Equals(true)).Count;
@@ -41,7 +42,7 @@ namespace eios
 
         }
 
-        async void OnBackClicked(Object sender, AssemblyLoadEventArgs args)
+        async void OnUnaviableClicked(Object sender, AssemblyLoadEventArgs args)
         {
             await Navigation.PopAsync();
         }
@@ -52,11 +53,14 @@ namespace eios
             var resultList = new List<SelectedStudent>();
             foreach (Student st in selectedList)
             {
-                var cache = new SelectedStudent();
-                cache.Id = st.Id;
+                var cache = new SelectedStudent
+                {
+                    Id = st.Id
+                };
                 resultList.Add(cache);
             }
-            await WebApi.Instance.SetAttendAsync(IdOccupation, resultList);
+            await WebApi.Instance.SetAttendAsync(this.occupation.IdOccupation, resultList);
+            Navigation.InsertPageBefore(new CompletedOccupationPage(this.occupation), this);
             await Navigation.PopAsync();
         }
     }

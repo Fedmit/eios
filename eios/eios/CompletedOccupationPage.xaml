@@ -3,53 +3,59 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:eios"
              x:Class="eios.CompletedOccupationPage">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <local:DateTimeToStringConverter x:Key="dateTimeToString" />
-        </ResourceDictionary>
-    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Margin="10,30,10,10">
             <Label
-                Text="{Binding Date, Converter={StaticResource dateTimeToString}}"
+                Text="{Binding Time}"
                 HorizontalOptions="Center"
                 TextColor="Black"
                 FontSize="Medium" />
-
             <Label
                 Text="{Binding NameOccupation}"
                 HorizontalOptions="Center"
                 TextColor="Black"
                 FontSize="Medium" />
-
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="50,20,50,0">
-                <Label
-                    Text="Всего:"
-                    FontSize="Medium"
-                    TextColor="Black" />
-                <Label
-                    Text="{Binding Total}"
-                    FontSize="Medium"
-                    TextColor="Black" />
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="30">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Label
+                        Text="Всего:"
+                        FontSize="Medium"
+                        TextColor="Black" />
+                    <Label
+                        Text="{Binding Total}"
+                        FontSize="Medium"
+                        TextColor="Black" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Label
+                        Text="Отсутствуют:"
+                        FontSize="Medium"
+                        TextColor="Black" />
+                    <Label
+                        Text="{Binding AbsentTotal}"
+                        FontSize="Medium"
+                        TextColor="Black" />
+                </StackLayout>
             </StackLayout>
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="50,0,50,0">
-                <Label
-                    Text="Отсутствуют:"
-                    FontSize="Medium"
-                    TextColor="Black" />
-                <Label
-                    Text="{Binding Present}"
-                    FontSize="Medium"
-                    TextColor="Black" />
-            </StackLayout>
-            
-            <Label
-                Text="Вы уже отметили посещаемость."
-                Margin="0,80,0,100"
-                HorizontalOptions="Center"
-                FontSize="Medium"
-                TextColor="Black" />
-
+            <ActivityIndicator
+                Margin="20"
+                WidthRequest="35"
+                HeightRequest="35"
+                IsVisible="{Binding IsBusy}"
+                IsRunning="{Binding IsBusy}" />
+            <ListView
+                x:Name="studentListView"
+                ItemsSource="{Binding StudentsList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Padding="20,0,20,0" Spacing="20" BackgroundColor="{Binding Color}">
+                                <Label Text="{Binding FullName}" VerticalOptions="Center"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
             <Button
                 Text="Назад"
                 BackgroundColor="#77aad9"
