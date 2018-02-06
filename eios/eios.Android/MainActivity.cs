@@ -27,12 +27,12 @@ namespace eios.Droid
             LoadApplication(new App());
 
             MessagingCenter.Subscribe<StartLongRunningTaskMessage>(this, "StartLongRunningTaskMessage", message => {
-                var intent = new Intent(this, typeof(LongRunningTaskService));
+                var intent = new Intent(this, typeof(SyncronizeScheduleTaskService));
                 StartService(intent);
             });
 
             MessagingCenter.Subscribe<StopLongRunningTaskMessage>(this, "StopLongRunningTaskMessage", message => {
-                var intent = new Intent(this, typeof(LongRunningTaskService));
+                var intent = new Intent(this, typeof(SyncronizeScheduleTaskService));
                 StopService(intent);
             });
         }

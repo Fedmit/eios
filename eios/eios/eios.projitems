@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Tasks\SyncronizeScheduleTask.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\BedgeView.xaml.cs">
       <DependentUpon>BedgeView.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -45,7 +46,7 @@
       <DependentUpon>MasterPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)MasterPageItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\MasterPageItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Attendance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\MarksMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\StartLongRunningTaskMessage.cs" />

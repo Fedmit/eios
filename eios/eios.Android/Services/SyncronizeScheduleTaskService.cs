@@ -11,11 +11,12 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using eios.Data;
+using eios.Tasks;
 
 namespace eios.Droid.Services
 {
     [Service]
-    public class LongRunningTaskService : Service
+    public class SyncronizeScheduleTaskService : Service
     {
         CancellationTokenSource _cts;
 
@@ -31,8 +32,8 @@ namespace eios.Droid.Services
             Task.Run(() => {
                 try
                 {
-                    var task = new TaskWeb();
-                    task.RunGetMarks(_cts.Token).Wait();
+                    var task = new SyncronizeScheduleTask();
+                    task.RunSyncronizeSchedule(_cts.Token).Wait();
                 }
                 catch (Android.OS.OperationCanceledException)
                 {

@@ -1,6 +1,8 @@
 ﻿using eios.Model;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,8 +15,10 @@ namespace eios
         public static string Login { get; set; }
         public static string Password { get; set; }
         public static bool IsUserLoggedIn { get; set; }
+        public static bool IsLoading { get; set; } = false;
+        public static bool IsConnected { get; set; }
 
-        public static DateTime Date { get; set; }
+        public static DateTime DateNow { get; set; }
 
         public static List<Group> Groups { get; set; }
 
@@ -25,9 +29,17 @@ namespace eios
             MainPage = new NavigationPage(new SplashPage());
 		}
 
-		protected override void OnStart ()
-		{
-            // Handle when your app starts
+        protected override void OnStart()
+        {
+            var isConnected = CrossConnectivity.Current.IsConnected;
+            Debug.WriteLine($"Connectivity is {isConnected}");
+            IsConnected = isConnected;
+
+            CrossConnectivity.Current.ConnectivityChanged += (sender, args) =>
+            {
+                Debug.WriteLine($"Connectivity changed to {args.IsConnected}");
+                IsConnected = args.IsConnected;
+            };
         }
 
         protected override void OnSleep ()
