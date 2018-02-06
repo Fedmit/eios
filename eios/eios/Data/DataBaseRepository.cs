@@ -34,117 +34,186 @@ namespace eios.Data
 
         public async Task<List<Occupation>> GetMeOccupation(int id_group)
         {
-            return await database.QueryAsync<Occupation>("SELECT id_ocup, lesson_name, lesson_id, aud FROM Occupations WHERE id_group = ?", id_group);
+            try
+            {
+                return await database.QueryAsync<Occupation>("SELECT id_ocup, lesson_name, lesson_id, aud FROM Occupations WHERE id_group = ?", id_group);
+            }
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
 
         public async Task <List<AttendStudent>> GetMeAttendence(int id_ocup, int id_group)
         {
-            List<Student> students = await database.QueryAsync<Student>("SELECT id_student, fio FROM Students WHERE id_group = ? ORDER BY id_student", id_group);
-            List<Attendance> attendance = await database.QueryAsync<Attendance>("SELECT id_student FROM Attendance WHERE id_group = ? AND id_ocup = ? ORDER BY id_student", id_group, id_ocup);
-            List<AttendStudent> result = new List<AttendStudent>();
-            //Console.WriteLine("Студенты:");
-            //foreach (var s in students)
-            //{
-            //    Console.WriteLine("id_student = " + s.Id + " fio = " + s.FullName + " id_group = "+id_group);
-            //}
-            //Console.WriteLine("Посещаемость:");
-            //foreach (var s in attendance)
-            //{
-            //    Console.WriteLine("id_student = " + s.id_student + " id_ocup = "+s.id_ocup+" id_group = "+s.id_group);
-            //}
-            //Console.WriteLine(students.Count + " " + attendance.Count);
-            int j = 0;
-            for (int i = 0; i < students.Count; i++)
+            try
             {
-                if (j != attendance.Count)
+                List<Student> students = await database.QueryAsync<Student>("SELECT id_student, fio FROM Students WHERE id_group = ? ORDER BY id_student", id_group);
+                List<Attendance> attendance = await database.QueryAsync<Attendance>("SELECT id_student FROM Attendance WHERE id_group = ? AND id_ocup = ? ORDER BY id_student", id_group, id_ocup);
+                List<AttendStudent> result = new List<AttendStudent>();
+                int j = 0;
+                for (int i = 0; i < students.Count; i++)
                 {
-                    if (students[i].Id == attendance[j].id_student)
+                    if (j != attendance.Count)
                     {
-                        j++;
-                        result.Add(new AttendStudent { id_student = students[i].Id, fio = students[i].FullName, is_absent = true });
+                        if (students[i].Id == attendance[j].id_student)
+                        {
+                            j++;
+                            result.Add(new AttendStudent { id_student = students[i].Id, fio = students[i].FullName, is_absent = true });
+                        }
+                        else
+                        {
+                            result.Add(new AttendStudent { id_student = students[i].Id, fio = students[i].FullName, is_absent = false });
+                        }
                     }
                     else
                     {
                         result.Add(new AttendStudent { id_student = students[i].Id, fio = students[i].FullName, is_absent = false });
                     }
-                } else
-                {
-                    result.Add(new AttendStudent { id_student = students[i].Id, fio = students[i].FullName, is_absent = false });
                 }
+                return result;
             }
-            //Console.WriteLine("Результат:");
-            //foreach (var s in result)
-            //{
-            //    Console.WriteLine("id_student = "+s.id_student+" fio = "+s.fio+" is_absent = "+s.is_absent);
-            //}
-            return result;
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
 
         }
 
         public async Task <List<Occupation>> GetMeMarks(int id_group)
         {
-            return await database.QueryAsync<Occupation>("SELECT id_ocup, is_check, is_block FROM Occupations WHERE id_group = ?", id_group);
+            try
+            {
+                return await database.QueryAsync<Occupation>("SELECT id_ocup, is_check, is_block FROM Occupations WHERE id_group = ?", id_group);
+            }
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
 
         public async Task SetYouStudents(List<Student> students)
         {
-            await database.InsertAllAsync(students);
+            try
+            {
+                await database.InsertAllAsync(students);
+            }
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public async Task SetYouGroup(List<Group> groups)
         {
-            await database.InsertAllAsync(groups);
+            try
+            {
+                await database.InsertAllAsync(groups);
+            }
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public async Task SetYouMarks(List<Occupation> marks)
         {
-            List<Occupation> cache = await database.Table<Occupation>().ToListAsync();
-            await database.DropTableAsync<Occupation>();
-            for (int i = 0; i < cache.Count; i++)
+            try
             {
-                marks[i].IdGroup = cache[i].IdGroup;
-                marks[i].Name = cache[i].Name;
-                marks[i].IdLesson = cache[i].IdLesson;
-                marks[i].Aud = cache[i].Aud;
+                List<Occupation> cache = await database.Table<Occupation>().ToListAsync();
+                await database.DropTableAsync<Occupation>();
+                for (int i = 0; i < cache.Count; i++)
+                {
+                    marks[i].IdGroup = cache[i].IdGroup;
+                    marks[i].Name = cache[i].Name;
+                    marks[i].IdLesson = cache[i].IdLesson;
+                    marks[i].Aud = cache[i].Aud;
+                }
+                SetYouOccupation(marks);
             }
-            SetYouOccupation(marks);
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public async Task SetYouOccupation(List<Occupation> list) 
         {
-            await database.InsertAllAsync(list);
+            try
+            {
+                await database.InsertAllAsync(list);
+            }
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public async Task<List<Group>> GetMeGroups()
         {
-            return await database.Table<Group>().ToListAsync();
+            try
+            {
+                return await database.Table<Group>().ToListAsync();
+            }
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
         
         public async Task SetSentFlag(int id_ocup, int id_group)
         {
-            List<Occupation> list = await database.QueryAsync<Occupation>("SELECT * FROM Occupations WHERE id_ocup = ? AND id_group = ?", id_ocup, id_group);
-            foreach (var s in list)
+            try
             {
-                s.is_sent = true;
+                List<Occupation> list = await database.QueryAsync<Occupation>("SELECT * FROM Occupations WHERE id_ocup = ? AND id_group = ?", id_ocup, id_group);
+                list[0].is_sent = true;
+                await database.UpdateAllAsync(list);
             }
-            await database.UpdateAllAsync(list);
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public async Task<List<Occupation>> SentAttendence()
         {
-            //не мог затестировать
-            return null;
+            try
+            {
+                return await database.QueryAsync<Occupation>("SELECT id_ocup, id_group FROM Occupations WHERE is_sent = 0");
+            } catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;    
+            }
         }
 
         public async Task<List<Attendance>> SentNotSynhronized(int id_ocup, int id_group)
         {
-           return await database.QueryAsync<Attendance>("SELECT id_student FROM Attendance WHERE id_ocup = ? AND id_group = ?", id_ocup, id_group);
+            try
+            {
+                return await database.QueryAsync<Attendance>("SELECT id_student FROM Attendance WHERE id_ocup = ? AND id_group = ?", id_ocup, id_group);
+            }
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
 
         public async Task UpdateAttendence(List<Attendance> refreshList, int id_ocup, int id_group)
         {
-            await database.QueryAsync<Attendance>("DELETE FROM Attendance WHERE id_ocup = ? AND id_group = ?", id_ocup, id_group);
-            await database.InsertAllAsync(refreshList);
-        }
+            try
+            {
+                await database.QueryAsync<Attendance>("DELETE FROM Attendance WHERE id_ocup = ? AND id_group = ?", id_ocup, id_group);
+                await database.InsertAllAsync(refreshList);
+            }  catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);  
+            }
+}
     }
 }
