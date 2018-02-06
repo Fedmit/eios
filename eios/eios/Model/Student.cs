@@ -7,15 +7,18 @@ using SQLite;
 
 namespace eios.Model
 {
-    class Student : INotifyPropertyChanged
+    [Table("Students")]
+    public class Student : INotifyPropertyChanged
     {
-        [JsonProperty("id_student")]
+        [JsonProperty("id_student"), PrimaryKey, Column("id_student")]
         public int Id { get; set; }
 
-        [JsonProperty("fio")]
+        [JsonProperty("fio"), Column("fio")]
         public string FullName { get; set; }
 
+        public int id_group { get; set; }
         private bool _isSelected = false;
+        [Ignore]
         public bool IsSelected
         {
             get { return _isSelected; }
@@ -25,7 +28,7 @@ namespace eios.Model
                 OnPropertyChanged(nameof(IconSource));
             }
         }
-
+        [Ignore]
         public string IconSource
         {
             get

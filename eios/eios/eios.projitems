@@ -33,6 +33,8 @@
       <DependentUpon>CompletedOccupationPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Data\DataBaseRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\ISQlite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\WebApi.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DateTimeToStringConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HelpPage.xaml.cs">
@@ -56,6 +58,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)MasterPageItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Attendance.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\AttendStudent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Group.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Mark.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Occupation.cs" />
