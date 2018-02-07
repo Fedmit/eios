@@ -12,6 +12,8 @@ namespace eios.Tasks
 {
     class SyncScheduleTask
     {
+        private Task webapi;
+
         public async Task RunSyncSchedule()
         {
             App.IsLoading = true;
@@ -20,9 +22,26 @@ namespace eios.Tasks
             {
                 DateTime dateNow = await WebApi.Instance.GetDateAsync();
                 string dateNowStr = dateNow.ToString("yyyy:mm:dd");
-                if (App.Current.Properties.ContainsKey("DateNow") && (string)App.Current.Properties["DateNow"] != dateNowStr)
+
+                string lastDate = null;
+                if (App.Current.Properties.ContainsKey("DateNow"))
                 {
-                        
+                    lastDate = (string)App.Current.Properties["DateNow"];
+                }
+
+                if (lastDate == null || lastDate != dateNowStr)
+                {
+                    var groups = await WebApi.Instance.GetGroupsAsync();
+                    await App.Database.SetGroup(groups);
+
+                    foreach(var group in groups)
+                    {
+                        var occupations = await WebApi.Instance.GetOccupationsAsync(group.IdGroup);
+                        var students = await WebApi.Instance.GetStudentsAsync(group.IdGroup);
+
+                        await App.Database.SetOccupations(occupations);
+                        await App.Database.SetStudents(students);
+                    }
                 }
                 App.Current.Properties["DateNow"] = dateNowStr;
             }

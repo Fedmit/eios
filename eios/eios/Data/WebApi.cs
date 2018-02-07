@@ -40,15 +40,15 @@ namespace eios.Data
             }
         }
 
-        static string _baseUrl { get { return "http://q9875032.beget.tech/hp_api/api.php"; } }
+        static string _baseUrl { get { return "http://lk.pnzgu.ru/ajax/mobile"; } }
 
-        public async Task<List<Occupation>> GetOccupationsAsync()
+        public async Task<List<Occupation>> GetOccupationsAsync(int idGroup)
         {
             dynamic dynamicJson = new ExpandoObject();
             dynamicJson.login = Login;
             dynamicJson.password = Password;
             dynamicJson.type = "get_info";
-            dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
+            dynamicJson.id_group = idGroup;
             dynamicJson.date = App.DateNow.ToString("yyyy-MM-dd");
 
             string json = "";
@@ -118,11 +118,11 @@ namespace eios.Data
             return marks;
         }
 
-        public async Task<List<Group>> GetGroupsAsync(string login, string password)
+        public async Task<List<Group>> GetGroupsAsync()
         {
             dynamic dynamicJson = new ExpandoObject();
-            dynamicJson.login = login;
-            dynamicJson.password = password;
+            dynamicJson.login = Login;
+            dynamicJson.password = Password;
             dynamicJson.type = "get_group";
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
@@ -153,17 +153,17 @@ namespace eios.Data
             return groups;
         }
 
-        public async Task<List<T>> GetStudentsAsync<T>()
+        public async Task<List<Student>> GetStudentsAsync(int idGroup)
         {
             dynamic dynamicJson = new ExpandoObject();
             dynamicJson.login = Login;
             dynamicJson.password = Password;
             dynamicJson.type = "get_students";
-            dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
+            dynamicJson.id_group = idGroup;
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
-            List<T> students = null;
+            List<Student> students = null;
             try
             {
                 HttpClient client = new HttpClient();
@@ -179,7 +179,7 @@ namespace eios.Data
 
                 var content = await response.Content.ReadAsStringAsync();
 
-                students = JsonConvert.DeserializeObject<List<T>>(content);
+                students = JsonConvert.DeserializeObject<List<Student>>(content);
             }
             catch (Exception ex)
             {
@@ -226,7 +226,7 @@ namespace eios.Data
             return time;
         }
 
-        public async Task<StudentAbsent> GetAttendanceAsync(int idOccupation)
+        public async Task<List<StudentAbsent>> GetAttendanceAsync(int idOccupation, int idGroup)
         {
             dynamic dynamicJson = new ExpandoObject();
             dynamicJson.login = Login;
@@ -237,7 +237,7 @@ namespace eios.Data
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
-            StudentAbsent attendance = null;
+            List<StudentAbsent> attendance = null;
             try
             {
                 HttpClient client = new HttpClient();
@@ -252,9 +252,8 @@ namespace eios.Data
                 response.EnsureSuccessStatusCode();
 
                 var content = await response.Content.ReadAsStringAsync();
-                JArray arr = JArray.Parse(content);
 
-                attendance = JsonConvert.DeserializeObject<StudentAbsent>(arr[0].ToString());
+                attendance = JsonConvert.DeserializeObject<List<StudentAbsent>>(content);
             }
             catch (Exception ex)
             {
@@ -264,7 +263,7 @@ namespace eios.Data
             return attendance;
         }
 
-        public async Task<bool> SetAttendAsync(int idTimeTable, List<SelectedStudent> list)
+        public async Task<bool> SetAttendAsync(int idTimeTable, List<StudentAbsent> list)
         {
             dynamic dynamicJson = new ExpandoObject();
             dynamicJson.login = Login;

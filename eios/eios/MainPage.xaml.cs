@@ -17,13 +17,17 @@ namespace eios
             masterPage.MenuBottom.ItemSelected += OnItemSelected;
         }
 
-        void OnItemSelected(Object sender, SelectedItemChangedEventArgs e)
+        async void OnItemSelected(Object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem is MasterPageItem item)
             {
                 // При нажатии на выход открываем экран с входом
                 if (item.TargetType == typeof(LoginPage))
                 {
+                    App.Current.Properties["IsLoggedIn"] = false;
+                    await App.Current.SavePropertiesAsync();
+
+                    Application.Current.MainPage = new NavigationPage(new LoginPage());
                     return;
                 }
 

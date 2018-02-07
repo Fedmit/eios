@@ -67,7 +67,7 @@ namespace eios.ViewModel
                     Device.BeginInvokeOnMainThread(async () => {
                         if (message.IsSuccessful)
                         {
-                            //OccupationsList = await App.Database.GetOccupation();
+                            OccupationsList = await PopulateList();
                         }
                         else
                         {
@@ -84,7 +84,7 @@ namespace eios.ViewModel
             {
                 Task.Run(async () =>
                 {
-                    //OccupationsList = await PopulateList();
+                    OccupationsList = await PopulateList();
                     IsBusy = false;
                 });
             }
@@ -101,9 +101,7 @@ namespace eios.ViewModel
 
         async Task<List<Occupation>> PopulateList()
         {
-            App.DateNow = await WebApi.Instance.GetDateAsync();
-            var occupationsList = await WebApi.Instance.GetOccupationsAsync();
-            return occupationsList;
+            return await App.Database.GetOccupations((int)App.Current.Properties["IdGroupCurrent"]);
         }
 
         async Task RefreshList()

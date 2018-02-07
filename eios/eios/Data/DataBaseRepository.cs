@@ -24,7 +24,7 @@ namespace eios.Data
             await database.CreateTableAsync<Group>();
         }
 
-        public async Task deleteThisShits()
+        public async Task DeleteThisShits()
         {
             await database.DropTableAsync<StudentAbsent>();
             await database.DropTableAsync<Student>();
@@ -32,11 +32,14 @@ namespace eios.Data
             await database.DropTableAsync<Group>();
         }
 
-        public async Task<List<Occupation>> GetOccupations(int id_group)
+        public async Task<List<Occupation>> GetOccupations(int idGroup)
         {
             try
             {
-                return await database.QueryAsync<Occupation>("SELECT id_ocup, lesson_name, lesson_id, aud FROM Occupations WHERE id_group = ?", id_group);
+                return await database.QueryAsync<Occupation>(
+                    "SELECT id_ocup, lesson_name, lesson_id, aud FROM Occupations WHERE id_group = ?",
+                    idGroup
+                );
             }
             catch (SQLiteException ex)
             {
@@ -45,17 +48,17 @@ namespace eios.Data
             }
         }
 
-        public async Task <List<StudentAttendance>> GetAttendance(int id_ocup, int id_group)
+        public async Task <List<StudentAttendance>> GetAttendance(int idOccupation, int idGroup)
         {
             try
             {
                 var students = await database.QueryAsync<Student>(
                     "SELECT id_student, fullname FROM Students WHERE id_group = ? ORDER BY id_student",
-                    id_group
+                    idGroup
                 );
                 var attendance = await database.QueryAsync<StudentAbsent>(
                     "SELECT id_student FROM Attendance WHERE id_group = ? AND id_ocup = ? ORDER BY id_student",
-                    id_group, id_ocup
+                    idGroup, idOccupation
                 );
                 var result = new List<StudentAttendance>();
                 int j = 0;
@@ -233,6 +236,19 @@ namespace eios.Data
             }  catch (SQLiteException ex)
             {
                 Console.WriteLine(ex.Message);  
+            }
+        }
+
+        public async Task <List<StudentSelect>> GetStudents(int idGroup)
+        {
+            try
+            {
+                return await database.QueryAsync<StudentSelect>("SELECT id_student, fullname FROM Students WHERE id_group =?", idGroup);
+            }
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
             }
         }
     }

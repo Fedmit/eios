@@ -50,10 +50,10 @@ namespace eios
         async Task OnMarkClicked(Object sender, AssemblyLoadEventArgs args)
         {
             var selectedList = viewModel.StudentsList.FindAll(s => s.IsSelected.Equals(true));
-            var resultList = new List<SelectedStudent>();
+            var resultList = new List<StudentAbsent>();
             foreach (Student st in selectedList)
             {
-                var cache = new SelectedStudent
+                var cache = new StudentAbsent()
                 {
                     Id = st.Id
                 };

@@ -21,8 +21,10 @@ namespace eios.Model
 
     public class StudentAttendance : Student
     {
+        [Ignore]
         public bool IsAbsent { get; set; }
 
+        [Ignore]
         public string Color
         {
             get
@@ -39,7 +41,7 @@ namespace eios.Model
     public class StudentSelect : Student, INotifyPropertyChanged
     {
         private bool _isSelected = false;
-        [Ignore]
+
         public bool IsSelected
         {
             get { return _isSelected; }
@@ -49,7 +51,7 @@ namespace eios.Model
                 OnPropertyChanged(nameof(IconSource));
             }
         }
-        [Ignore]
+
         public string IconSource
         {
             get
@@ -76,16 +78,16 @@ namespace eios.Model
     [Table("Attendance")]
     public class StudentAbsent
     {
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey, AutoIncrement, JsonIgnore]
         public int _id { get; set; }
 
         [Column("id_student")]
         public int Id { get; set; }
 
-        [Column("id_ocup")]
+        [Column("id_ocup"), JsonIgnore]
         public int IdOccupation { get; set; }
 
-        [Column("id_group")]
+        [Column("id_group"), JsonIgnore]
         public int IdGroup { get; set; }
     }
 }

@@ -21,7 +21,8 @@ namespace eios.Tasks
                     if (App.IsConnected)
                     {
                         var marks = await WebApi.Instance.GetMarksAsync();
-                        //await App.Database.SetMarks();
+                        await App.Database.SetMarks(marks);
+
                         var message = new OnMarksUpdatedMessage()
                         {
                             IsSuccessful = true

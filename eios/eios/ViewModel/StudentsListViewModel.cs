@@ -88,15 +88,14 @@ namespace eios.ViewModel
             Task.Run(async () =>
             {
                 IsBusy = true;
-                StudentsList = await PopulateList<StudentSelect>();
+                StudentsList = await PopulateList();
                 IsBusy = false;
             });
         }
 
-        async Task<List<T>> PopulateList<T>()
+        async Task<List<StudentSelect>> PopulateList()
         {
-            var studentsList = await WebApi.Instance.GetStudentsAsync<T>();
-            return studentsList;
+            return await App.Database.GetStudents((int)App.Current.Properties["IdGroupCurrent"]);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

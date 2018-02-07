@@ -11,7 +11,10 @@ namespace eios.ViewModel
 {
     class CompletedOccupationListViewModel : INotifyPropertyChanged
     {
+        public Occupation Occupation { get; set; }
+
         string _time;
+
         public string Time
         {
             get { return _time; }
@@ -98,32 +101,24 @@ namespace eios.ViewModel
 
         public CompletedOccupationListViewModel(Occupation occupation)
         {
-            Time = occupation.Time;
-            NameOccupation = occupation.Name;
+            Occupation = occupation;
+
+            Time = Occupation.Time;
+            NameOccupation = Occupation.Name;
 
             Task.Run(async () =>
             {
                 IsBusy = true;
 
-                //await Task.Delay(2000);
-
-                //var studentList = new List<StudentAttendance>();
-                //for (int i = 0; i < 10; i++)
-                //{
-                //    studentList.Add(new StudentAttendance()
-                //    {
-                //        Id = i,
-                //        FullName = i + " Федоров Дмитрий Алексеевич",
-                //        IsAbsent = i > 7
-                //    });
-                //}
-
-                //var attendance = await WebApi.Instance.GetAttendanceAsync(occupation.IdOccupation);
-
-                //StudentsList = studentList.OrderByDescending(student => student.IsAbsent).ToList();
+                StudentsList = await PopulateList();
 
                 IsBusy = false;
             });
+        }
+
+        async Task<List<StudentAttendance>> PopulateList()
+        {
+            return await App.Database.GetAttendance(Occupation.IdOccupation, (int)App.Current.Properties["IdGroupCurrent"]);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
