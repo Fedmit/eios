@@ -6,10 +6,6 @@
     <ContentPage.Content>
         <TableView Intent="Settings" HeightRequest="100">
             <TableRoot>
-                <TableSection Title="Уведомления">
-                    <SwitchCell Text="Поулучать уведомления о начале пары" On="True" />
-                    <SwitchCell Text="Напомнить отметить" On="true" />
-                </TableSection>
                 <TableSection Title="Группа">
                     <ViewCell>
                         <StackLayout Orientation="Horizontal" Padding="20,0">

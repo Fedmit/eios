@@ -210,10 +210,11 @@ namespace eios.Data
             {
                 await database.QueryAsync<Attendance>("DELETE FROM Attendance WHERE id_ocup = ? AND id_group = ?", id_ocup, id_group);
                 await database.InsertAllAsync(refreshList);
-            }  catch (SQLiteException ex)
-            {
-                Console.WriteLine(ex.Message);  
             }
-}
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
     }
 }

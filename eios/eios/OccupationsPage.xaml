@@ -2,18 +2,21 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:eios"
-             x:Class="eios.OccupationsPage"
-             Title="17РОМАНЛОХ | 2 февраля">
-    
+             x:Class="eios.OccupationsPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="calendarButton" Order="Primary" Text="07.02.18" Priority="0" Activated="onClicked"/>
+    </ContentPage.ToolbarItems>
+    <!--Title="17РОМАНЛОХ | 2 февраля"-->>
     <ContentPage.Content>
         <StackLayout>
-            <ActivityIndicator
+
+            <!--<ActivityIndicator
                 Margin="20"
                 WidthRequest="35"
                 HeightRequest="35"
                 IsVisible="{Binding IsBusy}"
-                IsRunning="{Binding IsBusy}" />
-            <ListView
+                IsRunning="{Binding IsBusy}" />-->
+            <!--<ListView
                 x:Name="listView" 
                 RowHeight="60"
                 ItemsSource="{Binding OccupationsList}"
@@ -31,7 +34,12 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView>
+            </ListView>-->
+            <DatePicker Format="D" DateSelected="datePicker_DateSelected">
+                <DatePicker.MinimumDate>6/01/2016</DatePicker.MinimumDate>
+                <DatePicker.MaximumDate>6/30/2020</DatePicker.MaximumDate>
+            </DatePicker>
+            <Label Text="check"></Label>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
