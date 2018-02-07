@@ -12,6 +12,17 @@ namespace eios.ViewModel
 {
     class OccupationsListViewModel : INotifyPropertyChanged
     {
+        string _date;
+        public string Date
+        {
+            get { return _date; }
+            set
+            {
+                _date = value;
+                OnPropertyChanged(nameof(Date));
+            }
+        }
+
         bool _isBusy;
         public bool IsBusy
         {

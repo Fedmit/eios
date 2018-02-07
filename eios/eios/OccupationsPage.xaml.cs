@@ -17,37 +17,37 @@ namespace eios
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class OccupationsPage : ContentPage
 	{
+        OccupationsListViewModel ViewModel { get; set; }
+
         public OccupationsPage ()
 		{
 			InitializeComponent ();
-   //         var occupationsViewModel = new OccupationsListViewModel();
-			//BindingContext = occupationsViewModel;
 
-   //         listView.ItemTapped += async (sender, e) =>
-   //         {
-   //             listView.SelectedItem = null;
+            ViewModel = new OccupationsListViewModel();
+            BindingContext = ViewModel;
 
-   //             if (e.Item is Occupation item)
-   //             {
-   //                 if (item.TargetType == null)
-   //                 {
-   //                     return;
-   //                 }
+            listView.ItemTapped += async (sender, e) =>
+            {
+                listView.SelectedItem = null;
 
-   //                 await Navigation.PushAsync((Page)Activator.CreateInstance(item.TargetType, item));
-   //             }
-   //         };
+                if (e.Item is Occupation item)
+                {
+                    if (item.TargetType == null)
+                    {
+                        return;
+                    }
+
+                    await Navigation.PushAsync((Page)Activator.CreateInstance(item.TargetType, item));
+                }
+            };
         }
         void onClicked (Object sender, DateChangedEventArgs e)
         {
-            Console.WriteLine("clicked");
-            datePicker_DateSelected(sender, e);
+            datePicker.Focus();
         }
         void datePicker_DateSelected(Object sender, DateChangedEventArgs e)
         {
-            Console.WriteLine("date = " + e.NewDate.ToString("dd/MM/yyyy"));
+            ViewModel.Date = e.NewDate.ToString("dd/MM/yyyy");
         }
-
-
     }
 }
