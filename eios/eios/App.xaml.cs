@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using eios.Data;
 
 namespace eios
 {
@@ -21,6 +22,20 @@ namespace eios
         public static DateTime DateNow { get; set; }
 
         public static List<Group> Groups { get; set; }
+
+        private const string DATABASE_NAME = "EIOS_DB.db";
+        private static DataBaseRepository dataBase;
+        public static DataBaseRepository Database
+        {
+            get
+            {
+                if (dataBase == null)
+                {
+                    dataBase = new DataBaseRepository(DATABASE_NAME);
+                }
+                return dataBase;
+            }
+        }
 
         public App ()
 		{

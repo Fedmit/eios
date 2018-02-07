@@ -5,26 +5,36 @@ using Xamarin.Forms;
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
+using SQLite;
 
 namespace eios.Model
 {
+    [Table("Occupations")]
     public class Occupation : INotifyPropertyChanged
     {
-        [JsonProperty("id_occup")]
-        public int IdOccupation { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
-        
-        [JsonProperty("id_lesson")]
-        public string IdLesson { get; set; }
-
-        [JsonProperty("aud")]
-        public string Aud { get; set; }
-
+        [PrimaryKey, AutoIncrement]
+        public int _id { get; set; }
+        [Column("id_group")]
         public int IdGroup { get; set; }
 
+        [JsonProperty("id_lesson"), Column("lesson_id")]
+        public int IdLesson { get; set; }
+
+        [JsonProperty("name"), Column("lesson_name")]
+        public string Name { get; set; }
+
+        [JsonProperty("aud"), Column("aud")]
+        public string Aud { get; set; }
+
+        public bool is_check { get; set; }
+        public bool is_block { get; set; }
+        public bool is_sent { get; set; }
+
+        [JsonProperty("id_occup"), Column("id_ocup")]
+        public int IdOccupation { get; set; }
+
         private string _mark;
+        [Ignore]
         public string Mark
         {
             get { return _mark; }
@@ -36,6 +46,7 @@ namespace eios.Model
             }
         }
 
+        [Ignore]
         public string CircleColor
         {
             get
@@ -52,6 +63,7 @@ namespace eios.Model
             }
         }
 
+        [Ignore]
         public Type TargetType
         {
             get
@@ -68,6 +80,7 @@ namespace eios.Model
             }
         }
 
+        [Ignore]
         public string Time
         {
             get

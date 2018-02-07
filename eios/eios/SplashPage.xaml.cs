@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using eios.Model;
 
 namespace eios
 {
@@ -46,6 +47,7 @@ namespace eios
 
         protected async override void OnAppearing()
         {
+            //Тестирую бд
             base.OnAppearing();
 
             if (App.IsConnected)

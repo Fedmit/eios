@@ -7,16 +7,19 @@ using SQLite;
 
 namespace eios.Model
 {
-    class Student
+    [Table("Students")]
+    public class Student
     {
-        [JsonProperty("id_student")]
+        [JsonProperty("id_student"), PrimaryKey, Column("id_student")]
         public int Id { get; set; }
 
-        [JsonProperty("fio")]
+        [JsonProperty("fullname"), Column("fullname")]
         public string FullName { get; set; }
+
+        public int id_group { get; set; }
     }
 
-    class StudentAttendance : Student
+    public class StudentAttendance : Student
     {
         public bool IsAbsent { get; set; }
 
@@ -33,9 +36,10 @@ namespace eios.Model
         }
     }
 
-    class StudentSelect : Student, INotifyPropertyChanged
+    public class StudentSelect : Student, INotifyPropertyChanged
     {
         private bool _isSelected = false;
+        [Ignore]
         public bool IsSelected
         {
             get { return _isSelected; }
@@ -45,7 +49,7 @@ namespace eios.Model
                 OnPropertyChanged(nameof(IconSource));
             }
         }
-
+        [Ignore]
         public string IconSource
         {
             get
@@ -67,5 +71,21 @@ namespace eios.Model
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+    }
+
+    [Table("Attendance")]
+    public class StudentAbsent
+    {
+        [PrimaryKey, AutoIncrement]
+        public int _id { get; set; }
+
+        [Column("id_student")]
+        public int Id { get; set; }
+
+        [Column("id_ocup")]
+        public int IdOccupation { get; set; }
+
+        [Column("id_group")]
+        public int IdGroup { get; set; }
     }
 }

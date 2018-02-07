@@ -226,7 +226,7 @@ namespace eios.Data
             return time;
         }
 
-        public async Task<Attendance> GetAttendanceAsync(int idOccupation)
+        public async Task<StudentAbsent> GetAttendanceAsync(int idOccupation)
         {
             dynamic dynamicJson = new ExpandoObject();
             dynamicJson.login = Login;
@@ -237,7 +237,7 @@ namespace eios.Data
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
-            Attendance attendance = null;
+            StudentAbsent attendance = null;
             try
             {
                 HttpClient client = new HttpClient();
@@ -254,7 +254,7 @@ namespace eios.Data
                 var content = await response.Content.ReadAsStringAsync();
                 JArray arr = JArray.Parse(content);
 
-                attendance = JsonConvert.DeserializeObject<Attendance>(arr[0].ToString());
+                attendance = JsonConvert.DeserializeObject<StudentAbsent>(arr[0].ToString());
             }
             catch (Exception ex)
             {
