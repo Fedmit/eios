@@ -23,6 +23,17 @@ namespace eios.ViewModel
             }
         }
 
+        string _group;
+        public string Group
+        {
+            get { return _group; }
+            set
+            {
+                _group = value;
+                OnPropertyChanged(nameof(Group));
+            }
+        }
+
         bool _isBusy;
         public bool IsBusy
         {

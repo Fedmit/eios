@@ -18,18 +18,8 @@ namespace eios
 		{
 			InitializeComponent ();
 
-            pickerGroup.SelectedIndexChanged += OnSelectedIndexChanged;
         }
 
-        void OnSelectedIndexChanged(object sender, EventArgs e)
-        {
-            var picker = (Picker)sender;
-            int selectedIndex = picker.SelectedIndex;
-
-            if (selectedIndex != -1)
-            {
-                App.Current.Properties["IdGroupCurrent"] = App.Groups[selectedIndex].IdGroup;
-            }
-        }
+        
     }
 }

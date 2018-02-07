@@ -25,6 +25,8 @@ namespace eios
 
             ViewModel = new OccupationsListViewModel();
             BindingContext = ViewModel;
+            ViewModel.Date = "дата";
+            ViewModel.Group = "групы";
 
             listView.ItemTapped += async (sender, e) =>
             {
@@ -48,6 +50,20 @@ namespace eios
         void datePicker_DateSelected(Object sender, DateChangedEventArgs e)
         {
             ViewModel.Date = e.NewDate.ToString("dd/MM/yyyy");
+        }
+        void OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            var picker = (Picker)sender;
+            int selectedIndex = picker.SelectedIndex;
+
+            if (selectedIndex != -1)
+            {
+                App.Current.Properties["IdGroupCurrent"] = App.Groups[selectedIndex].IdGroup;
+            }
+        }
+        void onClickedGroup()
+        {
+            pickerGroup.Focus();
         }
     }
 }

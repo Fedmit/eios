@@ -4,7 +4,8 @@
              xmlns:local="clr-namespace:eios"
              x:Class="eios.OccupationsPage">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="calendarButton" Order="Primary" Text="{Binding Date}" Priority="0" Activated="onClicked"/>
+        <ToolbarItem Name="calendarButton" Order="Primary" Text="{Binding Date}" Priority="1" Activated="onClicked"/>
+        <ToolbarItem Name ="groupButton" Order="Primary" Text="{Binding Group}" Priority="0" Activated="onClickedGroup"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <Grid>
@@ -39,6 +40,12 @@
                 <DatePicker.MinimumDate>6/01/2016</DatePicker.MinimumDate>
                 <DatePicker.MaximumDate>6/30/2020</DatePicker.MaximumDate>
             </DatePicker>
+            <Picker
+               x:Name="pickerGroup"
+               IsVisible="False"
+               SelectedIndexChanged="OnSelectedIndexChanged"
+               ItemsSource="{x:Static local:App.Groups}"
+               ItemDisplayBinding="{Binding Name}" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>
