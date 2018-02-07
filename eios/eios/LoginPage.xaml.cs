@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Auth;
 
 namespace eios
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
-        public bool mark=false;
+        public bool mark = false;
         public LoginPage()
         {
             InitializeComponent();
@@ -29,8 +30,16 @@ namespace eios
             if (isValid)
             {
                 App.IsUserLoggedIn = true;
-                App.Login = login;
-                App.Password = password;
+                
+                if (!string.IsNullOrWhiteSpace(login) && !string.IsNullOrWhiteSpace(password))
+                {
+                    Account account = new Account
+                    {
+                        Username = login
+                    };
+                    account.Properties.Add("Password", password);
+                    AccountStore.Create().Save(account, "eios");
+                }
 
                 Application.Current.MainPage = new MainPage();
             }
