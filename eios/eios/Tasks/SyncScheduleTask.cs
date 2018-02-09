@@ -17,8 +17,6 @@ namespace eios.Tasks
 
         public async Task RunSyncSchedule()
         {
-            App.IsLoading = true;
-
             if (App.IsConnected)
             {
                 try
@@ -34,23 +32,11 @@ namespace eios.Tasks
 
                     if (lastDate == null || lastDate != dateNowStr)
                     {
+                        var groups = await App.Database.GetGroups();
+
+                        await App.Database.DeleteThisShits();
                         await App.Database.CreateTables();
-
-                        var response = await WebApi.Instance.GetGroupsAsync();
-
-                        App.Current.Properties["IdGroupCurrent"] = response.Data[0].IdGroup;
-
-                        Device.BeginInvokeOnMainThread(() =>
-                        {
-                            MessagingCenter.Send(new OnGroupsLoadedMessage(), "OnGroupsLoadedMessage");
-                        });
-
-                        await App.Database.SetGroup(response.Data);
-
-                        App.Current.Properties["Fullname"] = response.Fullname;
-                        await App.Current.SavePropertiesAsync();
-
-                        foreach (var group in response.Data)
+                        foreach (var group in groups)
                         {
                             var occupations = await WebApi.Instance.GetOccupationsAsync(group.IdGroup);
                             var students = await WebApi.Instance.GetStudentsAsync(group.IdGroup);

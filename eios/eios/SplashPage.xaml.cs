@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using eios.Model;
+using System.Net.Http;
 
 namespace eios
 {
@@ -25,36 +26,41 @@ namespace eios
         {
             base.OnAppearing();
 
+            await Task.Delay(1000);
+
             if (App.IsConnected)
             {
-                await Task.Delay(3000);
-
                 if (App.Current.Properties.ContainsKey("IsLoggedIn") && (bool)App.Current.Properties["IsLoggedIn"])
                 {
-                    MessagingCenter.Subscribe<OnGroupsLoadedMessage>(this, "OnGroupsLoadedMessage", message =>
+                    try
                     {
-                        Device.BeginInvokeOnMainThread(() =>
-                        {
-                            MessagingCenter.Send(new StartSyncUnsentChangesTask(), "StartSyncUnsentChangesTask");
-
-                            Application.Current.MainPage = new MainPage();
-                        });
-                    });
-
-                    MessagingCenter.Subscribe<OnScheduleSyncronizedMessage>(this, "OnScheduleSyncronizedMessage", message =>
+                        await WebApi.Instance.GetGroupsAsync();
+                    }
+                    catch (HttpRequestException)
                     {
-                        Device.BeginInvokeOnMainThread(async () =>
-                        {
-                            if (!message.IsSuccessful)
-                            {
+                        Navigation.InsertPageBefore(new LoginPage(), this);
+                        await Navigation.PopAsync();
 
-                                Navigation.InsertPageBefore(new LoginPage(), this);
-                                await Navigation.PopAsync();
-                            }
-                        });
-                    });
+                        return;
+                    }
 
+                    //MessagingCenter.Send(new StartSyncUnsentChangesTask(), "StartSyncUnsentChangesTask");
+                    App.IsLoading = true;
                     MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
+
+                    Application.Current.MainPage = new MainPage();
+                }
+                else
+                {
+                    Navigation.InsertPageBefore(new LoginPage(), this);
+                    await Navigation.PopAsync();
+                }
+            }
+            else
+            {
+                if (App.Current.Properties.ContainsKey("IsLoggedIn") && (bool)App.Current.Properties["IsLoggedIn"])
+                {
+                    Application.Current.MainPage = new MainPage();
                 }
                 else
                 {

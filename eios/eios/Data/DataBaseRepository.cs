@@ -21,7 +21,6 @@ namespace eios.Data
             await database.CreateTableAsync<StudentAbsent>();
             await database.CreateTableAsync<Student>();
             await database.CreateTableAsync<Occupation>();
-            await database.CreateTableAsync<Group>();
         }
 
         public async Task DeleteThisShits()
@@ -29,7 +28,6 @@ namespace eios.Data
             await database.DropTableAsync<StudentAbsent>();
             await database.DropTableAsync<Student>();
             await database.DropTableAsync<Occupation>();
-            await database.DropTableAsync<Group>();
         }
 
         public async Task<List<Occupation>> GetOccupations(int idGroup)
@@ -139,6 +137,8 @@ namespace eios.Data
         {
             try
             {
+                await database.DropTableAsync<Group>();
+                await database.CreateTableAsync<Group>();
                 await database.InsertAllAsync(groups);
             }
             catch (SQLiteException ex)

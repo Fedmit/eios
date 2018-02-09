@@ -1,9 +1,11 @@
 ﻿using eios.Data;
 using eios.Messages;
+using eios.Model;
 using eios.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -28,7 +30,7 @@ namespace eios
                 buttonText);
         }
 
-        void OnLoginButtonClicked(Object sender, AssemblyLoadEventArgs args)
+        async void OnLoginButtonClicked(Object sender, AssemblyLoadEventArgs args)
         {
             loginButton.IsEnabled = false;
             loadingOverlay.IsVisible = true;
@@ -37,38 +39,36 @@ namespace eios
             App.Login = loginEntry.Text;
             App.Password = passwordEntry.Text;
 
-            MessagingCenter.Subscribe<OnGroupsLoadedMessage>(this, "OnGroupsLoadedMessage", message =>
+            GroupResponse response;
+            try
             {
-                Device.BeginInvokeOnMainThread(async () =>
-                {
-                    //MessagingCenter.Send(new StartSyncUnsentChangesTask(), "StartSyncUnsentChangesTask");
-
-                    App.Current.Properties["IsLoggedIn"] = true;
-                    App.Current.Properties["Login"] = App.Login;
-                    App.Current.Properties["Password"] = App.Password;
-                    await App.Current.SavePropertiesAsync();
-
-                    Application.Current.MainPage = new MainPage();
-                });
-            });
-
-            MessagingCenter.Subscribe<OnScheduleSyncronizedMessage>(this, "OnScheduleSyncronizedMessage", message =>
+                response = await WebApi.Instance.GetGroupsAsync();
+            }
+            catch (HttpRequestException)
             {
-                Device.BeginInvokeOnMainThread(async () =>
-                {
-                    if (!message.IsSuccessful)
-                    {
-                        loginButton.IsEnabled = true;
-                        loadingOverlay.IsVisible = false;
-                        activityIndicator.IsRunning = false;
+                loginButton.IsEnabled = true;
+                loadingOverlay.IsVisible = false;
+                activityIndicator.IsRunning = false;
 
-                        await ShowMessage("", "Пароль или логин введены неверно!", "OK");
-                        Console.WriteLine("Login failed");
-                    }
-                });
-            });
+                await ShowMessage("", "Пароль или логин введены неверно!", "OK");
+                Console.WriteLine("Login failed");
 
+                return;
+            }
+
+            await App.Database.SetGroup(response.Data);
+
+            App.Current.Properties["IdGroupCurrent"] = response.Data[0].IdGroup;
+            App.Current.Properties["Fullname"] = response.Fullname;
+            App.Current.Properties["IsLoggedIn"] = true;
+            App.Current.Properties["Login"] = App.Login;
+            App.Current.Properties["Password"] = App.Password;
+            await App.Current.SavePropertiesAsync();
+
+            App.IsLoading = true;
             MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
+
+            Application.Current.MainPage = new MainPage();
         }
     }
 }
