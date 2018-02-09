@@ -67,8 +67,7 @@ namespace eios.ViewModel
                     Device.BeginInvokeOnMainThread(async () => {
                         if (message.IsSuccessful)
                         {
-                            var occupations = await PopulateList();
-                            OccupationsList = occupations;
+                            OccupationsList = await PopulateList();
                         }
                         else
                         {
@@ -85,8 +84,7 @@ namespace eios.ViewModel
             {
                 Task.Run(async () =>
                 {
-                    var occupations = await PopulateList();
-                    OccupationsList = occupations;
+                    OccupationsList = await PopulateList();
                     IsBusy = false;
                 });
             }
@@ -109,7 +107,7 @@ namespace eios.ViewModel
         async Task RefreshList()
         {
             IsRefreshing = true;
-            await UpdateState();
+            //await UpdateState();
             IsRefreshing = false;
         }
 

@@ -57,6 +57,7 @@ namespace eios.Model
     {
         private bool _isSelected = false;
 
+        [Ignore]
         public bool IsSelected
         {
             get { return _isSelected; }
@@ -67,6 +68,7 @@ namespace eios.Model
             }
         }
 
+        [Ignore]
         public string IconSource
         {
             get

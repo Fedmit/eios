@@ -30,7 +30,7 @@ namespace eios.Data
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
-            List<Occupation> ocupations = null;
+            List<Occupation> occupations = null;
             try
             {
                 HttpClient client = new HttpClient();
@@ -45,7 +45,12 @@ namespace eios.Data
                 response.EnsureSuccessStatusCode();
 
                 var content = await response.Content.ReadAsStringAsync();
-                ocupations = JsonConvert.DeserializeObject<List<Occupation>>(content);
+                occupations = JsonConvert.DeserializeObject<List<Occupation>>(content);
+
+                foreach (var occupation in occupations)
+                {
+                    occupation.IdGroup = idGroup;
+                }
             }
             catch (HttpRequestException ex)
             {
@@ -56,7 +61,7 @@ namespace eios.Data
                 Console.WriteLine("GetOccupationsAsync(): " + ex.Message);
             }
 
-            return ocupations;
+            return occupations;
         }
 
         public async Task<List<Mark>> GetMarksAsync()
@@ -158,6 +163,11 @@ namespace eios.Data
                 var content = await response.Content.ReadAsStringAsync();
 
                 students = JsonConvert.DeserializeObject<List<Student>>(content);
+
+                foreach (var student in students)
+                {
+                    student.id_group = idGroup;
+                }
             }
             catch (Exception ex)
             {
