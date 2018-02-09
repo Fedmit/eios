@@ -20,6 +20,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\OnMarksUpdatedMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\OnScheduleSyncronizedMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\StartSyncScheduleStateTaskMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\StartSyncScheduleTaskMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\StartSyncUnsentChangesTask.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\StopSyncScheduleStateTaskMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\GroupResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tasks\SyncScheduleStateTask.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tasks\SyncScheduleTask.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tasks\SyncUnsentChangesTask.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\BedgeView.xaml.cs">
       <DependentUpon>BedgeView.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -29,6 +39,8 @@
       <DependentUpon>CompletedOccupationPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Data\DataBaseRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\ISQlite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\WebApi.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HelpPage.xaml.cs">
       <DependentUpon>HelpPage.xaml</DependentUpon>
@@ -45,12 +57,10 @@
       <DependentUpon>MasterPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)MasterPageItem.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\Attendance.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\MasterPageItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Group.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Mark.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Occupation.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\SelectedStudent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Student.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OccupationsPage.xaml.cs">
       <DependentUpon>OccupationsPage.xaml</DependentUpon>

@@ -1,4 +1,5 @@
-﻿using eios.Model;
+﻿using eios.Messages;
+using eios.Model;
 using eios.ViewModel;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -21,7 +22,7 @@ namespace eios
 		{
 			InitializeComponent ();
 
-            var occupationsViewModel = new OccupationsListViewModel();
+            var occupationsViewModel = new OccupationsListViewModel(this);
 			BindingContext = occupationsViewModel;
 
             listView.ItemTapped += async (sender, e) =>
@@ -38,6 +39,18 @@ namespace eios
                     await Navigation.PushAsync((Page)Activator.CreateInstance(item.TargetType, item));
                 }
             };
+        }
+
+        protected override void OnAppearing()
+        {
+            var message = new StartSyncScheduleStateTaskMessage();
+            MessagingCenter.Send(message, "StartSyncScheduleStateTaskMessage");
+        }
+
+        protected override void OnDisappearing()
+        {
+            var message = new StopSyncScheduleStateTaskMessage();
+            MessagingCenter.Send(message, "StopSyncScheduleStateTaskMessage");
         }
     }
 }

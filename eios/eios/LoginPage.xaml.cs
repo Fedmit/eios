@@ -1,7 +1,11 @@
 ﻿using eios.Data;
+using eios.Messages;
+using eios.Model;
+using eios.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -12,7 +16,6 @@ namespace eios
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
-        public bool mark=false;
         public LoginPage()
         {
             InitializeComponent();
@@ -29,37 +32,43 @@ namespace eios
 
         async void OnLoginButtonClicked(Object sender, AssemblyLoadEventArgs args)
         {
-            string login = loginEntry.Text;
-            string password = passwordEntry.Text;
+            loginButton.IsEnabled = false;
+            loadingOverlay.IsVisible = true;
+            activityIndicator.IsRunning = true;
 
-            bool isValid = await AreCredentialsCorrect(login, password);
-            if (isValid)
+            App.Login = loginEntry.Text;
+            App.Password = passwordEntry.Text;
+
+            GroupResponse response;
+            try
             {
-                App.IsUserLoggedIn = true;
-                App.Login = login;
-                App.Password = password;
-
-                Application.Current.MainPage = new MainPage();
+                response = await WebApi.Instance.GetGroupsAsync();
             }
-            else
+            catch (HttpRequestException)
             {
+                loginButton.IsEnabled = true;
+                loadingOverlay.IsVisible = false;
+                activityIndicator.IsRunning = false;
+
                 await ShowMessage("", "Пароль или логин введены неверно!", "OK");
                 Console.WriteLine("Login failed");
+
+                return;
             }
-        }
 
-        private async Task<bool> AreCredentialsCorrect(string login, string password)
-        {
-            var groups = await WebApi.Instance.GetGroupsAsync(login, password);
+            await App.Database.SetGroup(response.Data);
 
-            if (groups != null)
-            {
-                App.Groups = groups;
-                App.Current.Properties["IdGroupCurrent"] = groups[0].IdGroup;
+            App.Current.Properties["IdGroupCurrent"] = response.Data[0].IdGroup;
+            App.Current.Properties["Fullname"] = response.Fullname;
+            App.Current.Properties["IsLoggedIn"] = true;
+            App.Current.Properties["Login"] = App.Login;
+            App.Current.Properties["Password"] = App.Password;
+            await App.Current.SavePropertiesAsync();
 
-                return true;
-            }
-            else { return false; }
+            App.IsLoading = true;
+            MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
+
+            Application.Current.MainPage = new MainPage();
         }
     }
 }

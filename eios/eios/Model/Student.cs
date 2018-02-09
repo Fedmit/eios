@@ -7,19 +7,39 @@ using SQLite;
 
 namespace eios.Model
 {
-    class Student
+    [Table("Students")]
+    public class Student
     {
-        [JsonProperty("id_student")]
+        [JsonProperty("id_student"), PrimaryKey, Column("id_student")]
         public int Id { get; set; }
 
-        [JsonProperty("fio")]
-        public string FullName { get; set; }
+        [Ignore]
+        public string FullName
+        {
+            get
+            {
+                return LastName + " " + FirstName + " " + SecondName;
+            }
+        }
+
+        [JsonProperty("firstname"), Column("firstname")]
+        public string FirstName { get; set; }
+
+        [JsonProperty("lastname"), Column("lastname")]
+        public string LastName { get; set; }
+
+        [JsonProperty("secondname"), Column("secondname")]
+        public string SecondName { get; set; }
+
+        public int id_group { get; set; }
     }
 
-    class StudentAttendance : Student
+    public class StudentAttendance : Student
     {
+        [Ignore]
         public bool IsAbsent { get; set; }
 
+        [Ignore]
         public string Color
         {
             get
@@ -33,9 +53,11 @@ namespace eios.Model
         }
     }
 
-    class StudentSelect : Student, INotifyPropertyChanged
+    public class StudentSelect : Student, INotifyPropertyChanged
     {
         private bool _isSelected = false;
+
+        [Ignore]
         public bool IsSelected
         {
             get { return _isSelected; }
@@ -46,6 +68,7 @@ namespace eios.Model
             }
         }
 
+        [Ignore]
         public string IconSource
         {
             get
@@ -67,5 +90,21 @@ namespace eios.Model
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+    }
+
+    [Table("Attendance")]
+    public class StudentAbsent
+    {
+        [PrimaryKey, AutoIncrement, JsonIgnore]
+        public int _id { get; set; }
+
+        [Column("id_student")]
+        public int Id { get; set; }
+
+        [Column("id_ocup"), JsonIgnore]
+        public int IdOccupation { get; set; }
+
+        [Column("id_group"), JsonIgnore]
+        public int IdGroup { get; set; }
     }
 }

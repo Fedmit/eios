@@ -46,11 +46,12 @@
             </ListView>
             <StackLayout Margin="5" Orientation="Horizontal">
                 <Button x:Name="markButton"
-                        HorizontalOptions="Center"
+                        HorizontalOptions="Start"
                         Text="Отметить"
                         Clicked="OnMarkClicked"
                         Margin="5"/>
                 <Button x:Name="unavaibleButton"
+                        HorizontalOptions="EndAndExpand"
                         Text="Пары нет"
                         Clicked="OnUnaviableClicked"
                         Margin="5"/>

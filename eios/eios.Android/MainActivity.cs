@@ -6,6 +6,10 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Xamarin.Forms;
+using eios.Messages;
+using eios.Droid.Services;
+using Android.Content;
 
 namespace eios.Droid
 {
@@ -21,6 +25,30 @@ namespace eios.Droid
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
+
+            WireUpTask();
+        }
+
+        void WireUpTask()
+        {
+            MessagingCenter.Subscribe<StartSyncScheduleTaskMessage>(this, "StartSyncScheduleTaskMessage", message => {
+                var intent = new Intent(this, typeof(SyncScheduleTaskService));
+                StartService(intent);
+            });
+
+            MessagingCenter.Subscribe<StartSyncScheduleStateTaskMessage>(this, "StartSyncScheduleStateTaskMessage", message => {
+                var intent = new Intent(this, typeof(SyncScheduleStateTaskService));
+                StartService(intent);
+            });
+            MessagingCenter.Subscribe<StopSyncScheduleStateTaskMessage>(this, "StopSyncScheduleStateTaskMessage", message => {
+                var intent = new Intent(this, typeof(SyncScheduleStateTaskService));
+                StopService(intent);
+            });
+
+            MessagingCenter.Subscribe<StartSyncUnsentChangesTask>(this, "StartSyncUnsentChangesTask", message => {
+                var intent = new Intent(this, typeof(SyncUnsentChangesTaskService));
+                StartService(intent);
+            });
         }
     }
 }

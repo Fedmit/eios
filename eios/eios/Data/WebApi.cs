@@ -1,6 +1,7 @@
 ﻿using eios.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -15,21 +16,21 @@ namespace eios.Data
     {
         public static WebApi Instance { get; } = new WebApi();
 
-        static string _baseUrl { get { return "http://q9875032.beget.tech/hp_api/api.php"; } }
+        static string _baseUrl { get { return "http://lk.pnzgu.ru/ajax/mobile"; } }
 
-        public async Task<List<Occupation>> GetOccupationsAsync()
+        public async Task<List<Occupation>> GetOccupationsAsync(int idGroup)
         {
             dynamic dynamicJson = new ExpandoObject();
             dynamicJson.login = App.Login;
             dynamicJson.password = App.Password;
             dynamicJson.type = "get_info";
-            dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
-            dynamicJson.date = App.Date.ToString("yyyy-MM-dd");
+            dynamicJson.id_group = idGroup;
+            dynamicJson.date = App.DateNow.ToString("yyyy-MM-dd HH:mm:ss");
 
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
-            List<Occupation> ocupations = null;
+            List<Occupation> occupations = null;
             try
             {
                 HttpClient client = new HttpClient();
@@ -44,16 +45,23 @@ namespace eios.Data
                 response.EnsureSuccessStatusCode();
 
                 var content = await response.Content.ReadAsStringAsync();
-                ocupations = JsonConvert.DeserializeObject<List<Occupation>>(content);
+                occupations = JsonConvert.DeserializeObject<List<Occupation>>(content);
 
-                //ocupations.Sort((x, y) => DateTime.Compare(x.Time, y.Time));
+                foreach (var occupation in occupations)
+                {
+                    occupation.IdGroup = idGroup;
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                throw ex;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("GetOccupationsAsync(): " + ex.Message);
             }
 
-            return ocupations;
+            return occupations;
         }
 
         public async Task<List<Mark>> GetMarksAsync()
@@ -62,7 +70,7 @@ namespace eios.Data
             dynamicJson.login = App.Login;
             dynamicJson.password = App.Password;
             dynamicJson.type = "get_mark";
-            dynamicJson.date = App.Date.ToString("yyyy-MM-dd HH:mm:ss");
+            dynamicJson.date = App.DateNow.ToString("yyyy-MM-dd HH:mm:ss");
             dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
 
             string json = "";
@@ -93,16 +101,16 @@ namespace eios.Data
             return marks;
         }
 
-        public async Task<List<Group>> GetGroupsAsync(string login, string password)
+        public async Task<GroupResponse> GetGroupsAsync()
         {
             dynamic dynamicJson = new ExpandoObject();
-            dynamicJson.login = login;
-            dynamicJson.password = password;
+            dynamicJson.login = App.Login;
+            dynamicJson.password = App.Password;
             dynamicJson.type = "get_group";
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
-            List<Group> groups = null;
+            GroupResponse groupResponse = null;
             try
             {
                 HttpClient client = new HttpClient();
@@ -118,27 +126,27 @@ namespace eios.Data
 
                 var content = await response.Content.ReadAsStringAsync();
 
-                groups = JsonConvert.DeserializeObject<List<Group>>(content);
+                groupResponse = JsonConvert.DeserializeObject<GroupResponse>(content);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("GetGroupsAsync(): " + ex.Message);
             }
 
-            return groups;
+            return groupResponse;
         }
 
-        public async Task<List<T>> GetStudentsAsync<T>()
+        public async Task<List<Student>> GetStudentsAsync(int idGroup)
         {
             dynamic dynamicJson = new ExpandoObject();
             dynamicJson.login = App.Login;
             dynamicJson.password = App.Password;
             dynamicJson.type = "get_students";
-            dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
+            dynamicJson.id_group = idGroup;
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
-            List<T> students = null;
+            List<Student> students = null;
             try
             {
                 HttpClient client = new HttpClient();
@@ -154,7 +162,12 @@ namespace eios.Data
 
                 var content = await response.Content.ReadAsStringAsync();
 
-                students = JsonConvert.DeserializeObject<List<T>>(content);
+                students = JsonConvert.DeserializeObject<List<Student>>(content);
+
+                foreach (var student in students)
+                {
+                    student.id_group = idGroup;
+                }
             }
             catch (Exception ex)
             {
@@ -188,8 +201,7 @@ namespace eios.Data
                 response.EnsureSuccessStatusCode();
 
                 var content = await response.Content.ReadAsStringAsync();
-                JArray arr = JArray.Parse(content);
-                string str = (string)arr[0].SelectToken("date");
+                string str = (string)JObject.Parse(content).SelectToken("date");
 
                 time = DateTime.Parse(str);
             }
@@ -201,7 +213,7 @@ namespace eios.Data
             return time;
         }
 
-        public async Task<Attendance> GetAttendanceAsync(int idOccupation)
+        public async Task<List<StudentAbsent>> GetAttendanceAsync(int idOccupation, int idGroup)
         {
             dynamic dynamicJson = new ExpandoObject();
             dynamicJson.login = App.Login;
@@ -212,7 +224,7 @@ namespace eios.Data
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
-            Attendance attendance = null;
+            List<StudentAbsent> attendance = null;
             try
             {
                 HttpClient client = new HttpClient();
@@ -227,9 +239,8 @@ namespace eios.Data
                 response.EnsureSuccessStatusCode();
 
                 var content = await response.Content.ReadAsStringAsync();
-                JArray arr = JArray.Parse(content);
 
-                attendance = JsonConvert.DeserializeObject<Attendance>(arr[0].ToString());
+                attendance = JsonConvert.DeserializeObject<List<StudentAbsent>>(content);
             }
             catch (Exception ex)
             {
@@ -239,11 +250,11 @@ namespace eios.Data
             return attendance;
         }
 
-        public async Task<bool> SetAttendAsync(int idTimeTable, List<SelectedStudent> list)
+        public async Task<bool> SetAttendAsync(int idTimeTable, List<StudentAbsent> list)
         {
             dynamic dynamicJson = new ExpandoObject();
-            dynamicJson.login = App.Current.Properties["Login"];
-            dynamicJson.password = App.Current.Properties["Password"];
+            dynamicJson.login = App.Login;
+            dynamicJson.password = App.Password;
             dynamicJson.type = "set_attend";
             dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
             dynamicJson.id_timetable = idTimeTable;

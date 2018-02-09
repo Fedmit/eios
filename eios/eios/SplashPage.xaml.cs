@@ -1,4 +1,6 @@
-﻿using System;
+﻿using eios.Data;
+using eios.Messages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,13 +8,15 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using eios.Model;
+using System.Net.Http;
 
 namespace eios
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SplashPage : ContentPage
 	{
-		public SplashPage ()
+        public SplashPage ()
 		{
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
@@ -21,9 +25,49 @@ namespace eios
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            await Task.Delay(5000);//убрать 0
-            Navigation.InsertPageBefore(new LoginPage(), this);
-            await Navigation.PopAsync();
+
+            await Task.Delay(1000);
+
+            if (App.IsConnected)
+            {
+                if (App.Current.Properties.ContainsKey("IsLoggedIn") && (bool)App.Current.Properties["IsLoggedIn"])
+                {
+                    try
+                    {
+                        await WebApi.Instance.GetGroupsAsync();
+                    }
+                    catch (HttpRequestException)
+                    {
+                        Navigation.InsertPageBefore(new LoginPage(), this);
+                        await Navigation.PopAsync();
+
+                        return;
+                    }
+
+                    //MessagingCenter.Send(new StartSyncUnsentChangesTask(), "StartSyncUnsentChangesTask");
+                    App.IsLoading = true;
+                    MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
+
+                    Application.Current.MainPage = new MainPage();
+                }
+                else
+                {
+                    Navigation.InsertPageBefore(new LoginPage(), this);
+                    await Navigation.PopAsync();
+                }
+            }
+            else
+            {
+                if (App.Current.Properties.ContainsKey("IsLoggedIn") && (bool)App.Current.Properties["IsLoggedIn"])
+                {
+                    Application.Current.MainPage = new MainPage();
+                }
+                else
+                {
+                    Navigation.InsertPageBefore(new LoginPage(), this);
+                    await Navigation.PopAsync();
+                }
+            }
         }
     }
 }

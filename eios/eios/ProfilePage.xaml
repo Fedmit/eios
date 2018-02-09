@@ -109,6 +109,7 @@
             </StackLayout>
             <Button
                 x:Name="exitButton"
+                Clicked="OnExitButtonClicked"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 Text=" Выйти из профиля "

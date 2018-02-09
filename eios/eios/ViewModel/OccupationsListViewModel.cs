@@ -1,4 +1,5 @@
 ﻿using eios.Data;
+using eios.Messages;
 using eios.Model;
 using System;
 using System.Collections.Generic;
@@ -54,33 +55,61 @@ namespace eios.ViewModel
             }
         }
 
-        public OccupationsListViewModel()
+        public OccupationsListViewModel(ContentPage context)
         {
             _occupationsList = new List<Occupation>();
             _refreshCommand = new Command(async () => await RefreshList());
 
-            Task.Run(async () =>
+            IsBusy = true;
+            if (App.IsLoading)
             {
-                IsBusy = true;
-                OccupationsList = await PopulateList();
-                await UpdateState();
-                IsBusy = false;
+                MessagingCenter.Subscribe<OnScheduleSyncronizedMessage>(this, "OnScheduleSyncronizedMessage", message => {
+                    Device.BeginInvokeOnMainThread(async () => {
+                        if (message.IsSuccessful)
+                        {
+                            var occupationList = await PopulateList();
+                            OccupationsList = occupationList;
+                        }
+                        else
+                        {
+                            await context.DisplayAlert(
+                                "Ошибка",
+                                "Произошла ошибка при загрузке данных",
+                                "ОК");
+                        }
+                        IsBusy = false;
+                    });
+                });
+            }
+            else
+            {
+                Task.Run(async () =>
+                {
+                    var occupationList = await PopulateList();
+                    OccupationsList = occupationList;
+                    IsBusy = false;
+                });
+            }
+
+            MessagingCenter.Subscribe<OnMarksUpdatedMessage>(this, "OnMarksUpdatedMessage", message => {
+                Device.BeginInvokeOnMainThread(async () => {
+                    if (message.IsSuccessful)
+                    {
+                        await UpdateState();
+                    }
+                });
             });
         }
 
         async Task<List<Occupation>> PopulateList()
         {
-            App.Date = await WebApi.Instance.GetDateAsync();
-            var occupationsList = await WebApi.Instance.GetOccupationsAsync();
-            return occupationsList;
+            return await App.Database.GetOccupations((int)App.Current.Properties["IdGroupCurrent"]);
         }
 
         async Task RefreshList()
         {
             IsRefreshing = true;
-
-            await UpdateState();
-
+            //await UpdateState();
             IsRefreshing = false;
         }
 
