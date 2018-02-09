@@ -20,8 +20,8 @@ namespace eios.Tasks
 
                     if (App.IsConnected)
                     {
-                        var marks = await WebApi.Instance.GetMarksAsync();
-                        await App.Database.SetMarks(marks);
+                        //var marks = await WebApi.Instance.GetMarksAsync();
+                        //await App.Database.SetMarks(marks);
 
                         var message = new OnMarksUpdatedMessage()
                         {

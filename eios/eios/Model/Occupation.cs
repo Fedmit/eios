@@ -14,13 +14,17 @@ namespace eios.Model
     {
         [PrimaryKey, AutoIncrement]
         public int _id { get; set; }
+
         [Column("id_group")]
         public int IdGroup { get; set; }
+
+        [JsonProperty("id_occup"), Column("id_ocup")]
+        public int IdOccupation { get; set; }
 
         [JsonProperty("id_lesson"), Column("lesson_id")]
         public int IdLesson { get; set; }
 
-        [JsonProperty("name"), Column("lesson_name")]
+        [JsonProperty("lesson_name"), Column("lesson_name")]
         public string Name { get; set; }
 
         [JsonProperty("aud"), Column("aud")]
@@ -29,9 +33,6 @@ namespace eios.Model
         public bool is_check { get; set; }
         public bool is_block { get; set; }
         public bool is_sent { get; set; }
-
-        [JsonProperty("id_occup"), Column("id_ocup")]
-        public int IdOccupation { get; set; }
 
         private string _mark;
         [Ignore]
@@ -75,7 +76,7 @@ namespace eios.Model
                     case "is_no": return null;
                     case "is_attend": return typeof(CompletedOccupationPage);
                     case "will": return null;
-                    default: return null;
+                    default: return typeof(StudentsPage);
                 }
             }
         }

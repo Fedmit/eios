@@ -3,6 +3,7 @@ using eios.Messages;
 using eios.Model;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace eios.Tasks
 {
     class SyncScheduleTask
     {
-        private Task webapi;
+        private bool isSuccessful;
 
         public async Task RunSyncSchedule()
         {
@@ -20,41 +21,64 @@ namespace eios.Tasks
 
             if (App.IsConnected)
             {
-                DateTime dateNow = await WebApi.Instance.GetDateAsync();
-                string dateNowStr = dateNow.ToString("yyyy:mm:dd");
-
-                string lastDate = null;
-                if (App.Current.Properties.ContainsKey("DateNow"))
+                try
                 {
-                    lastDate = (string)App.Current.Properties["DateNow"];
-                }
+                    DateTime dateNow = await WebApi.Instance.GetDateAsync();
+                    string dateNowStr = dateNow.ToString("yyyy-mm-dd HH:mm:ss");
 
-                if (lastDate == null || lastDate != dateNowStr)
-                {
-                    var groups = await WebApi.Instance.GetGroupsAsync();
-                    await App.Database.SetGroup(groups);
-
-                    foreach(var group in groups)
+                    string lastDate = null;
+                    if (App.Current.Properties.ContainsKey("DateNow"))
                     {
-                        var occupations = await WebApi.Instance.GetOccupationsAsync(group.IdGroup);
-                        var students = await WebApi.Instance.GetStudentsAsync(group.IdGroup);
-
-                        await App.Database.SetOccupations(occupations);
-                        await App.Database.SetStudents(students);
+                        lastDate = (string)App.Current.Properties["DateNow"];
                     }
-                }
-                App.Current.Properties["DateNow"] = dateNowStr;
-            }
 
-            App.IsLoading = false;
+                    if (lastDate == null || lastDate != dateNowStr)
+                    {
+                        await App.Database.CreateTables();
+
+                        var response = await WebApi.Instance.GetGroupsAsync();
+
+                        App.Current.Properties["IdGroupCurrent"] = response.Data[0].IdGroup;
+
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            MessagingCenter.Send(new OnGroupsLoadedMessage(), "OnGroupsLoadedMessage");
+                        });
+
+                        await App.Database.SetGroup(response.Data);
+
+                        App.Current.Properties["Fullname"] = response.Fullname;
+                        await App.Current.SavePropertiesAsync();
+
+                        foreach (var group in response.Data)
+                        {
+                            var occupations = await WebApi.Instance.GetOccupationsAsync(group.IdGroup);
+                            var students = await WebApi.Instance.GetStudentsAsync(group.IdGroup);
+
+                            await App.Database.SetOccupations(occupations);
+                            await App.Database.SetStudents(students);
+                        }
+                    }
+                    App.Current.Properties["DateNow"] = dateNowStr;
+                    await App.Current.SavePropertiesAsync();
+
+                    isSuccessful = true;
+                }
+                catch (HttpRequestException)
+                {
+                    isSuccessful = false;
+                }
+            }
 
             var message = new OnScheduleSyncronizedMessage()
             {
-                IsSuccessful = true
+                IsSuccessful = isSuccessful
             };
             Device.BeginInvokeOnMainThread(() => {
                 MessagingCenter.Send(message, "OnScheduleSyncronizedMessage");
             });
+
+            App.IsLoading = false;
         }
     }
 }

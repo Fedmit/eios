@@ -15,30 +15,6 @@ namespace eios
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SplashPage : ContentPage
 	{
-        public string Login
-        {
-            get
-            {
-                if (App.Current.Properties.ContainsKey("Login"))
-                {
-                    return (string)App.Current.Properties["Login"];
-                }
-                return "";
-            }
-        }
-
-        public string Password
-        {
-            get
-            {
-                if (App.Current.Properties.ContainsKey("Password"))
-                {
-                    return (string)App.Current.Properties["Password"];
-                }
-                return "";
-            }
-        }
-
         public SplashPage ()
 		{
             InitializeComponent();
@@ -47,7 +23,6 @@ namespace eios
 
         protected async override void OnAppearing()
         {
-            //Тестирую бд
             base.OnAppearing();
 
             if (App.IsConnected)
@@ -56,10 +31,30 @@ namespace eios
 
                 if (App.Current.Properties.ContainsKey("IsLoggedIn") && (bool)App.Current.Properties["IsLoggedIn"])
                 {
-                    MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
-                    MessagingCenter.Send(new StartSyncUnsentChangesTask(), "StartSyncUnsentChangesTask");
+                    MessagingCenter.Subscribe<OnGroupsLoadedMessage>(this, "OnGroupsLoadedMessage", message =>
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            MessagingCenter.Send(new StartSyncUnsentChangesTask(), "StartSyncUnsentChangesTask");
 
-                    App.Current.MainPage = new MainPage();
+                            Application.Current.MainPage = new MainPage();
+                        });
+                    });
+
+                    MessagingCenter.Subscribe<OnScheduleSyncronizedMessage>(this, "OnScheduleSyncronizedMessage", message =>
+                    {
+                        Device.BeginInvokeOnMainThread(async () =>
+                        {
+                            if (!message.IsSuccessful)
+                            {
+
+                                Navigation.InsertPageBefore(new LoginPage(), this);
+                                await Navigation.PopAsync();
+                            }
+                        });
+                    });
+
+                    MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
                 }
                 else
                 {

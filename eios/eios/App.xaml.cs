@@ -13,8 +13,44 @@ namespace eios
 {
 	public partial class App : Application
 	{
-        public static string Login { get; set; }
-        public static string Password { get; set; }
+        private static string _login { get; set; }
+        public static string Login
+        {
+            get
+            {
+                if (_login == null)
+                {
+                    if (App.Current.Properties.ContainsKey("Login"))
+                    {
+                        return (string)App.Current.Properties["Login"];
+                    }
+                    return "";
+                }
+
+                return _login;
+            }
+            set { _login = value; }
+        }
+
+        private static string _password { get; set; }
+        public static string Password
+        {
+            get
+            {
+                if(_password == null)
+                {
+                    if (App.Current.Properties.ContainsKey("Password"))
+                    {
+                        return (string)App.Current.Properties["Password"];
+                    }
+                    return "";
+                }
+
+                return _password;
+            }
+            set { _password = value; }
+        }
+
         public static bool IsUserLoggedIn { get; set; }
         public static bool IsLoading { get; set; } = false;
         public static bool IsConnected { get; set; }
