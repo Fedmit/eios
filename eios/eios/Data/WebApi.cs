@@ -51,6 +51,13 @@ namespace eios.Data
                 {
                     occupation.IdGroup = idGroup;
                 }
+                for (int i = 0; i < occupations.Count; i++)
+                {
+                    if (i < 4)
+                    {
+                        occupations[i].IdLesson = i+1;
+                    }
+                }
             }
             catch (HttpRequestException ex)
             {
@@ -250,14 +257,17 @@ namespace eios.Data
             return attendance;
         }
 
-        public async Task<bool> SetAttendAsync(int idTimeTable, List<StudentAbsent> list)
+        public async Task SetAttendAsync(List<StudentAbsent> list, Occupation occupation)
         {
             dynamic dynamicJson = new ExpandoObject();
             dynamicJson.login = App.Login;
             dynamicJson.password = App.Password;
             dynamicJson.type = "set_attend";
             dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
-            dynamicJson.id_timetable = idTimeTable;
+            dynamicJson.date = App.Current.Properties["DateNow"];
+            dynamicJson.id_occup = occupation.IdOccupation;
+            dynamicJson.id_lesson = occupation.IdLesson;
+            dynamicJson.id_aud = occupation.IdAud;
             dynamicJson.data = list;
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
@@ -274,15 +284,15 @@ namespace eios.Data
                     )
                 );
                 response.EnsureSuccessStatusCode();
-
-                return true;
+            }
+            catch (HttpRequestException ex)
+            {
+                throw ex;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("SetAttendAsync(): " + ex.Message);
             }
-
-            return false;
         }
     }
 }

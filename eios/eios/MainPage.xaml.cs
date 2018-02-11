@@ -24,7 +24,12 @@ namespace eios
                 // При нажатии на выход открываем экран с входом
                 if (item.TargetType == typeof(LoginPage))
                 {
+                    App.Current.Properties["IdGroupCurrent"] = null;
+                    App.Current.Properties["Fullname"] = null;
                     App.Current.Properties["IsLoggedIn"] = false;
+                    App.Current.Properties["Login"] = null;
+                    App.Current.Properties["Password"] = null;
+                    App.Current.Properties["DateNow"] = null;
                     await App.Current.SavePropertiesAsync();
 
                     Application.Current.MainPage = new NavigationPage(new LoginPage());

@@ -54,21 +54,16 @@ namespace eios.ViewModel
             }
         }
 
-        int _absentTotal;
-        public int AbsentTotal
+        int _presentTotal;
+        public int PresentTotal
         {
             get
             {
                 if (StudentsList != null)
                 {
-                    return StudentsList.FindAll(s => s.IsAbsent.Equals(true)).Count;
+                    return StudentsList.FindAll(s => s.IsAbsent.Equals(false)).Count;
                 }
                 return 0;
-            }
-            set
-            {
-                _absentTotal = value;
-                OnPropertyChanged(nameof(AbsentTotal));
             }
         }
 
@@ -94,7 +89,7 @@ namespace eios.ViewModel
                     _studentsList = value;
                     OnPropertyChanged(nameof(StudentsList));
                     OnPropertyChanged(nameof(Total));
-                    OnPropertyChanged(nameof(AbsentTotal));
+                    OnPropertyChanged(nameof(PresentTotal));
                 }
             }
         }
@@ -118,7 +113,15 @@ namespace eios.ViewModel
 
         async Task<List<StudentAttendance>> PopulateList()
         {
-            return await App.Database.GetAttendance(Occupation.IdOccupation, (int)App.Current.Properties["IdGroupCurrent"]);
+            var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
+            var attendanceList = await App.Database.GetAttendance(Occupation.IdOccupation, idGroup);
+
+            if(attendanceList == null)
+            {
+                Console.WriteLine("Отмеченных студентов нет лол");
+            }
+
+            return attendanceList;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

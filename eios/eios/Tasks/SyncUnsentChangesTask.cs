@@ -2,6 +2,7 @@
 using eios.Messages;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -10,6 +11,7 @@ namespace eios.Tasks
 {
     class SyncUnsentChangesTask
     {
+        int idGroup = (int)App.Current.Properties["IdGroupCurrent"];
 
         public async Task RunSyncUnsentChanges()
         {
@@ -20,19 +22,21 @@ namespace eios.Tasks
                 {
                     foreach(var occupation in unsentOccupations)
                     {
-                        var students = await App.Database.GetAbsentStudents(occupation.IdOccupation, occupation.IdGroup);
-                        if (students != null && App.Current.Properties.ContainsKey("DateNow"))
+                        if (!App.IsConnected)
                         {
-                            if (!await WebApi.Instance.SetAttendAsync(1, students))
+                            return;
+                        }
+                        var students = await App.Database.GetAbsentStudents(occupation.IdOccupation, occupation.IdGroup);
+                        if (App.Current.Properties.ContainsKey("DateNow"))
+                        {
+                            try
                             {
-                                if (App.IsConnected)
-                                {
-                                    var attendance = await WebApi.Instance.GetAttendanceAsync(occupation.IdOccupation, occupation.IdGroup);
-                                    if (attendance != null)
-                                    {
-                                        await App.Database.SetAttendence(attendance, occupation.IdOccupation, occupation.IdGroup);
-                                    }
-                                }
+                                await WebApi.Instance.SetAttendAsync(students, occupation);
+                                await App.Database.SetSentFlag(occupation.IdOccupation, idGroup);
+                            }
+                            catch (HttpRequestException)
+                            {
+                                await App.Database.DeleteAttendance(occupation.IdOccupation, idGroup);
                             }
                         }
                     }

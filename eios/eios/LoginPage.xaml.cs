@@ -32,8 +32,13 @@ namespace eios
 
         async void OnLoginButtonClicked(Object sender, AssemblyLoadEventArgs args)
         {
+            if (!App.IsConnected)
+            {
+                await ShowMessage("", "Вы не подключены!", "OK");
+                return;
+            }
+
             loginButton.IsEnabled = false;
-            loadingOverlay.IsVisible = true;
             activityIndicator.IsRunning = true;
 
             App.Login = loginEntry.Text;
@@ -47,7 +52,6 @@ namespace eios
             catch (HttpRequestException)
             {
                 loginButton.IsEnabled = true;
-                loadingOverlay.IsVisible = false;
                 activityIndicator.IsRunning = false;
 
                 await ShowMessage("", "Пароль или логин введены неверно!", "OK");
@@ -66,6 +70,7 @@ namespace eios
             await App.Current.SavePropertiesAsync();
 
             App.IsLoading = true;
+
             MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
 
             Application.Current.MainPage = new MainPage();

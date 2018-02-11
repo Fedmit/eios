@@ -6,5 +6,6 @@ namespace eios.Messages
 {
     public class StopSyncScheduleStateTaskMessage
     {
+
     }
 }

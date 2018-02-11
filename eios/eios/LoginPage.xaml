@@ -4,72 +4,64 @@
              x:Class="eios.LoginPage"
              xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms">
     <ContentPage.Content>
-        <Grid>
-            <StackLayout BackgroundColor="White">
-                <StackLayout Orientation="Vertical" VerticalOptions="StartAndExpand">
-                    <Label
-                        Text="ЭИОС ПГУ &#10; Журнал посещаемости"
-                        TextColor="Black"
-                        VerticalOptions="Center"
-                        HorizontalTextAlignment="Center"
-                        FontSize="20"/>
-                </StackLayout>
-                <StackLayout Padding="75,75,75,30" Orientation="Vertical" VerticalOptions="Center" Spacing="10">
-                    <Label
-                        Text="Вход в систему"
-                        TextColor="Black"
-                        HorizontalOptions="Center"
-                        FontSize="20"/>
-                    <Entry
-                        x:Name="loginEntry"
-                        Placeholder="Логин"
-                        Text="s517644114"
-                        TextColor="Black"
-                        PlaceholderColor="Gray"
-                        VerticalOptions="Center"/>
-                    <Entry
-                        x:Name="passwordEntry"
-                        Placeholder="Пароль"
-                        PlaceholderColor="Gray"
-                        Text="xO1XX3dx"
-                        IsPassword="true"
-                        TextColor="Black"
-                        WidthRequest="200"
-                        VerticalOptions="Center"/>
-                    <Button 
-                        x:Name="loginButton"
-                        Text="Войти"
-                        FontSize="18"
-                        BackgroundColor="#1E90FF"
-                        TextColor="White"
-                        HeightRequest="42"
-                        WidthRequest="150"
-                        Clicked="OnLoginButtonClicked"
-                        HorizontalOptions="Center"/>
-                </StackLayout>
-                <StackLayout Padding="75,75,75,30" VerticalOptions="EndAndExpand" HorizontalOptions="Center">
-                    <Button
-                        x:Name="forgotPassword"
-                        Text="Я забыл свой пароль"
-                        TextColor="Black"
-                        BackgroundColor="Transparent"
-                        BorderColor="Transparent"
-                        FontSize="16"/>
-                </StackLayout>
+        <StackLayout BackgroundColor="White">
+            <Label
+                Text="ЭИОС ПГУ &#10; Журнал посещаемости"
+                TextColor="Black"
+                VerticalOptions="Center"
+                Margin="0,100,0,0"
+                HorizontalTextAlignment="Center"
+                FontSize="20"/>
+            <StackLayout Padding="50,80,50,0" Orientation="Vertical" VerticalOptions="Center" Spacing="10">
+                <Label
+                    Text="Вход в систему"
+                    TextColor="Black"
+                    HorizontalOptions="Center"
+                    FontSize="20"/>
+                <Entry
+                    x:Name="loginEntry"
+                    Placeholder="Логин"
+                    Text="s517644114"
+                    TextColor="Black"
+                    PlaceholderColor="Gray"
+                    VerticalOptions="Center"/>
+                <Entry
+                    x:Name="passwordEntry"
+                    Placeholder="Пароль"
+                    PlaceholderColor="Gray"
+                    Text="xO1XX3dx"
+                    IsPassword="true"
+                    TextColor="Black"
+                    WidthRequest="200"
+                    VerticalOptions="Center"/>
+            <StackLayout>
+            <Button 
+                    x:Name="loginButton"
+                    Text="Войти"
+                    FontSize="18"
+                    TextColor="Black"
+                    BorderColor="Black"
+                    WidthRequest="130"
+                    Clicked="OnLoginButtonClicked"
+                    HorizontalOptions="Center"/>
             </StackLayout>
-            <Grid
-                x:Name="loadingOverlay"
-                IsVisible="False"
+            </StackLayout>
+            <ActivityIndicator
+                x:Name="activityIndicator"
+                IsRunning="False"
+                VerticalOptions="Center"
+                Margin="0,30,0,0"/>
+            <Button
+                x:Name="forgotPassword"
+                Text="Я забыл свой пароль"
+                TextColor="Black"
+                BorderColor="Black"
+                BackgroundColor="White"
+                VerticalOptions="EndAndExpand"
                 HorizontalOptions="Center"
-                VerticalOptions="Start">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="35"/>
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <ActivityIndicator
-                    x:Name="activityIndicator"
-                    IsRunning="False" />
-            </Grid>
-        </Grid>
+                Margin="0,0,0,15"
+                WidthRequest="210"
+                FontSize="16" />
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

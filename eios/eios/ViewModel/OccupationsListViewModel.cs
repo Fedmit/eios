@@ -13,6 +13,30 @@ namespace eios.ViewModel
 {
     class OccupationsListViewModel : INotifyPropertyChanged
     {
+
+         string _date;
+         public string Date
+         {
+             get { return _date + "  ▼"; }
+             set
+             {
+                _date = value;
+                OnPropertyChanged(nameof(Date));
+             }
+         }
+
+         string _group;
+         public string Group
+         {
+             get { return _group + "  ▼"; }
+             set
+             {
+                 _group = value;
+                 OnPropertyChanged(nameof(Group));
+             }
+         }
+ 
+
         bool _isBusy;
         public bool IsBusy
         {
@@ -69,6 +93,15 @@ namespace eios.ViewModel
                         {
                             var occupationList = await PopulateList();
                             OccupationsList = occupationList;
+
+                            MessagingCenter.Subscribe<OnMarksUpdatedMessage>(this, "OnMarksUpdatedMessage", _message => {
+                                Device.BeginInvokeOnMainThread(async () => {
+                                    if (message.IsSuccessful)
+                                    {
+                                        await UpdateState();
+                                    }
+                                });
+                            });
                         }
                         else
                         {
@@ -88,17 +121,17 @@ namespace eios.ViewModel
                     var occupationList = await PopulateList();
                     OccupationsList = occupationList;
                     IsBusy = false;
+
+                    MessagingCenter.Subscribe<OnMarksUpdatedMessage>(this, "OnMarksUpdatedMessage", message => {
+                        Device.BeginInvokeOnMainThread(async () => {
+                            if (message.IsSuccessful)
+                            {
+                                await UpdateState();
+                            }
+                        });
+                    });
                 });
             }
-
-            MessagingCenter.Subscribe<OnMarksUpdatedMessage>(this, "OnMarksUpdatedMessage", message => {
-                Device.BeginInvokeOnMainThread(async () => {
-                    if (message.IsSuccessful)
-                    {
-                        await UpdateState();
-                    }
-                });
-            });
         }
 
         async Task<List<Occupation>> PopulateList()
@@ -109,22 +142,15 @@ namespace eios.ViewModel
         async Task RefreshList()
         {
             IsRefreshing = true;
-            //await UpdateState();
+            await UpdateState();
             IsRefreshing = false;
         }
 
         async Task UpdateState()
         {
-            List<Mark> marks = await WebApi.Instance.GetMarksAsync();
-
-            if (marks != null)
-            {
-                foreach (Mark mark in marks)
-                {
-                    var obj = OccupationsList.FirstOrDefault(x => x.IdOccupation == mark.Id);
-                    if (obj != null) obj.Mark = mark.mMark;
-                }
-            }
+            var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
+            var occupationsList = await App.Database.GetOccupations(idGroup);
+            OccupationsList = occupationsList;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
