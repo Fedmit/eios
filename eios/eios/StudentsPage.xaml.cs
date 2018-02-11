@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -49,17 +50,26 @@ namespace eios
 
         async Task OnMarkClicked(Object sender, AssemblyLoadEventArgs args)
         {
-            var selectedList = viewModel.StudentsList.FindAll(s => s.IsSelected.Equals(true));
-            var resultList = new List<StudentAbsent>();
-            foreach (Student st in selectedList)
+            var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
+            await App.Database.SetAttendence(viewModel.StudentsList, occupation.IdOccupation, idGroup);
+
+            if (App.IsConnected)
             {
-                var cache = new StudentAbsent()
+                var students = await App.Database.GetAbsentStudents(occupation.IdOccupation, occupation.IdGroup);
+                try
                 {
-                    Id = st.Id
-                };
-                resultList.Add(cache);
+                    await WebApi.Instance.SetAttendAsync(students, occupation);
+                    await App.Database.SetSentFlag(occupation.IdOccupation, idGroup);
+                }
+                catch (HttpRequestException)
+                {
+                    await App.Database.DeleteAttendance(occupation.IdOccupation, idGroup);
+
+                    await Navigation.PopAsync();
+                    return;
+                }
             }
-            await WebApi.Instance.SetAttendAsync(this.occupation.IdOccupation, resultList);
+
             Navigation.InsertPageBefore(new CompletedOccupationPage(this.occupation), this);
             await Navigation.PopAsync();
         }

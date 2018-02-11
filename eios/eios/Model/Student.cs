@@ -40,15 +40,18 @@ namespace eios.Model
         public bool IsAbsent { get; set; }
 
         [Ignore]
-        public string Color
+        public string IconSource
         {
             get
             {
                 if (IsAbsent)
                 {
-                    return "#ffc9c9";
+                    return "check.png";
                 }
-                return "Transparent";
+                else
+                {
+                    return "uncheck.png";
+                }
             }
         }
     }
@@ -56,7 +59,6 @@ namespace eios.Model
     public class StudentSelect : Student, INotifyPropertyChanged
     {
         private bool _isSelected = false;
-
         [Ignore]
         public bool IsSelected
         {
@@ -98,10 +100,10 @@ namespace eios.Model
         [PrimaryKey, AutoIncrement, JsonIgnore]
         public int _id { get; set; }
 
-        [Column("id_student")]
+        [Column("id_student"), JsonProperty("id_student")]
         public int Id { get; set; }
 
-        [Column("id_ocup"), JsonIgnore]
+        [Column("id_occup"), JsonIgnore]
         public int IdOccupation { get; set; }
 
         [Column("id_group"), JsonIgnore]
