@@ -33,6 +33,7 @@
                 RowHeight="50"
                 ItemsSource="{Binding StudentsList}">
                 <ListView.ItemTemplate>
+                    
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal" Margin="20,0,20,0" Spacing="20">
