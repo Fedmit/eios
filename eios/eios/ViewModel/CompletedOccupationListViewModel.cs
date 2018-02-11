@@ -54,21 +54,16 @@ namespace eios.ViewModel
             }
         }
 
-        int _absentTotal;
-        public int AbsentTotal
+        int _presentTotal;
+        public int PresentTotal
         {
             get
             {
                 if (StudentsList != null)
                 {
-                    return StudentsList.FindAll(s => s.IsAbsent.Equals(true)).Count;
+                    return StudentsList.FindAll(s => s.IsAbsent.Equals(false)).Count;
                 }
                 return 0;
-            }
-            set
-            {
-                _absentTotal = value;
-                OnPropertyChanged(nameof(AbsentTotal));
             }
         }
 
@@ -94,7 +89,7 @@ namespace eios.ViewModel
                     _studentsList = value;
                     OnPropertyChanged(nameof(StudentsList));
                     OnPropertyChanged(nameof(Total));
-                    OnPropertyChanged(nameof(AbsentTotal));
+                    OnPropertyChanged(nameof(PresentTotal));
                 }
             }
         }

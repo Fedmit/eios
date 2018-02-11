@@ -32,6 +32,12 @@ namespace eios
 
         async void OnLoginButtonClicked(Object sender, AssemblyLoadEventArgs args)
         {
+            if (!App.IsConnected)
+            {
+                await ShowMessage("", "Вы не подключены!", "OK");
+                return;
+            }
+
             loginButton.IsEnabled = false;
             activityIndicator.IsRunning = true;
 

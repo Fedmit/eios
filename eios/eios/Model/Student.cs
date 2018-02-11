@@ -40,15 +40,18 @@ namespace eios.Model
         public bool IsAbsent { get; set; }
 
         [Ignore]
-        public string Color
+        public string IconSource
         {
             get
             {
                 if (IsAbsent)
                 {
-                    return "#ffc9c9";
+                    return "check.png";
                 }
-                return "Transparent";
+                else
+                {
+                    return "uncheck.png";
+                }
             }
         }
     }

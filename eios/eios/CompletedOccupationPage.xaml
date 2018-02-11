@@ -28,11 +28,11 @@
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                     <Label
-                        Text="Отсутствуют:"
+                        Text="Присутствуют:"
                         FontSize="Medium"
                         TextColor="Black" />
                     <Label
-                        Text="{Binding AbsentTotal}"
+                        Text="{Binding PresentTotal}"
                         FontSize="Medium"
                         TextColor="Black" />
                 </StackLayout>
@@ -49,7 +49,11 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal" Padding="20,0,20,0" Spacing="20" BackgroundColor="{Binding Color}">
+                            <StackLayout Orientation="Horizontal" Padding="20,0,20,0" Spacing="20">
+                                <Image 
+                                    Source="{Binding IconSource}"
+                                    HeightRequest="20"
+                                    WidthRequest="20"/>
                                 <Label Text="{Binding FullName}" VerticalOptions="Center"/>
                             </StackLayout>
                         </ViewCell>
