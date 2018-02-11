@@ -66,6 +66,13 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <Button x:Name="editButton"
+                        HorizontalOptions="Center"
+                        BorderColor="Black"
+                        Text="Изменить"
+                        TextColor="Black"
+                        Clicked="OnEditClicked"
+                        Margin="5"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

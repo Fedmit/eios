@@ -58,9 +58,8 @@ namespace eios.Model
         {
             get
             {
-                if (!IsChecked && !IsBlocked && IdLesson != 0 && IdOccupation < App.IdOccupNow) { return typeof(StudentsPage); }
-                else if (IsChecked) { return typeof(CompletedOccupationPage); }
-                return null;
+                if (IsChecked) { return typeof(CompletedOccupationPage); }
+                return typeof(StudentsPage);
             }
         }
 

@@ -30,6 +30,8 @@ namespace eios
 
             this.occupation = occupation;
 
+            unavaibleButton.IsVisible = occupation.IdLesson != 0;
+
             studentListView.ItemTapped += (sender, e) =>
             {
                 studentListView.SelectedItem = null;

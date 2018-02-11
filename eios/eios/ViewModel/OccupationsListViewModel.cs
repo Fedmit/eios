@@ -17,18 +17,18 @@ namespace eios.ViewModel
          string _date;
          public string Date
          {
-             get { return _date; }
-            set
+             get { return _date + "  ▼"; }
+             set
              {
-                 _date = value;
-                 OnPropertyChanged(nameof(Date));
-            }
-        }
+                _date = value;
+                OnPropertyChanged(nameof(Date));
+             }
+         }
 
-                string _group;
+         string _group;
          public string Group
          {
-             get { return _group; }
+             get { return _group + "  ▼"; }
              set
              {
                  _group = value;
@@ -93,6 +93,15 @@ namespace eios.ViewModel
                         {
                             var occupationList = await PopulateList();
                             OccupationsList = occupationList;
+
+                            MessagingCenter.Subscribe<OnMarksUpdatedMessage>(this, "OnMarksUpdatedMessage", _message => {
+                                Device.BeginInvokeOnMainThread(async () => {
+                                    if (message.IsSuccessful)
+                                    {
+                                        await UpdateState();
+                                    }
+                                });
+                            });
                         }
                         else
                         {
@@ -112,17 +121,17 @@ namespace eios.ViewModel
                     var occupationList = await PopulateList();
                     OccupationsList = occupationList;
                     IsBusy = false;
+
+                    MessagingCenter.Subscribe<OnMarksUpdatedMessage>(this, "OnMarksUpdatedMessage", message => {
+                        Device.BeginInvokeOnMainThread(async () => {
+                            if (message.IsSuccessful)
+                            {
+                                await UpdateState();
+                            }
+                        });
+                    });
                 });
             }
-
-            MessagingCenter.Subscribe<OnMarksUpdatedMessage>(this, "OnMarksUpdatedMessage", message => {
-                Device.BeginInvokeOnMainThread(async () => {
-                    if (message.IsSuccessful)
-                    {
-                        await UpdateState();
-                    }
-                });
-            });
         }
 
         async Task<List<Occupation>> PopulateList()

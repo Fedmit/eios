@@ -49,6 +49,7 @@
             <StackLayout Margin="5" Orientation="Horizontal" Padding="10,0,0,10" >
                 <Button x:Name="unavaibleButton"
                         BorderColor="Black"
+                        IsVisible="False"
                         HorizontalOptions="Start"
                         Text="Пары нет"
                         TextColor="Black"

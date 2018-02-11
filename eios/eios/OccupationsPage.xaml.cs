@@ -26,8 +26,12 @@ namespace eios
             InitializeComponent();
 
             ViewModel = new OccupationsListViewModel(this);
-            DateTime thisDay = DateTime.Today;
-            ViewModel.Date = thisDay.ToString("d");
+
+            var dateNow = DateTime.Parse((string)App.Current.Properties["DateNow"]);
+            ViewModel.Date = dateNow.ToString("dd/MM/yyyy");
+
+
+
             BindingContext = ViewModel;
             listView.ItemTapped += async (sender, e) =>
             {
@@ -50,7 +54,7 @@ namespace eios
 
             var groups = await App.Database.GetGroups();
             var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
-            Title = groups.Where(Group => Group.IdGroup == idGroup).ToList()[0].Name;
+            ViewModel.Group = groups.Where(Group => Group.IdGroup == idGroup).ToList()[0].Name;
         }
 
         protected override void OnDisappearing()

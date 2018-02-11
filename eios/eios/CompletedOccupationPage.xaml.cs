@@ -14,6 +14,8 @@ namespace eios
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class CompletedOccupationPage : ContentPage
 	{
+        Occupation occupation;
+
         public CompletedOccupationPage(Occupation occupation)
 		{
 			InitializeComponent ();
@@ -21,14 +23,17 @@ namespace eios
             var viewModel = new CompletedOccupationListViewModel(occupation);
             BindingContext = viewModel;
 
+            this.occupation = occupation;
+
             studentListView.ItemTapped += (sender, e) =>
             {
                 studentListView.SelectedItem = null;
             };
         }
 
-        async void OnBackClicked(Object sender, AssemblyLoadEventArgs args)
+        async void OnEditClicked(Object sender, AssemblyLoadEventArgs args)
         {
+            Navigation.InsertPageBefore(new StudentsPage(this.occupation), this);
             await Navigation.PopAsync();
         }
     }
