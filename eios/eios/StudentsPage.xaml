@@ -4,10 +4,10 @@
              xmlns:local="clr-namespace:eios"
              x:Class="eios.StudentsPage">
     <ContentPage.Content>
-        <StackLayout Padding="20">
+        <StackLayout Padding="10,15,10,10">
             <Label x:Name="occupationTime"
                    Text="{Binding OccupationTime}"
-                   Margin="10"
+                   Margin="15"
                    HorizontalOptions="Center"/>
             <Label x:Name="occupationName"
                    Text="{Binding OccupationName}"
@@ -16,13 +16,13 @@
             <StackLayout Margin="5" Orientation="Horizontal">
                 <StackLayout Margin="5" Orientation="Horizontal">
                     <Label
-                        Text="Всего"
+                        Text="Всего:"
                         HorizontalOptions="Start"/>
                     <Label Text="{Binding Total}" />
                 </StackLayout>
                 <StackLayout Margin="5" Orientation="Horizontal" HorizontalOptions="EndAndExpand">
                     <Label 
-                       Text="Присутстуют"
+                       Text="Отсутствуют:"
                        HorizontalOptions="EndAndExpand"/>
                     <Label Text="{Binding OnSite}" />
                 </StackLayout>
@@ -33,7 +33,6 @@
                 RowHeight="50"
                 ItemsSource="{Binding StudentsList}">
                 <ListView.ItemTemplate>
-                    
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal" Margin="20,0,20,0" Spacing="20">
@@ -47,20 +46,20 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <StackLayout Margin="5" Orientation="Horizontal">
-                <Button x:Name="markButton"
+            <StackLayout Margin="5" Orientation="Horizontal" Padding="10,0,0,10" >
+                <Button x:Name="unavaibleButton"
+                        BorderColor="Black"
                         HorizontalOptions="Start"
+                        Text="Пары нет"
+                        TextColor="Black"
+                        Clicked="OnUnaviableClicked"
+                        Margin="5"/>
+                <Button x:Name="markButton"
+                        HorizontalOptions="EndAndExpand"
                         BorderColor="Black"
                         Text="Отметить"
                         TextColor="Black"
                         Clicked="OnMarkClicked"
-                        Margin="5"/>
-                <Button x:Name="unavaibleButton"
-                        BorderColor="Black"
-                        HorizontalOptions="EndAndExpand"
-                        Text="Пары нет"
-                        TextColor="Black"
-                        Clicked="OnUnaviableClicked"
                         Margin="5"/>
             </StackLayout>
         </StackLayout>

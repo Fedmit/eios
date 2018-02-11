@@ -4,9 +4,10 @@
              xmlns:local="clr-namespace:eios"
              x:Class="eios.CompletedOccupationPage">
     <ContentPage.Content>
-        <StackLayout Margin="10,30,10,10">
+        <StackLayout Margin="10,15,10,10">
             <Label
                 Text="{Binding Time}"
+                Margin="15"
                 HorizontalOptions="Center"
                 TextColor="Black"
                 FontSize="Medium" />
@@ -14,22 +15,25 @@
                 Text="{Binding NameOccupation}"
                 HorizontalOptions="Center"
                 TextColor="Black"
+                Margin="5"
                 FontSize="Medium" />
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="30">
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+            <StackLayout Orientation="Horizontal" Margin="5">
+                <StackLayout Margin="5" Orientation="Horizontal">
                     <Label
                         Text="Всего:"
                         FontSize="Medium"
+                        HorizontalOptions="Start"
                         TextColor="Black" />
                     <Label
                         Text="{Binding Total}"
                         FontSize="Medium"
                         TextColor="Black" />
                 </StackLayout>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <StackLayout Margin="5" Orientation="Horizontal" HorizontalOptions="EndAndExpand">
                     <Label
                         Text="Отсутствуют:"
                         FontSize="Medium"
+                         HorizontalOptions="EndAndExpand"
                         TextColor="Black" />
                     <Label
                         Text="{Binding AbsentTotal}"
@@ -45,6 +49,8 @@
                 IsRunning="{Binding IsBusy}" />
             <ListView
                 x:Name="studentListView"
+                SeparatorVisibility="None"
+                RowHeight="50"
                 ItemsSource="{Binding StudentsList}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
