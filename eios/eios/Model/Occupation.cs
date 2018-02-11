@@ -18,7 +18,7 @@ namespace eios.Model
         [Column("id_group")]
         public int IdGroup { get; set; }
 
-        [JsonProperty("id_occup"), Column("id_ocup")]
+        [JsonProperty("id_occup"), Column("id_occup")]
         public int IdOccupation { get; set; }
 
         [JsonProperty("id_lesson"), Column("lesson_id")]
@@ -26,6 +26,9 @@ namespace eios.Model
 
         [JsonProperty("lesson_name"), Column("lesson_name")]
         public string Name { get; set; }
+
+        [JsonProperty("id_aud"), Column("id_aud")]
+        public int IdAud { get; set; }
 
         [JsonProperty("aud"), Column("aud")]
         public string Aud { get; set; }

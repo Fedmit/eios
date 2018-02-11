@@ -118,7 +118,15 @@ namespace eios.ViewModel
 
         async Task<List<StudentAttendance>> PopulateList()
         {
-            return await App.Database.GetAttendance(Occupation.IdOccupation, (int)App.Current.Properties["IdGroupCurrent"]);
+            var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
+            var attendanceList = await App.Database.GetAttendance(Occupation.IdOccupation, idGroup);
+
+            if(attendanceList == null)
+            {
+                Console.WriteLine("Отмеченных студентов нет лол");
+            }
+
+            return attendanceList;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

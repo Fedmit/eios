@@ -95,7 +95,7 @@ namespace eios.ViewModel
                 Device.BeginInvokeOnMainThread(async () => {
                     if (message.IsSuccessful)
                     {
-                        //await UpdateState();
+                        await UpdateState();
                     }
                 });
             });
@@ -109,23 +109,16 @@ namespace eios.ViewModel
         async Task RefreshList()
         {
             IsRefreshing = true;
-            //await UpdateState();
+            await UpdateState();
             IsRefreshing = false;
         }
 
-        //async Task UpdateState()
-        //{
-        //    List<Mark> marks = await WebApi.Instance.GetMarksAsync();
-
-        //    if (marks != null)
-        //    {
-        //        foreach (Mark mark in marks)
-        //        {
-        //            var obj = OccupationsList.FirstOrDefault(x => x.IdOccupation == mark.Id);
-        //            if (obj != null) obj.Mark = mark.mMark;
-        //        }
-        //    }
-        //}
+        async Task UpdateState()
+        {
+            var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
+            var occupationsList = await App.Database.GetOccupations(idGroup);
+            OccupationsList = occupationsList;
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -64,6 +64,7 @@ namespace eios
             await App.Current.SavePropertiesAsync();
 
             App.IsLoading = true;
+
             MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
 
             Application.Current.MainPage = new MainPage();
