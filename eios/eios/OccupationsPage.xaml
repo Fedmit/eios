@@ -2,36 +2,53 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:eios"
-             x:Class="eios.OccupationsPage"
-             Title="17РОМАНЛОХ | 2 февраля">
-    
+             x:Class="eios.OccupationsPage" >
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="calendarButton" Order="Primary" Text="{Binding Date}" Priority="0" Activated="onClicked"/>
+        <ToolbarItem Name ="groupButton" Order="Primary" Text="{Binding Group}" Priority="0" Activated="onClickedGroup"/>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
-        <StackLayout>
-            <ActivityIndicator
-                Margin="20"
-                WidthRequest="35"
-                HeightRequest="35"
-                IsVisible="{Binding IsBusy}"
-                IsRunning="{Binding IsBusy}" />
-            <ListView
-                x:Name="listView" 
-                RowHeight="60"
-                ItemsSource="{Binding OccupationsList}"
-                IsPullToRefreshEnabled="true"
-                RefreshCommand="{Binding RefreshCommand}"
-                IsRefreshing="{Binding IsRefreshing}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal" Margin="20,0,20,0" Spacing="20">
-                                <local:BedgeView Size="50" />
-                                <Label Text="{Binding Name}" VerticalOptions="Center" FontSize="16" />
-                                <Label Text="{Binding Aud}" VerticalOptions="Center" HorizontalOptions="EndAndExpand" />
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
+        <Grid>
+            <StackLayout>
+                <ActivityIndicator
+                  Margin="20"
+                  WidthRequest="35"
+                  HeightRequest="35"
+                  IsVisible="{Binding IsBusy}"
+                  IsRunning="{Binding IsBusy}" />
+                <ListView
+                  x:Name="listView" 
+                  RowHeight="65"
+                  SeparatorVisibility="None"
+                  ItemsSource="{Binding OccupationsList}"
+                  IsPullToRefreshEnabled="true"
+                  RefreshCommand="{Binding RefreshCommand}"
+                  IsRefreshing="{Binding IsRefreshing}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal" Margin="20,0,20,0" Spacing="20">
+                                    <local:BedgeView Size="50" />
+                                    <Label Text="{Binding Name}" VerticalOptions="Center" FontSize="16" />
+                                    <Label Text="{Binding Aud}" VerticalOptions="Center" HorizontalOptions="EndAndExpand" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    </ListView>
+            </StackLayout>
+            <DatePicker x:Name="datePicker" Format="d" DateSelected="datePicker_DateSelected" IsVisible="False">
+                <DatePicker.MinimumDate>6/01/2016</DatePicker.MinimumDate>
+                <DatePicker.MaximumDate>6/30/2020</DatePicker.MaximumDate>
+            </DatePicker>
+            <Picker
+                x:Name="pickerGroup"
+                IsVisible="False"
+                SelectedIndexChanged="OnSelectedIndexChanged"
+                ItemsSource="{x:Static local:App.Groups}"
+                ItemDisplayBinding="{Binding Name}" />
+        </Grid>
+
     </ContentPage.Content>
 </ContentPage>

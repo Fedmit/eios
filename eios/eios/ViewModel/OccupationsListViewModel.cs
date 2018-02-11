@@ -13,6 +13,30 @@ namespace eios.ViewModel
 {
     class OccupationsListViewModel : INotifyPropertyChanged
     {
+
+         string _date;
+         public string Date
+         {
+             get { return _date; }
+            set
+             {
+                 _date = value;
+                 OnPropertyChanged(nameof(Date));
+            }
+        }
+
+                string _group;
+         public string Group
+         {
+             get { return _group; }
+             set
+             {
+                 _group = value;
+                 OnPropertyChanged(nameof(Group));
+             }
+         }
+ 
+
         bool _isBusy;
         public bool IsBusy
         {
