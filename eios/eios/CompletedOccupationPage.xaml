@@ -56,15 +56,6 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button
-                Text="Назад"
-                BackgroundColor="#77aad9"
-                TextColor="White"
-                Margin="5"
-                Clicked="OnBackClicked"
-                VerticalOptions="EndAndExpand"
-                HorizontalOptions="Center"
-                FontSize="Small" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

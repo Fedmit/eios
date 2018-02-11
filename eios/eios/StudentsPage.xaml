@@ -29,6 +29,8 @@
             </StackLayout>
             <ListView
                 x:Name="studentListView"
+                SeparatorVisibility="None"
+                RowHeight="50"
                 ItemsSource="{Binding StudentsList}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -47,12 +49,16 @@
             <StackLayout Margin="5" Orientation="Horizontal">
                 <Button x:Name="markButton"
                         HorizontalOptions="Start"
+                        BorderColor="Black"
                         Text="Отметить"
+                        TextColor="Black"
                         Clicked="OnMarkClicked"
                         Margin="5"/>
                 <Button x:Name="unavaibleButton"
+                        BorderColor="Black"
                         HorizontalOptions="EndAndExpand"
                         Text="Пары нет"
+                        TextColor="Black"
                         Clicked="OnUnaviableClicked"
                         Margin="5"/>
             </StackLayout>

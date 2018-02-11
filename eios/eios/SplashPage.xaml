@@ -5,7 +5,7 @@
     <ContentPage.Content>
         <StackLayout Padding="0,0,0,1">
             <Image 
-                Source="Resources/pguloogo.png" 
+                Source="pguloogo.png" 
                 HorizontalOptions="CenterAndExpand"
                 VerticalOptions="CenterAndExpand"
                 WidthRequest="180"

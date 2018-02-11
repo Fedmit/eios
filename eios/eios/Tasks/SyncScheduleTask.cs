@@ -45,7 +45,7 @@ namespace eios.Tasks
                             await App.Database.SetStudents(students);
                         }
                     }
-                    App.Current.Properties["DateNow"] = dateNow.ToString("yyyy-mm-dd HH:mm:ss");
+                    App.Current.Properties["DateNow"] = dateNow.ToString("yyyy-MM-dd HH:mm:ss");
                     await App.Current.SavePropertiesAsync();
                 }
                 

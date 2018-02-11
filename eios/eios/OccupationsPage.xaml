@@ -17,6 +17,7 @@
                 RowHeight="60"
                 ItemsSource="{Binding OccupationsList}"
                 IsPullToRefreshEnabled="true"
+                SeparatorVisibility="None"
                 RefreshCommand="{Binding RefreshCommand}"
                 IsRefreshing="{Binding IsRefreshing}">
                 <ListView.ItemTemplate>
