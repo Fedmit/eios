@@ -30,37 +30,23 @@ namespace eios.Model
         [JsonProperty("aud"), Column("aud")]
         public string Aud { get; set; }
 
-        public bool is_check { get; set; }
-        public bool is_block { get; set; }
-        public bool is_sent { get; set; }
-
-        private string _mark;
-        [Ignore]
-        public string Mark
-        {
-            get { return _mark; }
-            set
-            {
-                _mark = value;
-                OnPropertyChanged(nameof(CircleColor));
-                OnPropertyChanged(nameof(TargetType));
-            }
-        }
+        [Column("is_check")]
+        public bool IsChecked { get; set; }
+        
+        [Column("is_block")]
+        public bool IsBlocked { get; set; }
+        
+        [Column("is_sent")]
+        public bool IsSent { get; set; }
 
         [Ignore]
         public string CircleColor
         {
             get
             {
-                switch (Mark)
-                {
-                    case "was_no": return "#f7636c";
-                    case "was_attend": return "#e0e0e0";
-                    case "is_no": return "#acd94e";
-                    case "is_attend": return "#e0e0e0";
-                    case "will": return "#77aad9";
-                    default: return "#77aad9";
-                }
+                if (!IsChecked && !IsBlocked && IdLesson != 0 && IdOccupation < App.IdOccupNow) { return "#f7636c"; }
+                else if (IsChecked) { return "#acd94e"; }
+                return "#e0e0e0";
             }
         }
 
@@ -69,15 +55,9 @@ namespace eios.Model
         {
             get
             {
-                switch (Mark)
-                {
-                    case "was_no": return null;
-                    case "was_attend": return typeof(CompletedOccupationPage);
-                    case "is_no": return null;
-                    case "is_attend": return typeof(CompletedOccupationPage);
-                    case "will": return null;
-                    default: return typeof(StudentsPage);
-                }
+                if (!IsChecked && !IsBlocked && IdLesson != 0 && IdOccupation < App.IdOccupNow) { return typeof(StudentsPage); }
+                else if (IsChecked) { return typeof(CompletedOccupationPage); }
+                return null;
             }
         }
 

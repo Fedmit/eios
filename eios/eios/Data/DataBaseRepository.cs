@@ -198,7 +198,7 @@ namespace eios.Data
                     "SELECT * FROM Occupations WHERE id_ocup = ? AND id_group = ?",
                     idOccupation, idGroup
                 );
-                list[0].is_sent = true;
+                list[0].IsSent = true;
                 await database.UpdateAllAsync(list);
             }
             catch (SQLiteException ex)

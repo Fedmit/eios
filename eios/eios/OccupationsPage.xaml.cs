@@ -41,10 +41,14 @@ namespace eios
             };
         }
 
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
             var message = new StartSyncScheduleStateTaskMessage();
             MessagingCenter.Send(message, "StartSyncScheduleStateTaskMessage");
+
+            var groups = await App.Database.GetGroups();
+            var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
+            Title = groups.Where(Group => Group.IdGroup == idGroup).ToList()[0].Name;
         }
 
         protected override void OnDisappearing()

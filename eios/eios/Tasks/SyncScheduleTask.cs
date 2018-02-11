@@ -17,20 +17,20 @@ namespace eios.Tasks
 
         public async Task RunSyncSchedule()
         {
-            if (App.IsConnected)
+            try
             {
-                try
+                if (App.IsConnected)
                 {
                     DateTime dateNow = await WebApi.Instance.GetDateAsync();
-                    string dateNowStr = dateNow.ToString("yyyy-mm-dd HH:mm:ss");
 
-                    string lastDate = null;
+                    DateTime lastDate = new DateTime();
                     if (App.Current.Properties.ContainsKey("DateNow"))
                     {
-                        lastDate = (string)App.Current.Properties["DateNow"];
+                        var str = (string)App.Current.Properties["DateNow"];
+                        lastDate = DateTime.Parse(str);
                     }
 
-                    if (lastDate == null || lastDate != dateNowStr)
+                    if (lastDate == DateTime.MinValue || lastDate.Date != dateNow.Date)
                     {
                         var groups = await App.Database.GetGroups();
 
@@ -45,15 +45,15 @@ namespace eios.Tasks
                             await App.Database.SetStudents(students);
                         }
                     }
-                    App.Current.Properties["DateNow"] = dateNowStr;
+                    App.Current.Properties["DateNow"] = dateNow.ToString("yyyy-mm-dd HH:mm:ss");
                     await App.Current.SavePropertiesAsync();
-
-                    isSuccessful = true;
                 }
-                catch (HttpRequestException)
-                {
-                    isSuccessful = false;
-                }
+                
+                isSuccessful = true;
+            }
+            catch (HttpRequestException)
+            {
+                isSuccessful = false;
             }
 
             var message = new OnScheduleSyncronizedMessage()

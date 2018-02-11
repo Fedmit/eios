@@ -95,7 +95,7 @@ namespace eios.ViewModel
                 Device.BeginInvokeOnMainThread(async () => {
                     if (message.IsSuccessful)
                     {
-                        await UpdateState();
+                        //await UpdateState();
                     }
                 });
             });
@@ -113,19 +113,19 @@ namespace eios.ViewModel
             IsRefreshing = false;
         }
 
-        async Task UpdateState()
-        {
-            List<Mark> marks = await WebApi.Instance.GetMarksAsync();
+        //async Task UpdateState()
+        //{
+        //    List<Mark> marks = await WebApi.Instance.GetMarksAsync();
 
-            if (marks != null)
-            {
-                foreach (Mark mark in marks)
-                {
-                    var obj = OccupationsList.FirstOrDefault(x => x.IdOccupation == mark.Id);
-                    if (obj != null) obj.Mark = mark.mMark;
-                }
-            }
-        }
+        //    if (marks != null)
+        //    {
+        //        foreach (Mark mark in marks)
+        //        {
+        //            var obj = OccupationsList.FirstOrDefault(x => x.IdOccupation == mark.Id);
+        //            if (obj != null) obj.Mark = mark.mMark;
+        //        }
+        //    }
+        //}
 
         public event PropertyChangedEventHandler PropertyChanged;
 

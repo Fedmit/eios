@@ -33,7 +33,6 @@ namespace eios
         async void OnLoginButtonClicked(Object sender, AssemblyLoadEventArgs args)
         {
             loginButton.IsEnabled = false;
-            loadingOverlay.IsVisible = true;
             activityIndicator.IsRunning = true;
 
             App.Login = loginEntry.Text;
@@ -47,7 +46,6 @@ namespace eios
             catch (HttpRequestException)
             {
                 loginButton.IsEnabled = true;
-                loadingOverlay.IsVisible = false;
                 activityIndicator.IsRunning = false;
 
                 await ShowMessage("", "Пароль или логин введены неверно!", "OK");

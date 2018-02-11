@@ -51,6 +51,13 @@ namespace eios.Data
                 {
                     occupation.IdGroup = idGroup;
                 }
+                for (int i = 0; i < occupations.Count; i++)
+                {
+                    if (i < 4)
+                    {
+                        occupations[i].IdLesson = i+1;
+                    }
+                }
             }
             catch (HttpRequestException ex)
             {
