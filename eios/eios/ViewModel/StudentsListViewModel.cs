@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 
 namespace eios.ViewModel
 {
@@ -36,7 +35,7 @@ namespace eios.ViewModel
         string _occupationAud;
         public string OccupationAud
         {
-            get { return _occupationName; }
+            get { return _occupationAud; }
             set
             {
                 _occupationAud = value;
@@ -62,7 +61,7 @@ namespace eios.ViewModel
                 OnPropertyChanged(nameof(OnSite));
             }
         }
-
+        
         bool _isBusy;
         public bool IsBusy
         {
@@ -93,6 +92,7 @@ namespace eios.ViewModel
         {
             OccupationTime = occupation.Time;
             OccupationName = occupation.Name;
+            OccupationAud = occupation.Aud;
             _studentsList = new List<StudentSelect>();
 
             Task.Run(async () =>
