@@ -46,10 +46,7 @@ namespace eios.Data
             }
         }
 
-        internal Task DeleteGroupsTable()
-        {
-            await database.DropTableAsync<Group>();
-        }
+        internal Task DeleteGroupsTable() => database.DropTableAsync<Group>();
 
         public async Task <List<StudentAttendance>> GetAttendance(int idOccupation, int idGroup)
         {
@@ -289,6 +286,8 @@ namespace eios.Data
                 Console.WriteLine(ex.Message);  
             }
         }
+
+
 
         public async Task DeleteAttendance(int idOccupation, int idGroup)
         {

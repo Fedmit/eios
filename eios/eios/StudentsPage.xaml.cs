@@ -46,6 +46,24 @@ namespace eios
 
         async void OnUnaviableClicked(Object sender, AssemblyLoadEventArgs args)
         {
+
+            var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
+            if (App.IsConnected)
+            {
+                try
+                {
+                    await WebApi.Instance.SetNullAttendAsync(occupation);
+                    await App.Database.SetSentFlag(occupation.IdOccupation, idGroup);
+                }
+                catch (HttpRequestException)
+                {
+                    await App.Database.DeleteAttendance(occupation.IdOccupation, idGroup);
+                    await Navigation.PopAsync();
+                    return;
+                }
+                Navigation.InsertPageBefore(new CompletedOccupationPage(this.occupation), this);
+                await Navigation.PopAsync();
+            }
             await Navigation.PopAsync();
         }
 

@@ -5,6 +5,11 @@
              xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms">
     <ContentPage.Content>
         <StackLayout BackgroundColor="White">
+            <Button x:Name="buttonInfo"
+                    Margin="10"
+                    HorizontalOptions="EndAndExpand"
+                    TextColor="White"
+                    BackgroundColor ="Black"/>
             <Label
                 Text="ЭИОС ПГУ &#10; Журнал посещаемости"
                 TextColor="Black"
@@ -23,8 +28,10 @@
                     Placeholder="Логин"
                     Text="studbekkercf@gmail.com"
                     TextColor="Black"
+                    WidthRequest="200"
                     PlaceholderColor="Gray"
-                    VerticalOptions="Center"/>
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"/>
                 <Entry
                     x:Name="passwordEntry"
                     Placeholder="Пароль"
@@ -33,6 +40,7 @@
                     IsPassword="true"
                     TextColor="Black"
                     WidthRequest="200"
+                    HorizontalOptions="Center"
                     VerticalOptions="Center"/>
             <StackLayout>
             <Button 

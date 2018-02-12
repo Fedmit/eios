@@ -77,5 +77,10 @@ namespace eios
             //await Task.Delay(10000);
             Application.Current.MainPage = new MainPage();
         }
+
+        private void buttonInfo_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new ReferencePage());
+        }
     }
 }
