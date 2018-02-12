@@ -46,6 +46,11 @@ namespace eios.Data
             }
         }
 
+        internal Task DeleteGroupsTable()
+        {
+            await database.DropTableAsync<Group>();
+        }
+
         public async Task <List<StudentAttendance>> GetAttendance(int idOccupation, int idGroup)
         {
             try
@@ -131,7 +136,7 @@ namespace eios.Data
         {
             try
             {
-                await database.DropTableAsync<Group>();
+                await DeleteGroupsTable();
                 await database.CreateTableAsync<Group>();
                 await database.InsertAllAsync(groups);
             }
@@ -141,17 +146,20 @@ namespace eios.Data
             }
         }
 
-        public async Task SetMarks(List<Occupation> marks)
+        public async Task SetMarks(List<Mark> marks, int idGroup)
         {
             try
             {
-                var cache = await database.Table<Occupation>().ToListAsync();
-                await database.DropTableAsync<Occupation>();
+                var cache = await database.QueryAsync<Occupation>(
+                    "SELECT * FROM Occupations WHERE id_group = ?",
+                    idGroup
+                );
                 for (int i = 0; i < cache.Count; i++)
                 {
-                    marks[i].IdGroup = cache[i].IdGroup;
+                    cache[i].IsChecked = marks[i].Checked;
+                    cache[i].IsBlocked = marks[i].Blocked;
                 }
-                await SetOccupations(marks);
+                await database.UpdateAllAsync(cache);
             }
             catch (SQLiteException ex)
             {
@@ -254,18 +262,27 @@ namespace eios.Data
                 await database.InsertAllAsync(absentStudents);
 
                 var occupationsList = await database.QueryAsync<Occupation>(
-                    "SELECT * FROM Occupations WHERE id_occup = ? AND id_group = ?",
-                    idOccupation,
+                    "SELECT * FROM Occupations WHERE id_group = ?",
                     idGroup
                 );
-                occupationsList[0].IsChecked = true;
 
-                await database.QueryAsync<Occupation>(
-                    "DELETE FROM Occupations WHERE id_occup = ? AND id_group = ?",
-                    idOccupation, 
-                    idGroup
-                );
-                await database.InsertAllAsync(occupationsList);
+                foreach(var occup in occupationsList)
+                {
+                    if (occup.IdOccupation == idOccupation)
+                    {
+                        occup.IsChecked = true;
+                    }
+                }
+
+                //occupationsList[0].IsChecked = true;
+
+                //await database.QueryAsync<Occupation>(
+                //    "UPDATE Occupations SET is_check = 1 WHERE id_occup = ? AND id_group = ?",
+                //    idOccupation,
+                //    idGroup
+                //);
+
+                await database.UpdateAllAsync(occupationsList);
             }
             catch (SQLiteException ex)
             {

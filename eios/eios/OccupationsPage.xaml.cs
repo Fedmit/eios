@@ -44,8 +44,11 @@ namespace eios
 
         protected async override void OnAppearing()
         {
-            var message = new StartSyncScheduleStateTaskMessage();
-            MessagingCenter.Send(message, "StartSyncScheduleStateTaskMessage");
+            if (!App.IsLoading)
+            {
+                var message = new StartSyncScheduleStateTaskMessage();
+                MessagingCenter.Send(message, "StartSyncScheduleStateTaskMessage");
+            }
         }
 
         protected override void OnDisappearing()
