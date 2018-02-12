@@ -29,7 +29,6 @@ namespace eios
             BindingContext = viewModel;
 
             this.occupation = occupation;
-
             unavaibleButton.IsVisible = occupation.IdLesson != 0;
 
             studentListView.ItemTapped += (sender, e) =>

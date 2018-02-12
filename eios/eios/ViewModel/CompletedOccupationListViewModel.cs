@@ -37,7 +37,7 @@ namespace eios.ViewModel
         string _occupationAud;
         public string OccupationAud
         {
-            get { return _occupationName; }
+            get { return _occupationAud; }
             set
             {
                 _occupationAud = value;
@@ -63,7 +63,6 @@ namespace eios.ViewModel
             }
         }
 
-        int _presentTotal;
         public int PresentTotal
         {
             get
