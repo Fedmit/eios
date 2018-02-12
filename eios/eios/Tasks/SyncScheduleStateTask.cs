@@ -20,17 +20,19 @@ namespace eios.Tasks
 
                     if (App.IsConnected)
                     {
-                        //var marks = await WebApi.Instance.GetMarksAsync();
-                        //await App.Database.SetMarks(marks);
+                        var marksResponse = await WebApi.Instance.GetMarksAsync();
+                        await App.Database.SetMarks(marksResponse.Data, (int)App.Current.Properties["IdGroupCurrent"]);
 
-                        var message = new OnMarksUpdatedMessage()
-                        {
-                            IsSuccessful = true
-                        };
-                        Device.BeginInvokeOnMainThread(() => {
-                            MessagingCenter.Send(message, "OnMarksUpdatedMessage");
-                        });
+                        App.IdOccupNow = marksResponse.IdOccupNow;
                     }
+
+                    var message = new OnMarksUpdatedMessage()
+                    {
+                        IsSuccessful = true
+                    };
+                    Device.BeginInvokeOnMainThread(() => {
+                        MessagingCenter.Send(message, "OnMarksUpdatedMessage");
+                    });
 
                     await Task.Delay(5000);
                 }

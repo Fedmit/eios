@@ -3,10 +3,18 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:local="clr-namespace:eios"
             x:Class="eios.BedgeView">
+    <Grid.ColumnDefinitions>
+        <ColumnDefinitionCollection>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="*"/>
+        </ColumnDefinitionCollection>
+    </Grid.ColumnDefinitions>
     <local:CircleView 
         x:Name="circle"
         BackgroundColor="{Binding CircleColor}"
         CornerRadius="50"
+        WidthRequest="50"
+        HeightRequest="50"
         VerticalOptions="Center" 
         HorizontalOptions="Center" />
     <Label

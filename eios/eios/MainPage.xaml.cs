@@ -32,6 +32,9 @@ namespace eios
                     App.Current.Properties["DateNow"] = "1970-01-01 01:02:03";
                     await App.Current.SavePropertiesAsync();
 
+                    await App.Database.DeleteThisShits();
+                    await App.Database.DeleteGroupsTable();
+
                     Application.Current.MainPage = new NavigationPage(new LoginPage());
                     return;
                 }

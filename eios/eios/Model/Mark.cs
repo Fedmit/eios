@@ -7,10 +7,13 @@ namespace eios.Model
 {
     public class Mark
     {
-        [JsonProperty("id")]
+        [JsonProperty("id_occup")]
         public int Id { get; set; }
 
-        [JsonProperty("mark")]
-        public string mMark { get; set; }
+        [JsonProperty("checked")]
+        public bool Checked { get; set; }
+
+        [JsonProperty("blocked")]
+        public bool Blocked { get; set; }
     }
 }

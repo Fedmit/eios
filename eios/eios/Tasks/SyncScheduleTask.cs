@@ -30,6 +30,8 @@ namespace eios.Tasks
                         lastDate = DateTime.Parse(str);
                     }
 
+                    App.DateNow = dateNow;
+
                     if (lastDate == DateTime.MinValue || lastDate.Date != dateNow.Date)
                     {
                         var groups = await App.Database.GetGroups();

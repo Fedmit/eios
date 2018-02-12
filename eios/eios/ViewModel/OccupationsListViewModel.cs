@@ -108,6 +108,8 @@ namespace eios.ViewModel
 
                             await UpdateOccupationsList();
 
+                            MessagingCenter.Send(new StartSyncScheduleStateTaskMessage(), "StartSyncScheduleStateTaskMessage");
+
                             MessagingCenter.Subscribe<OnMarksUpdatedMessage>(this, "OnMarksUpdatedMessage", _message => {
                                 Device.BeginInvokeOnMainThread(async () => {
                                     if (message.IsSuccessful)
@@ -132,6 +134,12 @@ namespace eios.ViewModel
             {
                 Task.Run(async () =>
                 {
+                    var dateNow = DateTime.Parse((string)App.Current.Properties["DateNow"]);
+                    Date = dateNow.ToString("dd/MM/yyyy");
+
+                    var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
+                    Group = App.Groups.Where(group => group.IdGroup == idGroup).ToList()[0].Name;
+
                     await UpdateOccupationsList();
                     IsBusy = false;
 

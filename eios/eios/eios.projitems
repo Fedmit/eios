@@ -27,6 +27,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Messages\StartSyncUnsentChangesTask.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\StopSyncScheduleStateTaskMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\GroupResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\MarksResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tasks\SyncScheduleStateTask.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tasks\SyncScheduleTask.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tasks\SyncUnsentChangesTask.cs" />

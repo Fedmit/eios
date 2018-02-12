@@ -54,7 +54,7 @@ namespace eios
         public static bool IsUserLoggedIn { get; set; }
         public static bool IsLoading { get; set; } = false;
         public static bool IsConnected { get; set; }
-        public static int IdOccupNow { get; set; } = 5;
+        public static int IdOccupNow { get; set; } = 8;
 
         public static DateTime DateNow { get; set; }
 
