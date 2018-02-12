@@ -4,15 +4,30 @@
              xmlns:local="clr-namespace:eios"
              x:Class="eios.StudentsPage">
     <ContentPage.Content>
-        <StackLayout Padding="10,15,10,10">
-            <Label x:Name="occupationTime"
-                   Text="{Binding OccupationTime}"
-                   Margin="15"
-                   HorizontalOptions="Center"/>
-            <Label x:Name="occupationName"
-                   Text="{Binding OccupationName}"
-                   Margin="5"
-                   HorizontalOptions="Center"/>
+        <StackLayout Padding="10,5,5,10">
+            <Grid ColumnSpacing="5" Margin="15" RowSpacing="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                </Grid.RowDefinitions>
+                <Label x:Name="occupationTime"
+                       Text="{Binding OccupationTime}"
+                       Grid.Column ="0"
+                       Grid.Row="0"/>
+                <Label x:Name="occupationName"
+                       Text="{Binding OccupationName}"
+                       Grid.Column ="1"
+                       Grid.Row="0"/>
+                <Label x:Name="occupationAud"
+                       Text="{Binding OccupationAud}"
+                       HorizontalOptions="EndAndExpand"
+                       Grid.Column ="2"
+                       Grid.Row="0"/>
+            </Grid>
             <StackLayout Margin="5" Orientation="Horizontal">
                 <StackLayout Margin="5" Orientation="Horizontal">
                     <Label

@@ -13,26 +13,35 @@ namespace eios.ViewModel
     {
         public Occupation Occupation { get; set; }
 
-        string _time;
-
-        public string Time
+        string _occupationTime;
+        public string OccupationTime
         {
-            get { return _time; }
+            get { return _occupationTime; }
             set
             {
-                _time = value;
-                OnPropertyChanged(nameof(Time));
+                _occupationTime = value;
+                OnPropertyChanged(nameof(OccupationTime));
             }
         }
 
-        string _nameOccupation;
-        public string NameOccupation
+        string _occupationName;
+        public string OccupationName
         {
-            get { return _nameOccupation; }
+            get { return _occupationName; }
             set
             {
-                _nameOccupation = value;
-                OnPropertyChanged(nameof(NameOccupation));
+                _occupationName = value;
+                OnPropertyChanged(nameof(OccupationName));
+            }
+        }
+        string _occupationAud;
+        public string OccupationAud
+        {
+            get { return _occupationName; }
+            set
+            {
+                _occupationAud = value;
+                OnPropertyChanged(nameof(OccupationAud));
             }
         }
 
@@ -98,8 +107,9 @@ namespace eios.ViewModel
         {
             Occupation = occupation;
 
-            Time = Occupation.Time;
-            NameOccupation = Occupation.Name;
+            OccupationTime = Occupation.Time;
+            OccupationName = Occupation.Name;
+            OccupationAud = Occupation.Aud;
 
             Task.Run(async () =>
             {

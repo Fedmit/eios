@@ -29,7 +29,7 @@ namespace eios
                     App.Current.Properties["IsLoggedIn"] = false;
                     App.Current.Properties["Login"] = null;
                     App.Current.Properties["Password"] = null;
-                    App.Current.Properties["DateNow"] = null;
+                    App.Current.Properties["DateNow"] = "1970-01-01 01:02:03";
                     await App.Current.SavePropertiesAsync();
 
                     Application.Current.MainPage = new NavigationPage(new LoginPage());

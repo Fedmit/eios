@@ -14,7 +14,7 @@ namespace eios.ViewModel
     class OccupationsListViewModel : INotifyPropertyChanged
     {
 
-         string _date;
+        string _date = "lol";
          public string Date
          {
              get { return _date + "  ▼"; }
@@ -25,7 +25,7 @@ namespace eios.ViewModel
              }
          }
 
-         string _group;
+         string _group = "lol";
          public string Group
          {
              get { return _group + "  ▼"; }
@@ -87,6 +87,7 @@ namespace eios.ViewModel
             IsBusy = true;
             if (App.IsLoading)
             {
+                OccupationsList = new List<Occupation>();
                 MessagingCenter.Subscribe<OnScheduleSyncronizedMessage>(this, "OnScheduleSyncronizedMessage", message => {
                     Device.BeginInvokeOnMainThread(async () => {
                         if (message.IsSuccessful)

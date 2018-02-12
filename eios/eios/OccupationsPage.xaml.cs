@@ -26,13 +26,16 @@ namespace eios
             InitializeComponent();
 
             ViewModel = new OccupationsListViewModel(this);
+            BindingContext = ViewModel;
 
-            var dateNow = DateTime.Parse((string)App.Current.Properties["DateNow"]);
+            var dateNowStr = "2018-02-09 19:54:41";
+            if (App.Current.Properties.ContainsKey("DateNow"))
+            {
+                dateNowStr = (string)App.Current.Properties["DateNow"];
+            }
+            var dateNow = DateTime.Parse((dateNowStr));
             ViewModel.Date = dateNow.ToString("dd/MM/yyyy");
 
-
-
-            BindingContext = ViewModel;
             listView.ItemTapped += async (sender, e) =>
             {
                 listView.SelectedItem = null;
@@ -65,7 +68,7 @@ namespace eios
 
         void onClicked(Object sender, DateChangedEventArgs e)
         {
-            datePicker.Focus();
+            //datePicker.Focus();
         }
 
         void datePicker_DateSelected(Object sender, DateChangedEventArgs e)
@@ -75,7 +78,7 @@ namespace eios
 
         void onClickedGroup(Object sender)
         {
-            pickerGroup.Focus();
+            //pickerGroup.Focus();
         }
         void OnSelectedIndexChanged(object sender, EventArgs e)
         {

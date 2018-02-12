@@ -4,19 +4,30 @@
              xmlns:local="clr-namespace:eios"
              x:Class="eios.CompletedOccupationPage">
     <ContentPage.Content>
-        <StackLayout Margin="10,15,10,10">
-            <Label
-                Text="{Binding Time}"
-                Margin="15"
-                HorizontalOptions="Center"
-                TextColor="Black"
-                FontSize="Medium" />
-            <Label
-                Text="{Binding NameOccupation}"
-                HorizontalOptions="Center"
-                TextColor="Black"
-                Margin="5"
-                FontSize="Medium" />
+        <StackLayout Margin="10,5,5,10">
+            <Grid ColumnSpacing="5" Margin="15" RowSpacing="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                </Grid.RowDefinitions>
+                <Label x:Name="occupationTime"
+                       Text="{Binding OccupationTime}"
+                       Grid.Column ="0"
+                       Grid.Row="0"/>
+                <Label x:Name="occupationName"
+                       Text="{Binding OccupationName}"
+                       Grid.Column ="1"
+                       Grid.Row="0"/>
+                <Label x:Name="occupationAud"
+                       Text="{Binding OccupationAud}"
+                       HorizontalOptions="EndAndExpand"
+                       Grid.Column ="2"
+                       Grid.Row="0"/>
+            </Grid>
             <StackLayout Orientation="Horizontal" Margin="5">
                 <StackLayout Margin="5" Orientation="Horizontal">
                     <Label

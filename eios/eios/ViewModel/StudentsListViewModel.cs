@@ -33,6 +33,16 @@ namespace eios.ViewModel
                 OnPropertyChanged(nameof(OccupationName));
             }
         }
+        string _occupationAud;
+        public string OccupationAud
+        {
+            get { return _occupationName; }
+            set
+            {
+                _occupationAud = value;
+                OnPropertyChanged(nameof(OccupationAud));
+            }
+        }
 
         public int Total
         {

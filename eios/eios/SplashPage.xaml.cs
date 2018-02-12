@@ -46,10 +46,12 @@ namespace eios
                     
                     App.IsLoading = true;
 
+                    Application.Current.MainPage = new MainPage();
                     MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
                     MessagingCenter.Send(new StartSyncUnsentChangesTask(), "StartSyncUnsentChangesTask");
 
-                    Application.Current.MainPage = new MainPage();
+                    //await Task.Delay(10000);
+
                 }
                 else
                 {

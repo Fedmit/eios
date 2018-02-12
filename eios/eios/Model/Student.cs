@@ -13,23 +13,8 @@ namespace eios.Model
         [JsonProperty("id_student"), PrimaryKey, Column("id_student")]
         public int Id { get; set; }
 
-        [Ignore]
-        public string FullName
-        {
-            get
-            {
-                return LastName + " " + FirstName + " " + SecondName;
-            }
-        }
-
-        [JsonProperty("firstname"), Column("firstname")]
-        public string FirstName { get; set; }
-
-        [JsonProperty("lastname"), Column("lastname")]
-        public string LastName { get; set; }
-
-        [JsonProperty("secondname"), Column("secondname")]
-        public string SecondName { get; set; }
+        [JsonProperty("fullname"), Column("fullname")]
+        public string FullName { get; set; }
 
         public int id_group { get; set; }
     }

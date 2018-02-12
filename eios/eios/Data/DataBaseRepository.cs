@@ -51,7 +51,7 @@ namespace eios.Data
             try
             {
                 var students = await database.QueryAsync<Student>(
-                    "SELECT id_student, firstname, lastname, secondname FROM Students WHERE id_group = ? ORDER BY id_student",
+                    "SELECT id_student, fullname FROM Students WHERE id_group = ? ORDER BY id_student",
                     idGroup
                 );
                 var attendance = await database.QueryAsync<StudentAbsent>(
@@ -69,9 +69,7 @@ namespace eios.Data
                             j++;
                             result.Add(new StudentAttendance {
                                 Id = students[i].Id,
-                                FirstName = students[i].FirstName,
-                                LastName = students[i].LastName,
-                                SecondName = students[i].SecondName,
+                                FullName = students[i].FullName,
                                 IsAbsent = true });
                         }
                         else
@@ -79,9 +77,7 @@ namespace eios.Data
                             result.Add(new StudentAttendance
                             {
                                 Id = students[i].Id,
-                                FirstName = students[i].FirstName,
-                                LastName = students[i].LastName,
-                                SecondName = students[i].SecondName,
+                                FullName = students[i].FullName,
                                 IsAbsent = false
                             });
                         }
@@ -91,9 +87,7 @@ namespace eios.Data
                         result.Add(new StudentAttendance
                         {
                             Id = students[i].Id,
-                            FirstName = students[i].FirstName,
-                            LastName = students[i].LastName,
-                            SecondName = students[i].SecondName,
+                            FullName = students[i].FullName,
                             IsAbsent = false
                         });
                     }
@@ -313,7 +307,7 @@ namespace eios.Data
         {
             try
             {
-                return await database.QueryAsync<StudentSelect>("SELECT id_student, firstname, lastname, secondname FROM Students WHERE id_group =?", idGroup);
+                return await database.QueryAsync<StudentSelect>("SELECT id_student, fullname FROM Students WHERE id_group =?", idGroup);
             }
             catch (SQLiteException ex)
             {
