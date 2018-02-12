@@ -99,6 +99,7 @@ namespace eios.ViewModel
             {
                 IsBusy = true;
                 StudentsList = await PopulateList();
+                OnSite = StudentsList.FindAll(s => s.IsSelected.Equals(false)).Count;
                 IsBusy = false;
             });
         }

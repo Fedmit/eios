@@ -43,15 +43,15 @@ namespace eios
 
                         return;
                     }
-                    
+
+                    App.Groups = await App.Database.GetGroups();
+
                     App.IsLoading = true;
 
-                    Application.Current.MainPage = new MainPage();
                     MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
                     MessagingCenter.Send(new StartSyncUnsentChangesTask(), "StartSyncUnsentChangesTask");
 
-                    //await Task.Delay(10000);
-
+                    Application.Current.MainPage = new MainPage();
                 }
                 else
                 {

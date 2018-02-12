@@ -14,7 +14,7 @@ namespace eios.ViewModel
     class OccupationsListViewModel : INotifyPropertyChanged
     {
 
-        string _date = "lol";
+         string _date = "-";
          public string Date
          {
              get { return _date + "  ▼"; }
@@ -25,10 +25,18 @@ namespace eios.ViewModel
              }
          }
 
-         string _group = "lol";
+         string _group;
          public string Group
          {
-             get { return _group + "  ▼"; }
+             get {
+                if (_group != null)
+                {
+                    var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
+                    _group = App.Groups.Where(group => group.IdGroup == idGroup).ToList()[0].Name;
+                }
+
+                 return _group + "  ▼";
+             }
              set
              {
                  _group = value;
@@ -92,8 +100,13 @@ namespace eios.ViewModel
                     Device.BeginInvokeOnMainThread(async () => {
                         if (message.IsSuccessful)
                         {
-                            var occupationList = await PopulateList();
-                            OccupationsList = occupationList;
+                            var dateNow = DateTime.Parse((string)App.Current.Properties["DateNow"]);
+                            Date = dateNow.ToString("dd/MM/yyyy");
+
+                            var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
+                            Group = App.Groups.Where(group => group.IdGroup == idGroup).ToList()[0].Name;
+
+                            await UpdateOccupationsList();
 
                             MessagingCenter.Subscribe<OnMarksUpdatedMessage>(this, "OnMarksUpdatedMessage", _message => {
                                 Device.BeginInvokeOnMainThread(async () => {
@@ -119,8 +132,7 @@ namespace eios.ViewModel
             {
                 Task.Run(async () =>
                 {
-                    var occupationList = await PopulateList();
-                    OccupationsList = occupationList;
+                    await UpdateOccupationsList();
                     IsBusy = false;
 
                     MessagingCenter.Subscribe<OnMarksUpdatedMessage>(this, "OnMarksUpdatedMessage", message => {
@@ -133,6 +145,12 @@ namespace eios.ViewModel
                     });
                 });
             }
+        }
+
+        async public Task UpdateOccupationsList()
+        {
+            var occupationList = await PopulateList();
+            OccupationsList = occupationList;
         }
 
         async Task<List<Occupation>> PopulateList()

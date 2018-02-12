@@ -61,6 +61,7 @@ namespace eios
             }
 
             await App.Database.SetGroup(response.Data);
+            App.Groups = response.Data;
 
             App.Current.Properties["IdGroupCurrent"] = response.Data[0].IdGroup;
             App.Current.Properties["Fullname"] = response.Fullname;
