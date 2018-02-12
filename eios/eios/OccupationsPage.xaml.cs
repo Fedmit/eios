@@ -28,14 +28,6 @@ namespace eios
             ViewModel = new OccupationsListViewModel(this);
             BindingContext = ViewModel;
 
-            var dateNowStr = "2018-02-09 19:54:41";
-            if (App.Current.Properties.ContainsKey("DateNow"))
-            {
-                dateNowStr = (string)App.Current.Properties["DateNow"];
-            }
-            var dateNow = DateTime.Parse((dateNowStr));
-            ViewModel.Date = dateNow.ToString("dd/MM/yyyy");
-
             listView.ItemTapped += async (sender, e) =>
             {
                 listView.SelectedItem = null;
@@ -54,10 +46,6 @@ namespace eios
         {
             var message = new StartSyncScheduleStateTaskMessage();
             MessagingCenter.Send(message, "StartSyncScheduleStateTaskMessage");
-
-            var groups = await App.Database.GetGroups();
-            var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
-            ViewModel.Group = groups.Where(Group => Group.IdGroup == idGroup).ToList()[0].Name;
         }
 
         protected override void OnDisappearing()
@@ -68,7 +56,7 @@ namespace eios
 
         void onClicked(Object sender, DateChangedEventArgs e)
         {
-            //datePicker.Focus();
+            datePicker.Focus();
         }
 
         void datePicker_DateSelected(Object sender, DateChangedEventArgs e)
@@ -78,9 +66,9 @@ namespace eios
 
         void onClickedGroup(Object sender)
         {
-            //pickerGroup.Focus();
+            pickerGroup.Focus();
         }
-        void OnSelectedIndexChanged(object sender, EventArgs e)
+        async void OnSelectedIndexChanged(object sender, EventArgs e)
         {
             var picker = (Picker)sender;
             int selectedIndex = picker.SelectedIndex;
@@ -88,6 +76,9 @@ namespace eios
             if (selectedIndex != -1)
             {
                 App.Current.Properties["IdGroupCurrent"] = App.Groups[selectedIndex].IdGroup;
+                ViewModel.Group = App.Groups[selectedIndex].Name;
+
+                await ViewModel.UpdateOccupationsList();
             }
         }
     }

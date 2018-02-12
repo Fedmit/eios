@@ -39,7 +39,7 @@ namespace eios
                 if (e.Item is StudentSelect item)
                 {
                     item.IsSelected = !item.IsSelected;
-                    viewModel.OnSite = viewModel.StudentsList.FindAll(s => s.IsSelected.Equals(true)).Count;
+                    viewModel.OnSite = viewModel.StudentsList.FindAll(s => s.IsSelected.Equals(false)).Count;
                 }
             };
 

@@ -37,7 +37,7 @@
                 </StackLayout>
                 <StackLayout Margin="5" Orientation="Horizontal" HorizontalOptions="EndAndExpand">
                     <Label 
-                       Text="Отсутствуют:"
+                       Text="Присутствуют:"
                        HorizontalOptions="EndAndExpand"/>
                     <Label Text="{Binding OnSite}" />
                 </StackLayout>

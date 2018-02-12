@@ -63,7 +63,6 @@ namespace eios.ViewModel
             }
         }
 
-        int _presentTotal;
         public int PresentTotal
         {
             get
