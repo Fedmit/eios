@@ -74,7 +74,7 @@
                     x:Name="unavaibleButton"
                     WidthRequest="120"
                     BorderColor="Black"
-                    BackgroundColor="#E0E0E0"
+                    BackgroundColor="#8BC34A"
                     IsEnabled="False"
                     HorizontalOptions="Start"
                     Text="Пары нет"
@@ -85,7 +85,7 @@
                     WidthRequest="120"
                     HorizontalOptions="EndAndExpand"
                     BorderColor="Black"
-                    BackgroundColor="#E0E0E0"
+                    BackgroundColor="#8BC34A"
                     Text="Отметить"
                     TextColor="Black"
                     Clicked="OnMarkClicked" />

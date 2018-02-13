@@ -54,7 +54,7 @@
                         FontSize="18"
                         TextColor="Black"
                         BorderColor="Black"
-                        BackgroundColor="#E0E0E0"
+                        BackgroundColor="#8BC34A"
                         WidthRequest="130"
                         Clicked="OnLoginButtonClicked"
                         HorizontalOptions="Center" />
