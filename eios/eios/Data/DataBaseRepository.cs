@@ -46,7 +46,7 @@ namespace eios.Data
             }
         }
 
-        internal Task DeleteGroupsTable()
+        async public Task DeleteGroupsTable()
         {
             await database.DropTableAsync<Group>();
         }
@@ -104,7 +104,6 @@ namespace eios.Data
                 Console.WriteLine(ex.Message);
                 return null;
             }
-
         }
 
         public async Task <List<Occupation>> GetMarks(int idGroup)
@@ -274,19 +273,43 @@ namespace eios.Data
                     }
                 }
 
-                //occupationsList[0].IsChecked = true;
-
-                //await database.QueryAsync<Occupation>(
-                //    "UPDATE Occupations SET is_check = 1 WHERE id_occup = ? AND id_group = ?",
-                //    idOccupation,
-                //    idGroup
-                //);
-
                 await database.UpdateAllAsync(occupationsList);
             }
             catch (SQLiteException ex)
             {
                 Console.WriteLine(ex.Message);  
+            }
+        }
+
+        public async Task SetAttendence(List<StudentAbsent> absentStudents, int idOccupation, int idGroup)
+        {
+            try
+            {
+                await database.QueryAsync<StudentAbsent>(
+                    "DELETE FROM Attendance WHERE id_occup = ? AND id_group = ?",
+                    idOccupation,
+                    idGroup
+                );
+                await database.InsertAllAsync(absentStudents);
+
+                var occupationsList = await database.QueryAsync<Occupation>(
+                    "SELECT * FROM Occupations WHERE id_group = ?",
+                    idGroup
+                );
+
+                foreach (var occup in occupationsList)
+                {
+                    if (occup.IdOccupation == idOccupation)
+                    {
+                        occup.IsChecked = true;
+                    }
+                }
+
+                await database.UpdateAllAsync(occupationsList);
+            }
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
 

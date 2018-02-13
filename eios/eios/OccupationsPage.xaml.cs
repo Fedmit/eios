@@ -23,10 +23,10 @@ namespace eios
 
         public OccupationsPage()
         {
-            InitializeComponent();
-
             ViewModel = new OccupationsListViewModel(this);
             BindingContext = ViewModel;
+            
+            InitializeComponent();
 
             listView.ItemTapped += async (sender, e) =>
             {
@@ -42,7 +42,7 @@ namespace eios
             };
         }
 
-        protected async override void OnAppearing()
+        protected override void OnAppearing()
         {
             if (!App.IsLoading)
             {
@@ -57,19 +57,20 @@ namespace eios
             MessagingCenter.Send(message, "StopSyncScheduleStateTaskMessage");
         }
 
-        void onClicked(Object sender, DateChangedEventArgs e)
+        void OnDateClicked(Object sender, DateChangedEventArgs e)
         {
-            datePicker.Focus();
+            if (!App.IsLoading)
+            {
+                datePicker.Focus();
+            }
         }
 
-        void datePicker_DateSelected(Object sender, DateChangedEventArgs e)
+        void OnGroupClicked(Object sender)
         {
-            ViewModel.Date = e.NewDate.ToString("dd/MM/yyyy");
-        }
-
-        void onClickedGroup(Object sender)
-        {
-            pickerGroup.Focus();
+            if (!App.IsLoading)
+            {
+                groupPicker.Focus();
+            }
         }
         async void OnSelectedIndexChanged(object sender, EventArgs e)
         {

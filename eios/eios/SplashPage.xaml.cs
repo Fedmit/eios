@@ -10,6 +10,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using eios.Model;
 using System.Net.Http;
+using Plugin.Connectivity;
 
 namespace eios
 {
@@ -26,9 +27,7 @@ namespace eios
         {
             base.OnAppearing();
 
-            await Task.Delay(1000);
-
-            if (App.IsConnected)
+            if (CrossConnectivity.Current.IsConnected)
             {
                 if (App.Current.Properties.ContainsKey("IsLoggedIn") && (bool)App.Current.Properties["IsLoggedIn"])
                 {
@@ -63,6 +62,7 @@ namespace eios
             {
                 if (App.Current.Properties.ContainsKey("IsLoggedIn") && (bool)App.Current.Properties["IsLoggedIn"])
                 {
+                    App.Groups = await App.Database.GetGroups();
                     Application.Current.MainPage = new MainPage();
                 }
                 else

@@ -1,6 +1,7 @@
 ﻿using eios.Data;
 using eios.Messages;
 using eios.Model;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -19,20 +20,23 @@ namespace eios.Tasks
         {
             try
             {
-                if (App.IsConnected)
+                if (CrossConnectivity.Current.IsConnected)
                 {
-                    DateTime dateNow = await WebApi.Instance.GetDateAsync();
-
                     DateTime lastDate = new DateTime();
-                    if (App.Current.Properties.ContainsKey("DateNow"))
+                    if (!App.IsTimeTravelMode)
                     {
-                        var str = (string)App.Current.Properties["DateNow"];
-                        lastDate = DateTime.Parse(str);
+                        DateTime dateNow = await WebApi.Instance.GetDateAsync();
+
+                        if (App.Current.Properties.ContainsKey("DateNow"))
+                        {
+                            var str = (string)App.Current.Properties["DateNow"];
+                            lastDate = DateTime.Parse(str);
+                        }
+
+                        App.DateNow = dateNow;
                     }
 
-                    App.DateNow = dateNow;
-
-                    if (lastDate == DateTime.MinValue || lastDate.Date != dateNow.Date)
+                    if (App.IsTimeTravelMode || lastDate == DateTime.MinValue || lastDate.Date != App.DateNow.Date)
                     {
                         var groups = await App.Database.GetGroups();
 
@@ -47,7 +51,7 @@ namespace eios.Tasks
                             await App.Database.SetStudents(students);
                         }
                     }
-                    App.Current.Properties["DateNow"] = dateNow.ToString("yyyy-MM-dd HH:mm:ss");
+                    App.Current.Properties["DateNow"] = App.DateNow.ToString("yyyy-MM-dd HH:mm:ss");
                     await App.Current.SavePropertiesAsync();
                 }
                 
