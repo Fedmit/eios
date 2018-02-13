@@ -2,6 +2,7 @@
 using eios.Messages;
 using eios.Model;
 using eios.ViewModel;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,9 +33,9 @@ namespace eios
 
         async void OnLoginButtonClicked(Object sender, AssemblyLoadEventArgs args)
         {
-            if (!App.IsConnected)
+            if (!CrossConnectivity.Current.IsConnected)
             {
-                await ShowMessage("", "Вы не подключены!", "OK");
+                await ShowMessage("Ошибка", "Вы не подключены!", "OK");
                 return;
             }
 
@@ -74,7 +75,7 @@ namespace eios
 
 
             MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
-            //await Task.Delay(10000);
+
             Application.Current.MainPage = new MainPage();
         }
 

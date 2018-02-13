@@ -1,6 +1,7 @@
 ﻿using eios.Data;
 using eios.Model;
 using eios.ViewModel;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -72,7 +73,7 @@ namespace eios
             var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
             await App.Database.SetAttendence(viewModel.StudentsList, occupation.IdOccupation, idGroup);
 
-            if (App.IsConnected)
+            if (CrossConnectivity.Current.IsConnected)
             {
                 var students = await App.Database.GetAbsentStudents(occupation.IdOccupation, occupation.IdGroup);
                 try

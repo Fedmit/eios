@@ -36,10 +36,10 @@ namespace eios.Data
             {
                 HttpClient client = new HttpClient();
                 var response = await client.PostAsync(
-                    _baseUrl, 
+                    _baseUrl,
                     new StringContent(
-                        json, 
-                        UnicodeEncoding.UTF8, 
+                        json,
+                        UnicodeEncoding.UTF8,
                         "application/json"
                     )
                 );
@@ -204,7 +204,7 @@ namespace eios.Data
                 response.EnsureSuccessStatusCode();
 
                 var content = await response.Content.ReadAsStringAsync();
-                string str = (string)JObject.Parse(content).SelectToken("date");
+                string str = (string) JObject.Parse(content).SelectToken("date");
 
                 time = DateTime.Parse(str);
             }
@@ -268,7 +268,8 @@ namespace eios.Data
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
-            try {
+            try
+            {
                 Console.WriteLine(json);
                 HttpClient client = new HttpClient();
                 var response = await client.PostAsync(

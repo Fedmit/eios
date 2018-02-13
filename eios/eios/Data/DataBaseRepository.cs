@@ -46,9 +46,12 @@ namespace eios.Data
             }
         }
 
-        internal Task DeleteGroupsTable() => database.DropTableAsync<Group>();
+        async public Task DeleteGroupsTable()
+        {
+            await database.DropTableAsync<Group>();
+        }
 
-        public async Task <List<StudentAttendance>> GetAttendance(int idOccupation, int idGroup)
+        public async Task<List<StudentAttendance>> GetAttendance(int idOccupation, int idGroup)
         {
             try
             {
@@ -69,10 +72,12 @@ namespace eios.Data
                         if (students[i].Id == attendance[j].Id)
                         {
                             j++;
-                            result.Add(new StudentAttendance {
+                            result.Add(new StudentAttendance
+                            {
                                 Id = students[i].Id,
                                 FullName = students[i].FullName,
-                                IsAbsent = true });
+                                IsAbsent = true
+                            });
                         }
                         else
                         {
@@ -101,10 +106,9 @@ namespace eios.Data
                 Console.WriteLine(ex.Message);
                 return null;
             }
-
         }
 
-        public async Task <List<Occupation>> GetMarks(int idGroup)
+        public async Task<List<Occupation>> GetMarks(int idGroup)
         {
             try
             {
@@ -164,7 +168,7 @@ namespace eios.Data
             }
         }
 
-        public async Task SetOccupations(List<Occupation> list) 
+        public async Task SetOccupations(List<Occupation> list)
         {
             try
             {
@@ -188,7 +192,7 @@ namespace eios.Data
                 return null;
             }
         }
-        
+
         public async Task SetSentFlag(int idOccupation, int idGroup)
         {
             try
@@ -263,7 +267,7 @@ namespace eios.Data
                     idGroup
                 );
 
-                foreach(var occup in occupationsList)
+                foreach (var occup in occupationsList)
                 {
                     if (occup.IdOccupation == idOccupation)
                     {
@@ -271,23 +275,45 @@ namespace eios.Data
                     }
                 }
 
-                //occupationsList[0].IsChecked = true;
+                await database.UpdateAllAsync(occupationsList);
+            }
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
 
-                //await database.QueryAsync<Occupation>(
-                //    "UPDATE Occupations SET is_check = 1 WHERE id_occup = ? AND id_group = ?",
-                //    idOccupation,
-                //    idGroup
-                //);
+        public async Task SetAttendence(List<StudentAbsent> absentStudents, int idOccupation, int idGroup)
+        {
+            try
+            {
+                await database.QueryAsync<StudentAbsent>(
+                    "DELETE FROM Attendance WHERE id_occup = ? AND id_group = ?",
+                    idOccupation,
+                    idGroup
+                );
+                await database.InsertAllAsync(absentStudents);
+
+                var occupationsList = await database.QueryAsync<Occupation>(
+                    "SELECT * FROM Occupations WHERE id_group = ?",
+                    idGroup
+                );
+
+                foreach (var occup in occupationsList)
+                {
+                    if (occup.IdOccupation == idOccupation)
+                    {
+                        occup.IsChecked = true;
+                    }
+                }
 
                 await database.UpdateAllAsync(occupationsList);
             }
             catch (SQLiteException ex)
             {
-                Console.WriteLine(ex.Message);  
+                Console.WriteLine(ex.Message);
             }
         }
-
-
 
         public async Task DeleteAttendance(int idOccupation, int idGroup)
         {
@@ -319,7 +345,7 @@ namespace eios.Data
             }
         }
 
-        public async Task <List<StudentSelect>> GetStudents(int idGroup)
+        public async Task<List<StudentSelect>> GetStudents(int idGroup)
         {
             try
             {
