@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -292,6 +293,46 @@ namespace eios.Data
             catch (Exception ex)
             {
                 Console.WriteLine("SetAttendAsync(): " + ex.Message);
+            }
+        }
+
+        public async Task SetNullAttendAsync(Occupation occupation)
+        {
+            dynamic dynamicJson = new ExpandoObject();
+            dynamicJson.login = App.Login;
+            dynamicJson.password = App.Password;
+            dynamicJson.type = "set_attend";
+            dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
+            dynamicJson.date = App.DateNow.ToString("yyyy-MM-dd");
+            dynamicJson.id_occup = occupation.IdOccupation;
+            dynamicJson.id_lesson = occupation.IdLesson;
+            dynamicJson.id_aud = occupation.IdAud;
+            dynamicJson.data = "Set_canceled";
+
+            string json = "";
+            json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
+
+            try
+            {
+                Console.WriteLine(json);
+                HttpClient client = new HttpClient();
+                var response = await client.PostAsync(
+                    _baseUrl,
+                    new StringContent(
+                        json,
+                        UnicodeEncoding.UTF8,
+                        "application/json"
+                    )
+                );
+                response.EnsureSuccessStatusCode();
+            }
+            catch (HttpRequestException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("SetNullAttendAsync(): " + ex.Message);
             }
         }
     }

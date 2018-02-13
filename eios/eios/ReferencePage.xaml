@@ -4,55 +4,210 @@
              x:Class="eios.ReferencePage">
     <ScrollView>
         <StackLayout BackgroundColor="#ffffff" Padding="30">
-            <Label Text="Bxoд"
-                   Font="18" 
-                   TextColor="#000000"
-                   HorizontalOptions="Center"/>
-            <Label Text='    Для входа в систему введите свой логин и пароль в текстовые поля, в окне Вход в систему", а затем нажмите кнопку "Вход".&#10;   В случае если вы забыли пароль, нажмите на ссылку "Я забыл свой пароль", в низу окна.'
-                   Font="16" 
-                   TextColor="#7d7f7d" />
-            <Label Text="Меню"
-                   Font="18" 
-                   TextColor="#000000"
-                   HorizontalOptions="Center"/>
-            <Label Text='    В меню мы можем видеть такие пункты, как:&#10;    "Занятия" позволяет перейти в окно, содержащее расписание занятий указанной группы. Здесь вы можете отметить посещаемость и изменить номер группы;&#10;    "Мой профиль" позволяет перейти в окно, содержащее информацию о вас и позволяющее осуществить выход из профиля;&#10;    "Настройки" позволяет перейти в окно, позволяющее включить/выключить уведомления;&#10;    "Помощь" позволяет перейти в окно, осуществляющее связь с разработчиком приложения;&#10;    "О программе" позволяет перейти в окно, содержащее основную информацию о приложение;&#10;    "Выход" позволяет осуществить выход из программы.'
-                   Font="16" 
-                   TextColor="#7d7f7d" />
-            <Label Text="Как отметить посещаемость?"
-                   Font="18" 
-                   TextColor="#000000"
-                   HorizontalOptions="Center"/>
-            <Label Text='    1)В меню выберете пункт "Занятия".&#10;    2)В появившемся окне выберете интересующий вас предмет, нажмите на него.&#10;    3)В появившемся списке отметьте студентов отсутствующих студентов&#10;    4)Нажмите кнопку "Отметить посещаемость".'
-                   Font="16" 
-                   TextColor="#7d7f7d" />
-            <Label Text="Как изменить номер группы?"
-                   Font="18" 
-                   TextColor="#000000"
-                   HorizontalOptions="Center"/>
-            <Label Text='    1)В меню выберете пункт "Занятия".&#10;    2)В появившемся окне на верху нажмите на номер группы.&#10;    3)Перед вами выплывает окно с писком доступных вам групп. Нажмите на интересующую вас группу.'
-                   Font="16" 
-                   TextColor="#7d7f7d" />
-            <Label Text="Как выйти из профиля?"
-                   Font="18" 
-                   TextColor="#000000"
-                   HorizontalOptions="Center"/>
-            <Label Text='    1)В меню выберете пункт "Мой профиль".&#10;    2)В появившемся окне нажмите на кнопку "Выйти из профиля".'
-                   Font="16" 
-                   TextColor="#7d7f7d" />
-            <Label Text="Как вкл./выкл. уведомления?"
-                   Font="18" 
-                   TextColor="#000000"
-                   HorizontalOptions="Center"/>
-            <Label Text='    1)В меню выберете пункт "Настройки".&#10;    2)В появившемся окне переведите метку "Присылать уведомления" в активное\пассивное состояние.'
-                   Font="16" 
-                   TextColor="#7d7f7d" />
-            <Label Text="В случае если у вас &#10;остались вопросы:"
-                   Font="18" 
-                   TextColor="#000000"
-                   HorizontalOptions="Center"/>
-            <Label Text='    1)Выберете в меню пункт "Помощь".&#10;    2)В явившемся окне в текстовом поле опишите вашу проблему.&#10;    3)Нажмите кнопку "Отправить".'
-                   Font="16" 
-                   TextColor="#7d7f7d" />
+            <Label HorizontalOptions="Center"
+                   Text="Руководство по эксплуатации"/>
+            <Label HorizontalOptions="Center"
+                   Text="«ЭИОС ПГУ. Журнал посещаемости»"
+                   FontAttributes="Bold"
+                   />
+            <Label HorizontalOptions="Center"
+                   Text="Мобильное приложение «ЭИОС ПГУ. Журнал посещаемости» является клиентской частью Электронной информационно-образовательной системы Пензенского государственного университета и предназначено для автоматизированного сбора информации о посещаемости занятий студентами университета от старост учебных групп"
+                   
+                   />
+            <Label HorizontalOptions="Center"
+                   Text="Вход в систему"
+                   FontAttributes="Bold"
+                   />
+            <Label HorizontalOptions="Center"
+                   Text="Для входа в систему введите свой логин и пароль в соответствующие поля ввода, а затем нажмите кнопку 'Вход'. При вводе коректных данных приложение перейдет на следующий экран, при вводе некорректных – выведет соответствующее сообщение."
+                   />
+            <Label HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Примечание: " FontAttributes="Bold" />
+                        <Span Text="данное приложение предназначено только для старост учебных групп Пензенского государственного университета.
+В случае, если вы забыли пароль, нажмите на кнопку 'Я забыл свой пароль' в нижней части экрана. После этого вы получите инструкции по восстановлению учетных данных." />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Примечание " FontAttributes="Bold" />
+                        <Span Text="при успешном входе в систему повторный вход осуществляется без ввода учетных данных пользователя." />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label HorizontalOptions="Center"
+                   Text="Расписание занятий"
+                   FontAttributes="Bold"
+                   />
+            <Label HorizontalOptions="Center"
+                   Text="На экране расписания занятий вы можете увидеть список занятий на сегодня, включающий в себя следующие данные: время занятия, название занятия, аудитория. При клике на один из элементов списка осуществляется переход на экран отдельного занятия, где пользователь может внести, изменить или просмотреть данные о посещаемости."
+                   
+                   />
+            <Label HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Примечание: " FontAttributes="Bold" />
+                        <Span Text="элементы списка могут иметь следующий статус:" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <StackLayout Orientation="Horizontal">
+                <Image Source=""/>
+                <Label Text=" - занятие не отмечено"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Image Source=""/>
+                <Label Text=" - вы забыли отметить посещаемость на данном занятии (только при заполненном расписании и рабочем Интернет-соединении)"/>
+            </StackLayout>
+            <Label HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Примечание: " FontAttributes="Bold" />
+                        <Span Text="элементы списка могут иметь следующий статус:" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Image Source=""/>
+            <Label HorizontalOptions="Center"
+                   Text="Элемент списка принимает краткий вид, если Вы не заполнили расписание/занятия нет в расписании"/>
+            <Image Source=""/>
+            <Label HorizontalOptions="Center"
+                   Text="Для того, чтобы отметить посещаемость за определенную дату – выберите ее в диалоговом окне выбора даты, нажав соответствующую кнопку в правой верхней части экрана (по-умолчанию, при наличии Интернет-соединения загружается расписание занятий Вашей группы на сегодняшний день) ."
+                   
+                    />
+            <Image Source=""/>
+            <Label HorizontalOptions="Center"
+                   Text="Если вы являетесь старостой одновременно нескольких"/>
+            <Label HorizontalOptions="Center"
+                   Text="Экран занятия"
+                   FontAttributes="Bold"
+                   />
+            <Label HorizontalOptions="Center"
+                   Text="На экране занятия вы можете внести, изменить или просмотреть данные о посещаемости. На данном экране присутствуют следующие элементы:"
+                   />
+            <Image Source=""/>
+            
+            <Label HorizontalOptions="Center"
+                   Text="Строка информации о просматриваемом занятии, включающая в себя время занятия, название предмета и аудиторию."
+                   />
+            <Image Source=""/>
+            <Label HorizontalOptions="Center"
+                   Text="Строка информации о количестве студентов, присутствующих на занятии (количество по списку и на лицо)."
+                   />
+            <Image Source=""/>
+            
+            <Label HorizontalOptions="Center"
+                   Text="Список студентов Вашей группы."
+                   />
+            <Label HorizontalOptions="Center"
+                   Text="Для того, чтобы отметить посещаемость на данном занятии – выберите отсутствующих студентов, нажимая на элемент с их ФИО (при этом индикатор рядом с ФИО студента поменяет свой цвет с серого на красный) …
+"
+                   />
+            <Image Source=""/>
+            <Label HorizontalOptions="Center"
+                  Text="…а затем нажмите кнопку «Отметить» в правом нижнем углу экрана"
+                   />
+            <Image Source=""/>
+            <Label HorizontalOptions="Center"
+                   Text="Если вы некорректно отметили посещаемость на занятии, то вы можете изменить данные, нажав кнопку «Изменить» в нижней части экрана…"
+                   />
+            <Image Source=""/>
+            <Label HorizontalOptions="Center"
+                   Text="…и внеся корректные данные."
+                   />
+            <Label HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Примечание: " FontAttributes="Bold" />
+                        <Span Text="изменение данных о посещаемости возможно только на протяжении занятия и 15 минут после него, по истечении этого времени возможность внесения изменений будет заблокирована. Если же вы не отметили посещаемость во время занятия, то у вас будет возможность отметить посещаемость только 1 раз.
+" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Примечание: " FontAttributes="Bold" />
+                        <Span Text="Если занятие было отменено, то вы можете сообщить об этом, нажав кнопку «Занятия нет» в левой нижней части экрана.
+" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Image Source=""/>
+            <Label HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Примечание: " FontAttributes="Bold" />
+                        <Span Text="кнопка «Занятия нет» доступна лишь в том случае, если для выбранного занятия заполнена информация (заполнено расписание)." />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label HorizontalOptions="Center"
+                   Text="Меню приложения"
+                   FontAttributes="Bold"
+                   />
+            <Label HorizontalOptions="Center"
+                   Text="Переход между экранами приложения возможен как путем непосредственного перехода по нажатию на те или иные элементы управления, так и путем перехода к определенным экранам из меню приложения.
+   	Меню приложения можно открыть нажатием кнопки «Меню» на экране расписания или проведя пальцем вправо (сделав «свайп») на любом другом экране (исключая экран загрузки и входа в приложение)."
+                   />
+            <Image Source =""/>
+            <Label HorizontalOptions ="Center"
+                   Text="Меню приложения содержит следующие пункты:"/>
+            <Label HorizontalOptions ="Center"
+                   Text="Расписание – по нажатию на данный пункт меню осуществляется переход на экран расписания занятий.
+"/>
+            <Label HorizontalOptions ="Center"
+                   Text="Справка – по нажатию на данный пункт меню осуществляется переход на экран справки, содержащий данное Руководство по эксплуатации.
+"/>
+            <Label HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Примечание: " FontAttributes="Bold" />
+                        <Span Text="Руководство по эксплуатации также доступно и на экране входа в систему по нажатию на кнопку справки." />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Image Source=""/>
+            <Label HorizontalOptions ="Center"
+                   Text="Выйти из профиля - по нажатию на данный пункт меню осуществляется выход из аккаунта пользователя.
+"/>
+            <Label HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Примечание: " FontAttributes="Bold" />
+                        <Span Text="При выходе из профиля возможно удаление несинхронизированных данных (принципиально для работы в оффлайн-режиме).
+" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label HorizontalOptions ="Center"
+                   Text="Работа в оффлайн-режиме"
+                   FontAttributes="Bold"/>
+            <Label HorizontalOptions ="Center"
+                   Text="Мобильное приложение 'ЭИОС ПГУ. Журнал посещаемости' имеет широкие возможности в области отложенной синхронизации. Даже при отсутствии постоянного стабильного Интернет-соединения Вы можете без проблем отправлять данные о посещаемости занятий.
+"/>
+            <Label HorizontalOptions ="Center"
+                   Text="Для того, чтобы отмечать посещаемость в оффлайн-режиме вам необходимо единожды загрузить расписание на день (по-умолчанию - текущий) и после этого вы сможете отмечать посещаемость без постоянного Интернет соединения (исключая некоторые функции - например, индикацию того, что Вы забыли отметить посещаемость на прошедшем занятии). Все изменения будут синхронизированы с сервером при первом же подключении к Интернету.
+"/>
+            <Label HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Примечание: " FontAttributes="Bold" />
+                        <Span Text="выход из профиля при работе в оффлайн-режиме приведет к стиранию ранее загруженной, а также еще не синхронизированной информации и невозможности продолжения работы в данном режиме.
+" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label HorizontalOptions ="Center"
+                   Text="Вопросы и предложения"
+                   FontAttributes="Bold"/>
+            <Label HorizontalOptions ="Center"
+                   Text="Все интересующие Вас вопросы, а также имеющиеся предложения и информацию об ошибках направляйте по адресу creativityprojectcenter@gmail.com с указанием темы письма - 'ЭИОС ПГУ. ЖУрнал посещаемости'.
+"/>
+           
         </StackLayout>
     </ScrollView>
 </ContentPage>

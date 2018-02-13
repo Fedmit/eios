@@ -6,7 +6,8 @@
     x:Class="eios.CompletedOccupationPage">
     <ContentPage.Content>
         <StackLayout
-            Margin="10,5,10,5">
+            Padding="20,15,20,5"
+            Margin="0,15">
             <Label
                 x:Name="occupationName"
                 Text="{Binding OccupationName}"
@@ -14,8 +15,7 @@
             <StackLayout
                 Orientation="Horizontal"
                 HorizontalOptions="FillAndExpand"
-                Spacing="10"
-                Margin="5">
+                Spacing="10">
                 <Label
                     x:Name="occupationTime"
                     Text="{Binding OccupationTime}"
@@ -26,10 +26,8 @@
                     HorizontalOptions="EndAndExpand" />
             </StackLayout>
             <StackLayout
-                Orientation="Horizontal"
-                Margin="5">
+                Orientation="Horizontal">
                 <StackLayout
-                    Margin="5"
                     Orientation="Horizontal">
                     <Label
                         Text="Всего:"
@@ -42,7 +40,6 @@
                         TextColor="Black" />
                 </StackLayout>
                 <StackLayout
-                    Margin="5"
                     Orientation="Horizontal"
                     HorizontalOptions="EndAndExpand">
                     <Label
@@ -72,7 +69,6 @@
                         <ViewCell>
                             <StackLayout
                                 Orientation="Horizontal"
-                                Padding="20,0,20,0"
                                 Spacing="20">
                                 <Image
                                     Source="{Binding IconSource}"
@@ -93,8 +89,7 @@
                 BackgroundColor="#E0E0E0"
                 Text="Изменить"
                 TextColor="Black"
-                Clicked="OnEditClicked"
-                Margin="5" />
+                Clicked="OnEditClicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -6,7 +6,8 @@
     x:Class="eios.StudentsPage">
     <ContentPage.Content>
         <StackLayout
-            Padding="10,5,10,5">
+            Padding="20,15,20,5"
+            Margin="0,15">
             <Label
                 x:Name="occupationName"
                 Text="{Binding OccupationName}"
@@ -14,8 +15,7 @@
             <StackLayout
                 Orientation="Horizontal"
                 HorizontalOptions="FillAndExpand"
-                Spacing="10"
-                Margin="5">
+                Spacing="10">
                 <Label
                     x:Name="occupationTime"
                     Text="{Binding OccupationTime}"
@@ -26,10 +26,8 @@
                     HorizontalOptions="EndAndExpand" />
             </StackLayout>
             <StackLayout
-                Margin="5"
                 Orientation="Horizontal">
                 <StackLayout
-                    Margin="5"
                     Orientation="Horizontal">
                     <Label
                         Text="Всего:"
@@ -38,7 +36,6 @@
                         Text="{Binding Total}" />
                 </StackLayout>
                 <StackLayout
-                    Margin="5"
                     Orientation="Horizontal"
                     HorizontalOptions="EndAndExpand">
                     <Label
@@ -58,7 +55,6 @@
                         <ViewCell>
                             <StackLayout
                                 Orientation="Horizontal"
-                                Margin="20,0,20,0"
                                 Spacing="20">
                                 <Image
                                     Source="{Binding IconSource}"
@@ -84,8 +80,7 @@
                     HorizontalOptions="Start"
                     Text="Пары нет"
                     TextColor="Black"
-                    Clicked="OnUnaviableClicked"
-                    Margin="5" />
+                    Clicked="OnUnaviableClicked" />
                 <Button
                     x:Name="markButton"
                     HorizontalOptions="EndAndExpand"
@@ -93,8 +88,7 @@
                     BackgroundColor="#E0E0E0"
                     Text="Отметить"
                     TextColor="Black"
-                    Clicked="OnMarkClicked"
-                    Margin="5" />
+                    Clicked="OnMarkClicked" />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

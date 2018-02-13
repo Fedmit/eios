@@ -9,12 +9,12 @@ using Xamarin.Forms.Xaml;
 
 namespace eios
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ReferencePage : ContentPage
-	{
-		public ReferencePage ()
-		{
-			InitializeComponent ();
-		}
-	}
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class ReferencePage : ContentPage
+    {
+        public ReferencePage()
+        {
+            InitializeComponent();
+        }
+    }
 }

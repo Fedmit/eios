@@ -7,6 +7,19 @@
     <ContentPage.Content>
         <StackLayout
             BackgroundColor="White">
+            <StackLayout
+                Orientation="Horizontal"
+                Padding="15"
+                Margin="10">
+                <Button
+                    x:Name="buttonInfo"
+                    Margin="10"
+                    HorizontalOptions="EndAndExpand"
+                    Clicked="buttonInfo_Clicked"
+                    WidthRequest="48"
+                    HeightRequest="48"
+                    Image="infoIcon.jpg" />
+            </StackLayout>
             <Label
                 Text="ЭИОС ПГУ &#10; Журнал посещаемости"
                 TextColor="Black"
