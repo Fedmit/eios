@@ -34,8 +34,8 @@
                     TextColor="Black"
                     WidthRequest="200"
                     VerticalOptions="Center"/>
-            <StackLayout>
-            <Button 
+                <StackLayout>
+                    <Button 
                     x:Name="loginButton"
                     Text="Войти"
                     FontSize="18"
@@ -44,7 +44,7 @@
                     WidthRequest="130"
                     Clicked="OnLoginButtonClicked"
                     HorizontalOptions="Center"/>
-            </StackLayout>
+                </StackLayout>
             </StackLayout>
             <ActivityIndicator
                 x:Name="activityIndicator"
@@ -61,7 +61,8 @@
                 HorizontalOptions="Center"
                 Margin="0,0,0,15"
                 WidthRequest="210"
-                FontSize="16" />
+                FontSize="16"
+                Clicked="OnForgotPasswordButtonClicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

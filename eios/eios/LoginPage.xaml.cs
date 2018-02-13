@@ -23,12 +23,21 @@ namespace eios
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
-        public async Task ShowMessage(string message, string title, string buttonText)
+        public async Task ShowMessage(string title, string message, string buttonText)
         {
             await DisplayAlert(
                 title,
                 message,
                 buttonText);
+        }
+
+        async void OnForgotPasswordButtonClicked(Object sender, AssemblyLoadEventArgs args)
+        {
+            await ShowMessage(
+                "",
+                "В случае, если был утерян доступ к учебным данным к системе ЭИОС - обратитесь в библиотеку в 3 корпусе",
+                "OK"
+            );
         }
 
         async void OnLoginButtonClicked(Object sender, AssemblyLoadEventArgs args)
@@ -82,7 +91,6 @@ namespace eios
             await App.Current.SavePropertiesAsync();
 
             App.IsLoading = true;
-
 
             MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
 
