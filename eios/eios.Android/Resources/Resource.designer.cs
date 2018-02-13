@@ -4091,7 +4091,7 @@ namespace eios.Droid
 			public const int icon = 2130837744;
 			
 			// aapt resource value: 0x7f0200f1
-			public const int infoIcon = 2130837745;
+			public const int info_icon = 2130837745;
 			
 			// aapt resource value: 0x7f0200f2
 			public const int mr_button_connected_dark = 2130837746;

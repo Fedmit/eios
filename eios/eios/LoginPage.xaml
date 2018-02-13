@@ -7,24 +7,18 @@
     <ContentPage.Content>
         <StackLayout
             BackgroundColor="White">
-            <StackLayout
-                Orientation="Horizontal"
-                Padding="15"
-                Margin="10">
-                <Button
-                    x:Name="buttonInfo"
-                    Margin="10"
-                    HorizontalOptions="EndAndExpand"
-                    Clicked="buttonInfo_Clicked"
-                    WidthRequest="48"
-                    HeightRequest="48"
-                    Image="infoIcon.jpg" />
-            </StackLayout>
+            <Image
+                x:Name="buttonInfo"
+                Margin="10"
+                HorizontalOptions="EndAndExpand"
+                WidthRequest="30"
+                HeightRequest="30"
+                Source="info_icon.png" />
             <Label
                 Text="ЭИОС ПГУ &#10; Журнал посещаемости"
                 TextColor="Black"
                 VerticalOptions="Center"
-                Margin="0,100,0,0"
+                Margin="0,70,0,0"
                 HorizontalTextAlignment="Center"
                 FontSize="20" />
             <StackLayout

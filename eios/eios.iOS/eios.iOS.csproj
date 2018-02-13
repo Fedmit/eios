@@ -162,7 +162,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\infoIcon.jpg" />
+    <BundleResource Include="Resources\info_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\eios\eios.projitems" Label="Shared" />
