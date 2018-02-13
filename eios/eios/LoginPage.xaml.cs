@@ -21,6 +21,10 @@ namespace eios
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
+
+            TapGestureRecognizer tapEvent = new TapGestureRecognizer();
+            tapEvent.Tapped += OnInfoButtonClicked;
+            buttonInfo.GestureRecognizers.Add(tapEvent);
         }
 
         public async Task ShowMessage(string title, string message, string buttonText)
@@ -87,7 +91,7 @@ namespace eios
             Application.Current.MainPage = new MainPage();
         }
 
-        private void buttonInfo_Clicked(object sender, EventArgs e)
+        private void OnInfoButtonClicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new ReferencePage());
         }

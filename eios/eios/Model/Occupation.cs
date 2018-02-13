@@ -47,7 +47,7 @@ namespace eios.Model
         {
             get
             {
-                if (!IsChecked && !IsBlocked && IdLesson != 0 && IdOccupation < App.IdOccupNow) { return "#f7636c"; }
+                if (!IsChecked && IdLesson != 0 && (IdOccupation < App.IdOccupNow || App.IsTimeTravelMode)) { return "#f7636c"; }
                 else if (IsChecked) { return "#acd94e"; }
                 return "#e0e0e0";
             }
@@ -58,7 +58,7 @@ namespace eios.Model
         {
             get
             {
-                if (IdLesson == 0 && !IsChecked) { return "#000000"; }
+                if (!IsChecked && (IdLesson == 0 || (IdOccupation >= App.IdOccupNow && !App.IsTimeTravelMode))) { return "#000000"; }
                 return "#FFFFFF";
             }
         }

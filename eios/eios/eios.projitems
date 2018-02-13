@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\OnDateSyncronizedMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\OnMarksUpdatedMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\OnScheduleSyncronizedMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\StartSyncScheduleStateTaskMessage.cs" />

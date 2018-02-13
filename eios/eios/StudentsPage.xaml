@@ -6,8 +6,7 @@
     x:Class="eios.StudentsPage">
     <ContentPage.Content>
         <StackLayout
-            Padding="20,15,20,5"
-            Margin="0,15">
+            Padding="20,5,20,20">
             <Label
                 x:Name="occupationName"
                 Text="{Binding OccupationName}"
@@ -26,7 +25,8 @@
                     HorizontalOptions="EndAndExpand" />
             </StackLayout>
             <StackLayout
-                Orientation="Horizontal">
+                Orientation="Horizontal"
+                Margin="20,0">
                 <StackLayout
                     Orientation="Horizontal">
                     <Label
@@ -69,23 +69,23 @@
                 </ListView.ItemTemplate>
             </ListView>
             <StackLayout
-                Margin="5"
-                Orientation="Horizontal"
-                Padding="10,0,0,10">
+                Orientation="Horizontal">
                 <Button
                     x:Name="unavaibleButton"
+                    WidthRequest="120"
                     BorderColor="Black"
-                    BackgroundColor="#E0E0E0"
-                    IsVisible="False"
+                    BackgroundColor="#8BC34A"
+                    IsEnabled="False"
                     HorizontalOptions="Start"
                     Text="Пары нет"
                     TextColor="Black"
                     Clicked="OnUnaviableClicked" />
                 <Button
                     x:Name="markButton"
+                    WidthRequest="120"
                     HorizontalOptions="EndAndExpand"
                     BorderColor="Black"
-                    BackgroundColor="#E0E0E0"
+                    BackgroundColor="#8BC34A"
                     Text="Отметить"
                     TextColor="Black"
                     Clicked="OnMarkClicked" />

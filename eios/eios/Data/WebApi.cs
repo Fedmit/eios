@@ -226,8 +226,9 @@ namespace eios.Data
             dynamicJson.login = App.Login;
             dynamicJson.password = App.Password;
             dynamicJson.type = "get_attend_info";
-            dynamicJson.id_timetable = idOccupation;
+            dynamicJson.id_occup = idOccupation;
             dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
+            dynamicJson.date = App.DateNow.ToString("yyyy-MM-dd");
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
@@ -248,6 +249,11 @@ namespace eios.Data
                 var content = await response.Content.ReadAsStringAsync();
 
                 attendance = JsonConvert.DeserializeObject<List<StudentAbsent>>(content);
+                foreach (var student in attendance)
+                {
+                    student.IdOccupation = idOccupation;
+                    student.IdGroup = idGroup;
+                }
             }
             catch (Exception ex)
             {

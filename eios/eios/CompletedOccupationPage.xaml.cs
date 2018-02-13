@@ -11,19 +11,21 @@ using Xamarin.Forms.Xaml;
 
 namespace eios
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class CompletedOccupationPage : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class CompletedOccupationPage : ContentPage
+    {
         Occupation occupation;
 
         public CompletedOccupationPage(Occupation occupation)
-		{
-			InitializeComponent ();
+        {
+            InitializeComponent();
 
             var viewModel = new CompletedOccupationListViewModel(occupation);
             BindingContext = viewModel;
 
             this.occupation = occupation;
+
+            editButton.IsEnabled = occupation.IsBlocked != false;
 
             studentListView.ItemTapped += (sender, e) =>
             {
