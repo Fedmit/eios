@@ -6,8 +6,7 @@
     x:Class="eios.CompletedOccupationPage">
     <ContentPage.Content>
         <StackLayout
-            Padding="20,15,20,5"
-            Margin="0,15">
+            Padding="20,5,20,20">
             <Label
                 x:Name="occupationName"
                 Text="{Binding OccupationName}"
@@ -26,31 +25,24 @@
                     HorizontalOptions="EndAndExpand" />
             </StackLayout>
             <StackLayout
-                Orientation="Horizontal">
+                Orientation="Horizontal"
+                Margin="20,0">
                 <StackLayout
                     Orientation="Horizontal">
                     <Label
                         Text="Всего:"
-                        FontSize="Medium"
-                        HorizontalOptions="Start"
-                        TextColor="Black" />
+                        HorizontalOptions="Start" />
                     <Label
-                        Text="{Binding Total}"
-                        FontSize="Medium"
-                        TextColor="Black" />
+                        Text="{Binding Total}" />
                 </StackLayout>
                 <StackLayout
                     Orientation="Horizontal"
                     HorizontalOptions="EndAndExpand">
                     <Label
                         Text="Присутствуют:"
-                        FontSize="Medium"
-                        HorizontalOptions="EndAndExpand"
-                        TextColor="Black" />
+                        HorizontalOptions="EndAndExpand" />
                     <Label
-                        Text="{Binding PresentTotal}"
-                        FontSize="Medium"
-                        TextColor="Black" />
+                        Text="{Binding PresentTotal}" />
                 </StackLayout>
             </StackLayout>
             <ActivityIndicator
@@ -82,14 +74,18 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button
-                x:Name="editButton"
-                HorizontalOptions="Center"
-                BorderColor="Black"
-                BackgroundColor="#E0E0E0"
-                Text="Изменить"
-                TextColor="Black"
-                Clicked="OnEditClicked" />
+            <StackLayout>
+                <Button
+                    x:Name="editButton"
+                    IsEnabled="False"
+                    WidthRequest="120"
+                    HorizontalOptions="Center"
+                    BorderColor="Black"
+                    BackgroundColor="#E0E0E0"
+                    Text="Изменить"
+                    TextColor="Black"
+                    Clicked="OnEditClicked" />
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

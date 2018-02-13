@@ -9,7 +9,7 @@
             BackgroundColor="White">
             <Image
                 x:Name="buttonInfo"
-                Margin="10"
+                Margin="20"
                 HorizontalOptions="EndAndExpand"
                 WidthRequest="30"
                 HeightRequest="30"
@@ -65,18 +65,20 @@
                 IsRunning="False"
                 VerticalOptions="Center"
                 Margin="0,30,0,0" />
-            <Button
-                x:Name="forgotPassword"
-                Text="Я забыл свой пароль"
-                TextColor="Black"
-                BorderColor="Black"
-                BackgroundColor="White"
-                VerticalOptions="EndAndExpand"
-                HorizontalOptions="Center"
-                Margin="0,0,0,15"
-                WidthRequest="210"
-                FontSize="16"
-                Clicked="OnForgotPasswordButtonClicked" />
+            <StackLayout>
+                <Button
+                    x:Name="forgotPassword"
+                    Text="Я забыл свой пароль"
+                    FontSize="11"
+                    TextColor="Black"
+                    BorderColor="Black"
+                    BackgroundColor="White"
+                    VerticalOptions="EndAndExpand"
+                    HorizontalOptions="Center"
+                    Margin="0,0,0,15"
+                    WidthRequest="150"
+                    Clicked="OnForgotPasswordButtonClicked" />
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
