@@ -7,11 +7,11 @@ using Xamarin.Forms;
 
 namespace eios
 {
-	public partial class MainPage : MasterDetailPage
-	{
-		public MainPage()
-		{
-			InitializeComponent();
+    public partial class MainPage : MasterDetailPage
+    {
+        public MainPage()
+        {
+            InitializeComponent();
 
             masterPage.MenuTop.ItemSelected += OnItemSelected;
             masterPage.MenuBottom.ItemSelected += OnItemSelected;
@@ -40,10 +40,10 @@ namespace eios
                 }
 
                 // Открываем новый экран, если мы не выбрали текущий пункт меню
-                var current = (NavigationPage)Detail;
+                var current = (NavigationPage) Detail;
                 if (item.TargetType != current.CurrentPage.GetType())
                 {
-                    Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType));
+                    Detail = new NavigationPage((Page) Activator.CreateInstance(item.TargetType));
                 }
 
                 masterPage.MenuTop.SelectedItem = null;

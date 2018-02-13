@@ -1,44 +1,68 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:eios"
-             xmlns:view="clr-namespace:eios.View"
-             x:Class="eios.MasterPage"
-             Title="Меню">
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:eios"
+    xmlns:view="clr-namespace:eios.View"
+    x:Class="eios.MasterPage"
+    Title="Меню">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="#646973">
-            <ListView x:Name="menuTop" VerticalOptions="Start" HeightRequest="200">
+        <StackLayout
+            BackgroundColor="#646973">
+            <ListView
+                x:Name="menuTop"
+                VerticalOptions="Start"
+                HeightRequest="200">
                 <ListView.Header>
-                    <StackLayout Padding="40,5,0,10" Spacing="10" BackgroundColor="#545a66">
-                        <Label Text="ЭИОС ПГУ" TextColor="White" />
-                        <Label Text="Журнал посещаемости" TextColor="White" />
+                    <StackLayout
+                        Padding="40,5,0,10"
+                        Spacing="10"
+                        BackgroundColor="#545a66">
+                        <Label
+                            Text="ЭИОС ПГУ"
+                            TextColor="White" />
+                        <Label
+                            Text="Журнал посещаемости"
+                            TextColor="White" />
                     </StackLayout>
                 </ListView.Header>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <view:MenuListCell Title="{Binding Title}" />
+                        <view:MenuListCell
+                            Title="{Binding Title}" />
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.ItemsSource>
-                    <x:Array Type="{x:Type local:MasterPageItem}">
-                        <local:MasterPageItem Title="Занятия" TargetType="{x:Type local:OccupationsPage}" />
-                        <local:MasterPageItem Title="Мой профиль" TargetType="{x:Type local:ProfilePage}" />
-                        <local:MasterPageItem Title="Настройки" TargetType="{x:Type local:SettingsPage}" />
+                    <x:Array
+                        Type="{x:Type local:MasterPageItem}">
+                        <local:MasterPageItem
+                            Title="Занятия"
+                            TargetType="{x:Type local:OccupationsPage}" />
+                        <local:MasterPageItem
+                            Title="О программе"
+                            TargetType="{x:Type local:AboutPage}" />
+                        <local:MasterPageItem
+                            Title="Справка"
+                            TargetType="{x:Type local:ReferencePage}" />
                     </x:Array>
                 </ListView.ItemsSource>
             </ListView>
-            <ListView x:Name="menuBottom" VerticalOptions="EndAndExpand" HeightRequest="180">
+            <ListView
+                x:Name="menuBottom"
+                VerticalOptions="EndAndExpand"
+                HeightRequest="45">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <view:MenuListCell Title="{Binding Title}" />
+                        <view:MenuListCell
+                            Title="{Binding Title}" />
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.ItemsSource>
-                    <x:Array Type="{x:Type local:MasterPageItem}">
-                        <local:MasterPageItem Title="Помощь" TargetType="{x:Type local:HelpPage}" />
-                        <local:MasterPageItem Title="О программе" TargetType="{x:Type local:AboutPage}" />
-                        <local:MasterPageItem Title="Справка" TargetType="{x:Type local:ReferencePage}" />
-                        <local:MasterPageItem Title="Выход" TargetType="{x:Type local:LoginPage}"/>
+                    <x:Array
+                        Type="{x:Type local:MasterPageItem}">
+                        <local:MasterPageItem
+                            Title="Выйти из профиля"
+                            TargetType="{x:Type local:LoginPage}" />
                     </x:Array>
                 </ListView.ItemsSource>
             </ListView>
