@@ -131,6 +131,10 @@ namespace eios.Data
 
                 groupResponse = JsonConvert.DeserializeObject<GroupResponse>(content);
             }
+            catch (HttpRequestException ex)
+            {
+                throw ex;
+            }
             catch (Exception ex)
             {
                 Console.WriteLine("GetGroupsAsync(): " + ex.Message);

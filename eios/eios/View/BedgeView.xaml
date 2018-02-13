@@ -1,29 +1,32 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<Grid xmlns="http://xamarin.com/schemas/2014/forms" 
-            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:local="clr-namespace:eios"
-            x:Class="eios.BedgeView">
+<Grid
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:eios"
+    x:Class="eios.BedgeView">
     <Grid.ColumnDefinitions>
         <ColumnDefinitionCollection>
-            <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition
+                Width="50" />
+            <ColumnDefinition
+                Width="*" />
         </ColumnDefinitionCollection>
     </Grid.ColumnDefinitions>
-    <local:CircleView 
+    <local:CircleView
         x:Name="circle"
         BackgroundColor="{Binding CircleColor}"
         CornerRadius="50"
         WidthRequest="50"
         HeightRequest="50"
-        VerticalOptions="Center" 
+        VerticalOptions="Center"
         HorizontalOptions="Center" />
     <Label
         Text="{Binding Time}"
         x:Name="label"
-        TextColor="White"
-        VerticalOptions="Center" 
-        HorizontalOptions="Center" 
-        VerticalTextAlignment="Center" 
-        HorizontalTextAlignment="Center" 
+        TextColor="{Binding TextColor}"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        VerticalTextAlignment="Center"
+        HorizontalTextAlignment="Center"
         FontSize="12" />
 </Grid>

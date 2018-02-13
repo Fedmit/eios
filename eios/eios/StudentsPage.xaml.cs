@@ -47,9 +47,8 @@ namespace eios
 
         async void OnUnaviableClicked(Object sender, AssemblyLoadEventArgs args)
         {
-
-            var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
-            if (App.IsConnected)
+            var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
+            if (CrossConnectivity.Current.IsConnected)
             {
                 try
                 {
@@ -70,7 +69,7 @@ namespace eios
 
         async Task OnMarkClicked(Object sender, AssemblyLoadEventArgs args)
         {
-            var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
+            var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
             await App.Database.SetAttendence(viewModel.StudentsList, occupation.IdOccupation, idGroup);
 
             if (CrossConnectivity.Current.IsConnected)

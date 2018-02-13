@@ -22,11 +22,15 @@ namespace eios.ViewModel
             get { return _date; }
             set
             {
-                _date = value;
-
                 var dateNow = DateTime.Parse((string)App.Current.Properties["DateNow"]);
-                if (value != dateNow && CrossConnectivity.Current.IsConnected)
+                if (value == dateNow)
                 {
+                    _date = value;
+                }
+                else if (CrossConnectivity.Current.IsConnected)
+                {
+                    _date = value;
+
                     IsBusy = true;
                     App.IsTimeTravelMode = true;
                     App.DateNow = value;
@@ -35,6 +39,7 @@ namespace eios.ViewModel
                 }
                 else
                 {
+                    _date = App.DateNow;
                     App.IsTimeTravelMode = false;
                 }
 

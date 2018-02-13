@@ -1,12 +1,18 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="eios.View.MenuListCell">
-    <Grid Padding="5,10" BackgroundColor="#646973">
+<ViewCell
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="eios.View.MenuListCell">
+    <Grid
+        Padding="5,10"
+        BackgroundColor="#BDBDBD">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="30" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Label x:Name="label" TextColor="White" Grid.Column="1" />
+        <Label
+            x:Name="label"
+            TextColor="Black"
+            Grid.Column="1" />
     </Grid>
 </ViewCell>
