@@ -1,5 +1,6 @@
 ﻿using eios.Data;
 using eios.Model;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -124,12 +125,11 @@ namespace eios.ViewModel
         {
             var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
 
-            // Как будет готов get_attend_info
-            //if (App.IsConnected)
-            //{
-            //    var absentStudents = await WebApi.Instance.GetAttendanceAsync(Occupation.IdOccupation, idGroup);
-            //    await App.Database.SetAttendence(absentStudents, Occupation.IdOccupation, idGroup);
-            //}
+            if (CrossConnectivity.Current.IsConnected)
+            {
+                var absentStudents = await WebApi.Instance.GetAttendanceAsync(Occupation.IdOccupation, idGroup);
+                await App.Database.SetAttendence(absentStudents, Occupation.IdOccupation, idGroup);
+            }
 
             var attendanceList = await App.Database.GetAttendance(Occupation.IdOccupation, idGroup);
 
