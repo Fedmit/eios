@@ -1,44 +1,69 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:eios"
-             x:Class="eios.OccupationsPage" >
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:eios"
+    x:Class="eios.OccupationsPage">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name ="groupButton" Order="Primary" Text="{Binding Group}" Priority="0" Activated="OnGroupClicked"/>
-        <ToolbarItem Name="calendarButton" Order="Primary" Text="{Binding DateStr}" Priority="0" Activated="OnDateClicked"/>
+        <ToolbarItem
+            Name="groupButton"
+            Order="Primary"
+            Text="{Binding Group}"
+            Priority="0"
+            Activated="OnGroupClicked" />
+        <ToolbarItem
+            Name="calendarButton"
+            Order="Primary"
+            Text="{Binding DateStr}"
+            Priority="0"
+            Activated="OnDateClicked" />
     </ContentPage.ToolbarItems>
-
     <ContentPage.Content>
         <Grid>
             <StackLayout>
                 <ActivityIndicator
-                  Margin="20"
-                  WidthRequest="35"
-                  HeightRequest="35"
-                  IsVisible="{Binding IsBusy}"
-                  IsRunning="{Binding IsBusy}" />
+                    Margin="20"
+                    WidthRequest="35"
+                    HeightRequest="35"
+                    IsVisible="{Binding IsBusy}"
+                    IsRunning="{Binding IsBusy}" />
                 <ListView
-                  x:Name="listView" 
-                  RowHeight="65"
-                  SeparatorVisibility="None"
-                  ItemsSource="{Binding OccupationsList}"
-                  IsPullToRefreshEnabled="true"
-                  RefreshCommand="{Binding RefreshCommand}"
-                  IsRefreshing="{Binding IsRefreshing}">
+                    x:Name="listView"
+                    RowHeight="65"
+                    SeparatorVisibility="None"
+                    ItemsSource="{Binding OccupationsList}"
+                    IsPullToRefreshEnabled="true"
+                    RefreshCommand="{Binding RefreshCommand}"
+                    IsRefreshing="{Binding IsRefreshing}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout Orientation="Horizontal" Margin="20,0,20,0" Spacing="20">
-                                    <local:BedgeView Size="50" />
-                                    <Label Text="{Binding Name}" VerticalOptions="Center" FontSize="16" />
-                                    <Label Text="{Binding Aud}" VerticalOptions="Center" HorizontalOptions="EndAndExpand" WidthRequest="60" />
+                                <StackLayout
+                                    Orientation="Horizontal"
+                                    Margin="20,0,20,0"
+                                    Spacing="20">
+                                    <local:BedgeView
+                                        Size="50" />
+                                    <Label
+                                        Text="{Binding Name}"
+                                        VerticalOptions="Center"
+                                        FontSize="16" />
+                                    <Label
+                                        Text="{Binding Aud}"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="EndAndExpand"
+                                        WidthRequest="60" />
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </StackLayout>
-            <DatePicker x:Name="datePicker" Date="{Binding Date, Mode=TwoWay}" DateSelected="OnDateSelected" IsVisible="False">
+            <DatePicker
+                x:Name="datePicker"
+                Date="{Binding Date, Mode=TwoWay}"
+                DateSelected="OnDateSelected"
+                IsVisible="False">
                 <DatePicker.MinimumDate>6/01/2016</DatePicker.MinimumDate>
                 <DatePicker.MaximumDate>6/30/2020</DatePicker.MaximumDate>
             </DatePicker>

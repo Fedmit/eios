@@ -8,22 +8,22 @@
     Title="Меню">
     <ContentPage.Content>
         <StackLayout
-            BackgroundColor="#646973">
+            BackgroundColor="#BDBDBD">
             <ListView
                 x:Name="menuTop"
                 VerticalOptions="Start"
-                HeightRequest="200">
+                HeightRequest="155">
                 <ListView.Header>
                     <StackLayout
                         Padding="40,5,0,10"
                         Spacing="10"
-                        BackgroundColor="#545a66">
+                        BackgroundColor="#9E9E9E">
                         <Label
                             Text="ЭИОС ПГУ"
-                            TextColor="White" />
+                            TextColor="Black" />
                         <Label
                             Text="Журнал посещаемости"
-                            TextColor="White" />
+                            TextColor="Black" />
                     </StackLayout>
                 </ListView.Header>
                 <ListView.ItemTemplate>
@@ -39,9 +39,6 @@
                             Title="Занятия"
                             TargetType="{x:Type local:OccupationsPage}" />
                         <local:MasterPageItem
-                            Title="О программе"
-                            TargetType="{x:Type local:AboutPage}" />
-                        <local:MasterPageItem
                             Title="Справка"
                             TargetType="{x:Type local:ReferencePage}" />
                     </x:Array>
@@ -50,7 +47,7 @@
             <ListView
                 x:Name="menuBottom"
                 VerticalOptions="EndAndExpand"
-                HeightRequest="45">
+                HeightRequest="90">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <view:MenuListCell
@@ -60,6 +57,9 @@
                 <ListView.ItemsSource>
                     <x:Array
                         Type="{x:Type local:MasterPageItem}">
+                        <local:MasterPageItem
+                            Title="О программе"
+                            TargetType="{x:Type local:AboutPage}" />
                         <local:MasterPageItem
                             Title="Выйти из профиля"
                             TargetType="{x:Type local:LoginPage}" />

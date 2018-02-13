@@ -1,23 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:eios"
-             x:Class="eios.CompletedOccupationPage">
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:eios"
+    x:Class="eios.CompletedOccupationPage">
     <ContentPage.Content>
-        <StackLayout Margin="10,5,5,10">
-            <Label x:Name="occupationName"
-                       Text="{Binding OccupationName}"
-                       HorizontalOptions="Center"/>
-            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="10" Margin="5">
-                <Label x:Name="occupationTime"
-                       Text="{Binding OccupationTime}"
-                       HorizontalOptions="Start"/>
-                <Label x:Name="occupationAud"
-                       Text="{Binding OccupationAud}"
-                       HorizontalOptions="EndAndExpand"/>
+        <StackLayout
+            Margin="10,5,10,5">
+            <Label
+                x:Name="occupationName"
+                Text="{Binding OccupationName}"
+                HorizontalOptions="Center" />
+            <StackLayout
+                Orientation="Horizontal"
+                HorizontalOptions="FillAndExpand"
+                Spacing="10"
+                Margin="5">
+                <Label
+                    x:Name="occupationTime"
+                    Text="{Binding OccupationTime}"
+                    HorizontalOptions="Start" />
+                <Label
+                    x:Name="occupationAud"
+                    Text="{Binding OccupationAud}"
+                    HorizontalOptions="EndAndExpand" />
             </StackLayout>
-            <StackLayout Orientation="Horizontal" Margin="5">
-                <StackLayout Margin="5" Orientation="Horizontal">
+            <StackLayout
+                Orientation="Horizontal"
+                Margin="5">
+                <StackLayout
+                    Margin="5"
+                    Orientation="Horizontal">
                     <Label
                         Text="Всего:"
                         FontSize="Medium"
@@ -28,11 +41,14 @@
                         FontSize="Medium"
                         TextColor="Black" />
                 </StackLayout>
-                <StackLayout Margin="5" Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                <StackLayout
+                    Margin="5"
+                    Orientation="Horizontal"
+                    HorizontalOptions="EndAndExpand">
                     <Label
                         Text="Присутствуют:"
                         FontSize="Medium"
-                         HorizontalOptions="EndAndExpand"
+                        HorizontalOptions="EndAndExpand"
                         TextColor="Black" />
                     <Label
                         Text="{Binding PresentTotal}"
@@ -54,24 +70,31 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal" Padding="20,0,20,0" Spacing="20">
-                                <Image 
+                            <StackLayout
+                                Orientation="Horizontal"
+                                Padding="20,0,20,0"
+                                Spacing="20">
+                                <Image
                                     Source="{Binding IconSource}"
                                     HeightRequest="20"
-                                    WidthRequest="20"/>
-                                <Label Text="{Binding FullName}" VerticalOptions="Center"/>
+                                    WidthRequest="20" />
+                                <Label
+                                    Text="{Binding FullName}"
+                                    VerticalOptions="Center" />
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button x:Name="editButton"
-                        HorizontalOptions="Center"
-                        BorderColor="Black"
-                        Text="Изменить"
-                        TextColor="Black"
-                        Clicked="OnEditClicked"
-                        Margin="5"/>
+            <Button
+                x:Name="editButton"
+                HorizontalOptions="Center"
+                BorderColor="Black"
+                BackgroundColor="#E0E0E0"
+                Text="Изменить"
+                TextColor="Black"
+                Clicked="OnEditClicked"
+                Margin="5" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

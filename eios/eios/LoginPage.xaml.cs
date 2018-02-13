@@ -69,16 +69,6 @@ namespace eios
 
                 return;
             }
-            catch (TaskCanceledException ex)
-            {
-                loginButton.IsEnabled = true;
-                activityIndicator.IsRunning = false;
-
-                await ShowMessage("Ошибка", "Что-то не так с соединением!", "OK");
-                Console.WriteLine(ex.Message);
-
-                return;
-            }
 
             await App.Database.SetGroup(response.Data);
             App.Groups = response.Data;

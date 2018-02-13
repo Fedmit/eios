@@ -54,6 +54,16 @@ namespace eios.Model
         }
 
         [Ignore]
+        public string TextColor
+        {
+            get
+            {
+                if (IdLesson == 0 && !IsChecked) { return "#000000"; }
+                return "#FFFFFF";
+            }
+        }
+
+        [Ignore]
         public Type TargetType
         {
             get

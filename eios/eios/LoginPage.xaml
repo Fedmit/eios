@@ -1,56 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="eios.LoginPage"
-             xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms">
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="eios.LoginPage"
+    xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="White">
+        <StackLayout
+            BackgroundColor="White">
             <Label
                 Text="ЭИОС ПГУ &#10; Журнал посещаемости"
                 TextColor="Black"
                 VerticalOptions="Center"
                 Margin="0,100,0,0"
                 HorizontalTextAlignment="Center"
-                FontSize="20"/>
-            <StackLayout Padding="50,80,50,0" Orientation="Vertical" VerticalOptions="Center" Spacing="10">
+                FontSize="20" />
+            <StackLayout
+                Padding="50,80,50,0"
+                Orientation="Vertical"
+                VerticalOptions="Center"
+                Spacing="10">
                 <Label
                     Text="Вход в систему"
                     TextColor="Black"
                     HorizontalOptions="Center"
-                    FontSize="20"/>
+                    FontSize="20" />
                 <Entry
                     x:Name="loginEntry"
                     Placeholder="Логин"
-                    Text="studbekkercf@gmail.com"
+                    Text="s517644114"
                     TextColor="Black"
                     PlaceholderColor="Gray"
-                    VerticalOptions="Center"/>
+                    VerticalOptions="Center" />
                 <Entry
                     x:Name="passwordEntry"
                     Placeholder="Пароль"
                     PlaceholderColor="Gray"
-                    Text="GzaVNCtb"
+                    Text="xO1XX3dx"
                     IsPassword="true"
                     TextColor="Black"
                     WidthRequest="200"
-                    VerticalOptions="Center"/>
+                    VerticalOptions="Center" />
                 <StackLayout>
-                    <Button 
-                    x:Name="loginButton"
-                    Text="Войти"
-                    FontSize="18"
-                    TextColor="Black"
-                    BorderColor="Black"
-                    WidthRequest="130"
-                    Clicked="OnLoginButtonClicked"
-                    HorizontalOptions="Center"/>
+                    <Button
+                        x:Name="loginButton"
+                        Text="Войти"
+                        FontSize="18"
+                        TextColor="Black"
+                        BorderColor="Black"
+                        BackgroundColor="#E0E0E0"
+                        WidthRequest="130"
+                        Clicked="OnLoginButtonClicked"
+                        HorizontalOptions="Center" />
                 </StackLayout>
             </StackLayout>
             <ActivityIndicator
                 x:Name="activityIndicator"
                 IsRunning="False"
                 VerticalOptions="Center"
-                Margin="0,30,0,0"/>
+                Margin="0,30,0,0" />
             <Button
                 x:Name="forgotPassword"
                 Text="Я забыл свой пароль"
@@ -62,7 +69,7 @@
                 Margin="0,0,0,15"
                 WidthRequest="210"
                 FontSize="16"
-                Clicked="OnForgotPasswordButtonClicked"/>
+                Clicked="OnForgotPasswordButtonClicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

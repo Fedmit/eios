@@ -5,14 +5,14 @@
     x:Class="eios.View.MenuListCell">
     <Grid
         Padding="5,10"
-        BackgroundColor="#646973">
+        BackgroundColor="#BDBDBD">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="30" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Label
             x:Name="label"
-            TextColor="White"
+            TextColor="Black"
             Grid.Column="1" />
     </Grid>
 </ViewCell>
