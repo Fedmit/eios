@@ -29,9 +29,10 @@
                         <DataTemplate>
                             <ViewCell>
                                 <StackLayout Orientation="Horizontal" Margin="20,0,20,0" Spacing="20">
-                                    <local:BedgeView Size="50" />
-                                    <Label Text="{Binding Name}" VerticalOptions="Center" FontSize="16" />
-                                    <Label Text="{Binding Aud}" VerticalOptions="Center" HorizontalOptions="EndAndExpand" WidthRequest="60" />
+                                    <local:BedgeView Size="50" 
+                                      HorizontalOptions="Start"/>
+                                    <Label Text="{Binding Name}" VerticalOptions="Center" FontSize="16" HorizontalOptions="CenterAndExpand"/>
+                                    <Label Text="{Binding Aud}" VerticalOptions="Center" HorizontalOptions="EndAndExpand" />
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>

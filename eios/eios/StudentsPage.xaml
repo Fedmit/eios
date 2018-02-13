@@ -4,11 +4,12 @@
              xmlns:local="clr-namespace:eios"
              x:Class="eios.StudentsPage">
     <ContentPage.Content>
-        <StackLayout Padding="10,5,5,10">
+        <StackLayout Padding="20,15,20,5"
+                     Margin="0,15">
             <Label x:Name="occupationName"
                        Text="{Binding OccupationName}"
                        HorizontalOptions="Center"/>
-            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="10" Margin="5">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="10">
                 <Label x:Name="occupationTime"
                        Text="{Binding OccupationTime}"
                        HorizontalOptions="Start"/>
@@ -16,14 +17,14 @@
                        Text="{Binding OccupationAud}"
                        HorizontalOptions="EndAndExpand"/>
             </StackLayout>
-            <StackLayout Margin="5" Orientation="Horizontal">
-                <StackLayout Margin="5" Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal">
+                <StackLayout Orientation="Horizontal">
                     <Label
                         Text="Всего:"
                         HorizontalOptions="Start"/>
                     <Label Text="{Binding Total}" />
                 </StackLayout>
-                <StackLayout Margin="5" Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
                     <Label 
                        Text="Присутствуют:"
                        HorizontalOptions="EndAndExpand"/>
@@ -38,7 +39,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal" Margin="20,0,20,0" Spacing="20">
+                            <StackLayout Orientation="Horizontal" Spacing="20">
                                 <Image 
                                     Source="{Binding IconSource}"
                                     HeightRequest="20"
@@ -56,15 +57,13 @@
                         HorizontalOptions="Start"
                         Text="Пары нет"
                         TextColor="Black"
-                        Clicked="OnUnaviableClicked"
-                        Margin="5"/>
+                        Clicked="OnUnaviableClicked"/>
                 <Button x:Name="markButton"
                         HorizontalOptions="EndAndExpand"
                         BorderColor="Black"
                         Text="Отметить"
                         TextColor="Black"
-                        Clicked="OnMarkClicked"
-                        Margin="5"/>
+                        Clicked="OnMarkClicked"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

@@ -5,11 +5,16 @@
              xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms">
     <ContentPage.Content>
         <StackLayout BackgroundColor="White">
-            <Button x:Name="buttonInfo"
+            <StackLayout Orientation="Horizontal" Padding="15" Margin="10">
+                <Button x:Name="buttonInfo"
                     Margin="10"
                     HorizontalOptions="EndAndExpand"
-                    TextColor="White"
-                    BackgroundColor ="Black"/>
+                    Clicked ="buttonInfo_Clicked"
+                    WidthRequest="48"
+                    HeightRequest="48"
+                    Image="infoIcon.jpg"/>
+            </StackLayout>
+                        
             <Label
                 Text="ЭИОС ПГУ &#10; Журнал посещаемости"
                 TextColor="Black"
