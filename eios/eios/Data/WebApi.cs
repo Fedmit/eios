@@ -116,7 +116,7 @@ namespace eios.Data
             try
             {
                 HttpClient client = new HttpClient();
-                client.Timeout = new TimeSpan(0, 0, 1);
+                client.Timeout = new TimeSpan(0, 0, 5);
                 var response = await client.PostAsync(
                     _baseUrl,
                     new StringContent(
