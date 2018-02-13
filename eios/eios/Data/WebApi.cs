@@ -116,6 +116,7 @@ namespace eios.Data
             try
             {
                 HttpClient client = new HttpClient();
+                client.Timeout = new TimeSpan(0, 0, 1);
                 var response = await client.PostAsync(
                     _baseUrl,
                     new StringContent(
@@ -129,6 +130,14 @@ namespace eios.Data
                 var content = await response.Content.ReadAsStringAsync();
 
                 groupResponse = JsonConvert.DeserializeObject<GroupResponse>(content);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw ex;
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw ex;
             }
             catch (Exception ex)
             {

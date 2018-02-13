@@ -50,13 +50,23 @@ namespace eios
             {
                 response = await WebApi.Instance.GetGroupsAsync();
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException ex)
             {
                 loginButton.IsEnabled = true;
                 activityIndicator.IsRunning = false;
 
-                await ShowMessage("", "Пароль или логин введены неверно!", "OK");
-                Console.WriteLine("Login failed");
+                await ShowMessage("Ошибка", "Пароль или логин введены неверно!", "OK");
+                Console.WriteLine(ex.Message);
+
+                return;
+            }
+            catch (TaskCanceledException ex)
+            {
+                loginButton.IsEnabled = true;
+                activityIndicator.IsRunning = false;
+
+                await ShowMessage("Ошибка", "Что-то не так с соединением!", "OK");
+                Console.WriteLine(ex.Message);
 
                 return;
             }
