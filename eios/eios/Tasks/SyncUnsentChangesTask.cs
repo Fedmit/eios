@@ -37,6 +37,7 @@ namespace eios.Tasks
                             catch (HttpRequestException)
                             {
                                 await App.Database.DeleteAttendance(occupation.IdOccupation, idGroup);
+                                await App.Database.SetSentFlag(occupation.IdOccupation, idGroup);
                             }
                         }
                     }
