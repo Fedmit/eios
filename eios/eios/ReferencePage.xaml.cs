@@ -12,9 +12,9 @@ namespace eios
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ReferencePage : ContentPage
 	{
-		public ReferencePage ()
-		{
-			InitializeComponent ();
-		}
+        public ReferencePage()
+        {
+            InitializeComponent();
+        }
 	}
 }
