@@ -38,7 +38,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </StackLayout>
-            <DatePicker x:Name="datePicker" Date="{Binding Date, Mode=TwoWay}" Format="d" IsVisible="False">
+            <DatePicker x:Name="datePicker" Date="{Binding Date, Mode=TwoWay}" DateSelected="OnDateSelected" IsVisible="False">
                 <DatePicker.MinimumDate>6/01/2016</DatePicker.MinimumDate>
                 <DatePicker.MaximumDate>6/30/2020</DatePicker.MaximumDate>
             </DatePicker>
@@ -49,6 +49,5 @@
                 ItemsSource="{x:Static local:App.Groups}"
                 ItemDisplayBinding="{Binding Name}" />
         </Grid>
-
     </ContentPage.Content>
 </ContentPage>

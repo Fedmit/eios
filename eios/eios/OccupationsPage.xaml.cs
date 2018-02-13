@@ -3,6 +3,7 @@ using eios.Model;
 using eios.ViewModel;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,6 +84,17 @@ namespace eios
                 ViewModel.Group = App.Groups[selectedIndex].Name;
 
                 await ViewModel.UpdateOccupationsList();
+            }
+        }
+
+        async void OnDateSelected(object sender, DateChangedEventArgs e)
+        {
+            if (!CrossConnectivity.Current.IsConnected && e.NewDate != App.DateNow)
+            {
+                await DisplayAlert(
+                            "Ошибка",
+                            "Вы не подключены!",
+                            "ОК");
             }
         }
     }
