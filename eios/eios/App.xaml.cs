@@ -53,8 +53,8 @@ namespace eios
 
         public static bool IsUserLoggedIn { get; set; }
         public static bool IsLoading { get; set; } = false;
-        public static bool IsConnected { get; set; }
         public static int IdOccupNow { get; set; } = 8;
+        public static bool IsTimeTravelMode { get; set; } = false;
 
         public static DateTime DateNow { get; set; }
 
@@ -83,25 +83,14 @@ namespace eios
 
         protected override void OnStart()
         {
-            var isConnected = CrossConnectivity.Current.IsConnected;
-            Debug.WriteLine($"Connectivity is {isConnected}");
-            IsConnected = isConnected;
-
-            CrossConnectivity.Current.ConnectivityChanged += (sender, args) =>
-            {
-                Debug.WriteLine($"Connectivity changed to {args.IsConnected}");
-                IsConnected = args.IsConnected;
-            };
         }
 
         protected override void OnSleep ()
 		{
-			// Handle when your app sleeps
 		}
 
 		protected override void OnResume ()
 		{
-			// Handle when your app resumes
 		}
 	}
 }

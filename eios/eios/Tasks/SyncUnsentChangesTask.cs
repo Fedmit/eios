@@ -1,5 +1,6 @@
 ﻿using eios.Data;
 using eios.Messages;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -15,14 +16,14 @@ namespace eios.Tasks
 
         public async Task RunSyncUnsentChanges()
         {
-            if (App.IsConnected)
+            if (CrossConnectivity.Current.IsConnected)
             {
                 var unsentOccupations = await App.Database.GetUnsentOccupations();
                 if(unsentOccupations != null)
                 {
                     foreach(var occupation in unsentOccupations)
                     {
-                        if (!App.IsConnected)
+                        if (!CrossConnectivity.Current.IsConnected)
                         {
                             return;
                         }

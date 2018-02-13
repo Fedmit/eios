@@ -1,5 +1,6 @@
 ﻿using eios.Data;
 using eios.Messages;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,7 +19,7 @@ namespace eios.Tasks
                 {
                     token.ThrowIfCancellationRequested();
 
-                    if (App.IsConnected)
+                    if (CrossConnectivity.Current.IsConnected)
                     {
                         var marksResponse = await WebApi.Instance.GetMarksAsync();
                         await App.Database.SetMarks(marksResponse.Data, (int)App.Current.Properties["IdGroupCurrent"]);

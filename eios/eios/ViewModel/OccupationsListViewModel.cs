@@ -1,6 +1,7 @@
 ﻿using eios.Data;
 using eios.Messages;
 using eios.Model;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,7 +24,19 @@ namespace eios.ViewModel
             {
                 _date = value;
 
-                
+                var dateNow = DateTime.Parse((string)App.Current.Properties["DateNow"]);
+                if (value != dateNow && CrossConnectivity.Current.IsConnected)
+                {
+                    IsBusy = true;
+                    App.IsTimeTravelMode = true;
+                    App.DateNow = value;
+                    HandleTaskMessages();
+                    MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
+                }
+                else
+                {
+                    App.IsTimeTravelMode = false;
+                }
 
                 OnPropertyChanged(nameof(Date));
                 OnPropertyChanged(nameof(DateStr));
@@ -115,44 +128,7 @@ namespace eios.ViewModel
             IsBusy = true;
             if (App.IsLoading)
             {
-                OccupationsList = new List<Occupation>();
-                MessagingCenter.Subscribe<OnScheduleSyncronizedMessage>(this, "OnScheduleSyncronizedMessage", message =>
-                {
-                    Device.BeginInvokeOnMainThread(async () =>
-                    {
-                        if (message.IsSuccessful)
-                        {
-                            var dateNow = DateTime.Parse((string)App.Current.Properties["DateNow"]);
-                            Date = dateNow;
-
-                            var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
-                            Group = App.Groups.Where(group => group.IdGroup == idGroup).ToList()[0].Name;
-
-                            await UpdateOccupationsList();
-
-                            MessagingCenter.Send(new StartSyncScheduleStateTaskMessage(), "StartSyncScheduleStateTaskMessage");
-
-                            MessagingCenter.Subscribe<OnMarksUpdatedMessage>(this, "OnMarksUpdatedMessage", _message =>
-                            {
-                                Device.BeginInvokeOnMainThread(async () =>
-                                {
-                                    if (message.IsSuccessful)
-                                    {
-                                        await UpdateState();
-                                    }
-                                });
-                            });
-                        }
-                        else
-                        {
-                            await context.DisplayAlert(
-                                "Ошибка",
-                                "Произошла ошибка при загрузке данных",
-                                "ОК");
-                        }
-                        IsBusy = false;
-                    });
-                });
+                HandleTaskMessages();
             }
             else
             {
@@ -179,6 +155,48 @@ namespace eios.ViewModel
                     });
                 });
             }
+        }
+
+        void HandleTaskMessages()
+        {
+            OccupationsList = new List<Occupation>();
+            MessagingCenter.Subscribe<OnScheduleSyncronizedMessage>(this, "OnScheduleSyncronizedMessage", message =>
+            {
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    if (message.IsSuccessful)
+                    {
+                        var dateNow = DateTime.Parse((string)App.Current.Properties["DateNow"]);
+                        Date = dateNow;
+
+                        var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
+                        Group = App.Groups.Where(group => group.IdGroup == idGroup).ToList()[0].Name;
+
+                        await UpdateOccupationsList();
+
+                        MessagingCenter.Send(new StartSyncScheduleStateTaskMessage(), "StartSyncScheduleStateTaskMessage");
+
+                        MessagingCenter.Subscribe<OnMarksUpdatedMessage>(this, "OnMarksUpdatedMessage", _message =>
+                        {
+                            Device.BeginInvokeOnMainThread(async () =>
+                            {
+                                if (message.IsSuccessful)
+                                {
+                                    await UpdateState();
+                                }
+                            });
+                        });
+                    }
+                    else
+                    {
+                        await Context.DisplayAlert(
+                            "Ошибка",
+                            "Произошла ошибка при загрузке данных",
+                            "ОК");
+                    }
+                    IsBusy = false;
+                });
+            });
         }
 
         async public Task UpdateOccupationsList()
