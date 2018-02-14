@@ -18,35 +18,39 @@ namespace eios.Tasks
 
         public async Task RunGetSchedule()
         {
-            if (CrossConnectivity.Current.IsConnected)
+            try
             {
-                List<Occupation> data = new List<Occupation>();
-                try
+                isSuccessful = false;
+                if (CrossConnectivity.Current.IsConnected)
                 {
                     var groups = await App.Database.GetGroups();
 
-                    var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
-                    data = await WebApi.Instance.GetOccupationsAsync(idGroup);
+                    await App.Database.DropTable<Occupation>();
+                    await App.Database.CreateTable<Occupation>();
 
+                    foreach (var group in groups)
+                    {
+                        var occupations = await WebApi.Instance.GetOccupationsAsync(group.IdGroup);
+                        await App.Database.SetOccupations(occupations);
+                    }
                     isSuccessful = true;
                 }
-                catch (HttpRequestException)
-                {
-                    isSuccessful = false;
-                }
-
-                var message = new OccupationsMessage()
-                {
-                    IsSuccessful = isSuccessful,
-                    Data = data
-                };
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    MessagingCenter.Send(message, "OccupationsMessage");
-                });
-
-                App.IsLoading = false;
             }
+            catch (HttpRequestException)
+            {
+            }
+
+            var message = new OnScheduleSyncronizedMessage()
+            {
+                IsSuccessful = isSuccessful,
+                IsFirstTime = false
+            };
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                MessagingCenter.Send(message, "OnScheduleSyncronizedMessage");
+            });
+
+            App.IsLoading = false;
         }
     }
 }

@@ -16,33 +16,38 @@ namespace eios.Tasks
 
         public async Task RunSyncUnsentChanges()
         {
-            if (CrossConnectivity.Current.IsConnected)
+            while (true)
             {
-                var unsentOccupations = await App.Database.GetUnsentOccupations();
-                if(unsentOccupations != null)
+                if (CrossConnectivity.Current.IsConnected)
                 {
-                    foreach(var occupation in unsentOccupations)
+                    var unsentOccupations = await App.Database.GetUnsentOccupations();
+                    if (unsentOccupations != null)
                     {
-                        if (!CrossConnectivity.Current.IsConnected)
+                        foreach (var occupation in unsentOccupations)
                         {
-                            return;
-                        }
-                        var students = await App.Database.GetAbsentStudents(occupation.IdOccupation, occupation.IdGroup);
-                        if (App.Current.Properties.ContainsKey("DateNow"))
-                        {
-                            try
+                            if (!CrossConnectivity.Current.IsConnected)
                             {
-                                await WebApi.Instance.SetAttendAsync(students, occupation);
-                                await App.Database.SetSentFlag(occupation.IdOccupation, idGroup);
+                                return;
                             }
-                            catch (HttpRequestException)
+                            var students = await App.Database.GetAbsentStudents(occupation.IdOccupation, occupation.IdGroup);
+                            if (App.Current.Properties.ContainsKey("DateNow"))
                             {
-                                await App.Database.DeleteAttendance(occupation.IdOccupation, idGroup);
-                                await App.Database.SetSentFlag(occupation.IdOccupation, idGroup);
+                                try
+                                {
+                                    await WebApi.Instance.SetAttendAsync(students, occupation);
+                                    await App.Database.SetSentFlag(occupation.IdOccupation, idGroup);
+                                }
+                                catch (HttpRequestException)
+                                {
+                                    await App.Database.DeleteAttendance(occupation.IdOccupation, idGroup);
+                                    await App.Database.SetSentFlag(occupation.IdOccupation, idGroup);
+                                }
                             }
                         }
                     }
                 }
+
+                await Task.Delay(10000);
             }
         }
     }

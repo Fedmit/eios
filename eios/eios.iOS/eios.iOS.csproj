@@ -95,6 +95,8 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Services\GetScheduleTaskService.cs" />
+    <Compile Include="Services\SyncAttendanceTaskService.cs" />
+    <Compile Include="Services\SyncScheduleStateTaskService.cs" />
     <Compile Include="SQLite_IOS.cs" />
     <Compile Include="Services\SyncScheduleTaskService.cs" />
     <Compile Include="Services\SyncUnsentChangesTaskService.cs" />

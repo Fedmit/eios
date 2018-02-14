@@ -36,8 +36,11 @@ namespace eios.Tasks
                     {
                         var groups = await App.Database.GetGroups();
 
-                        await App.Database.DeleteThisShits();
-                        await App.Database.CreateTables();
+                        await App.Database.DropTable<Student>();
+                        await App.Database.DropTable<Occupation>();
+                        await App.Database.CreateTable<Student>();
+                        await App.Database.CreateTable<Occupation>();
+
                         foreach (var group in groups)
                         {
                             var occupations = await WebApi.Instance.GetOccupationsAsync(group.IdGroup);
@@ -48,7 +51,6 @@ namespace eios.Tasks
                         }
                     }
                 }
-
                 isSuccessful = true;
             }
             catch (HttpRequestException)
@@ -58,9 +60,11 @@ namespace eios.Tasks
 
             var message = new OnScheduleSyncronizedMessage()
             {
-                IsSuccessful = isSuccessful
+                IsSuccessful = isSuccessful,
+                IsFirstTime = true
             };
-            Device.BeginInvokeOnMainThread(() => {
+            Device.BeginInvokeOnMainThread(() =>
+            {
                 MessagingCenter.Send(message, "OnScheduleSyncronizedMessage");
             });
 

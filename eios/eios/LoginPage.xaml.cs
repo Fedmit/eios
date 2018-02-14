@@ -74,7 +74,10 @@ namespace eios
                 return;
             }
 
+            await App.Database.DropTable<Group>();
+            await App.Database.CreateTable<Group>();
             await App.Database.SetGroup(response.Data);
+
             App.Groups = response.Data;
 
             App.Current.Properties["IdGroupCurrent"] = response.Data[0].IdGroup;

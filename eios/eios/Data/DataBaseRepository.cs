@@ -16,18 +16,14 @@ namespace eios.Data
             database = new SQLiteAsyncConnection(databasePath);
         }
 
-        public async Task CreateTables()
+        public async Task DropTable<T>() where T : new()
         {
-            await database.CreateTableAsync<StudentAbsent>();
-            await database.CreateTableAsync<Student>();
-            await database.CreateTableAsync<Occupation>();
+            await database.DropTableAsync<T>();
         }
 
-        public async Task DeleteThisShits()
+        public async Task CreateTable<T>() where T : new()
         {
-            await database.DropTableAsync<StudentAbsent>();
-            await database.DropTableAsync<Student>();
-            await database.DropTableAsync<Occupation>();
+            await database.CreateTableAsync<T>();
         }
 
         public async Task<List<Occupation>> GetOccupations(int idGroup)
@@ -44,11 +40,6 @@ namespace eios.Data
                 Console.WriteLine(ex.Message);
                 return null;
             }
-        }
-
-        async public Task DeleteGroupsTable()
-        {
-            await database.DropTableAsync<Group>();
         }
 
         public async Task<List<StudentAttendance>> GetAttendance(int idOccupation, int idGroup)
@@ -137,8 +128,6 @@ namespace eios.Data
         {
             try
             {
-                await DeleteGroupsTable();
-                await database.CreateTableAsync<Group>();
                 await database.InsertAllAsync(groups);
             }
             catch (SQLiteException ex)
@@ -292,7 +281,11 @@ namespace eios.Data
                     idOccupation,
                     idGroup
                 );
-                await database.InsertAllAsync(absentStudents);
+
+                if(absentStudents != null)
+                {
+                    await database.InsertAllAsync(absentStudents);
+                }
 
                 var occupationsList = await database.QueryAsync<Occupation>(
                     "SELECT * FROM Occupations WHERE id_group = ?",

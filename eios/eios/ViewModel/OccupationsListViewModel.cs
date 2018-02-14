@@ -33,14 +33,20 @@ namespace eios.ViewModel
                     return;
                 }
 
-                _date = value;
-                App.DateSelected = value;
+                if (CrossConnectivity.Current.IsConnected)
+                {
+                    _date = value;
+                    App.DateSelected = value;
 
-                IsBusy = true;
+                    IsBusy = true;
 
-                App.IsTimeTravelMode = true;
-                App.IsLoading = true;
-                MessagingCenter.Send(new StartGetScheduleTaskMessage(), "StartGetScheduleTaskMessage");
+                    App.IsLoading = true;
+                    MessagingCenter.Send(new StartGetScheduleTaskMessage(), "StartGetScheduleTaskMessage");
+                }
+                else
+                {
+                    _date = App.DateSelected;
+                }
 
                 OnPropertyChanged(nameof(Date));
                 OnPropertyChanged(nameof(DateStr));
@@ -135,7 +141,6 @@ namespace eios.ViewModel
             {
                 Task.Run(async () =>
                 {
-                    App.DateSelected = App.DateNow;
                     Date = App.DateSelected;
 
                     var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
@@ -155,17 +160,19 @@ namespace eios.ViewModel
         {
             OccupationsList = new List<Occupation>();
 
-            MessagingCenter.Subscribe<OccupationsMessage>(this, "OccupationsMessage", message =>
+            MessagingCenter.Subscribe<OnMarksUpdatedMessage>(this, "OnMarksUpdatedMessage", message =>
             {
                 Device.BeginInvokeOnMainThread(async () =>
                 {
-                    if (message.IsSuccessful)
+                    if (!App.IsLoading)
                     {
-                        var occupationsList = message.Data;
-                        OccupationsList = occupationsList;
-                        await UpdateState();
-
-                        IsBusy = false;
+                        var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
+                        var marks = await App.Database.GetMarks(idGroup);
+                        for (int i = 0; i < marks.Count; i++)
+                        {
+                            OccupationsList[i].IsChecked = marks[i].IsChecked;
+                            OccupationsList[i].IsBlocked = marks[i].IsBlocked;
+                        }
                     }
                 });
             });
@@ -176,8 +183,11 @@ namespace eios.ViewModel
                 {
                     if (message.IsSuccessful)
                     {
-                        App.DateSelected = App.DateNow;
-                        Date = App.DateSelected;
+                        if (message.IsFirstTime)
+                        {
+                            App.DateSelected = App.DateNow;
+                            Date = App.DateSelected;
+                        }
 
                         var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
                         Group = App.Groups.Where(group => group.IdGroup == idGroup).ToList()[0].Name;
@@ -223,27 +233,11 @@ namespace eios.ViewModel
             if (CrossConnectivity.Current.IsConnected)
             {
                 var marksResponse = await WebApi.Instance.GetMarksAsync();
-                var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
-                if (!App.IsTimeTravelMode)
-                {
-                    await App.Database.SetMarks(marksResponse.Data, idGroup);
-                    App.IdOccupNow = marksResponse.IdOccupNow;
+                await App.Database.SetMarks(marksResponse.Data, (int) App.Current.Properties["IdGroupCurrent"]);
 
-                    var occupationsList = await App.Database.GetOccupations(idGroup);
-                    OccupationsList = occupationsList;
-                }
-                else
-                {
-                    App.IdOccupNow = marksResponse.IdOccupNow;
-                    var occupationsList = OccupationsList;
-                    var marks = marksResponse.Data;
-                    for (int i = 0; i < marksResponse.Data.Count; i++)
-                    {
-                        occupationsList[i].IsChecked = marks[i].Checked;
-                        occupationsList[i].IsBlocked = marks[i].Blocked;
-                    }
-                    OccupationsList = occupationsList;
-                }
+                App.IdOccupNow = marksResponse.IdOccupNow;
+
+                MessagingCenter.Send(new OnMarksUpdatedMessage(), "OnMarksUpdatedMessage");
             }
         }
 

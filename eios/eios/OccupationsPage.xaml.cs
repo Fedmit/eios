@@ -26,7 +26,7 @@ namespace eios
         {
             ViewModel = new OccupationsListViewModel(this);
             BindingContext = ViewModel;
-            
+
             InitializeComponent();
 
             listView.ItemTapped += async (sender, e) =>
@@ -38,24 +38,21 @@ namespace eios
                     {
                         return;
                     }
-                    await Navigation.PushAsync((Page)Activator.CreateInstance(item.TargetType, ViewModel, item));
+                    await Navigation.PushAsync((Page) Activator.CreateInstance(item.TargetType, ViewModel, item));
                 }
             };
         }
 
         protected override void OnAppearing()
         {
-            //if (!App.IsLoading)
-            //{
-            //    var message = new StartSyncScheduleStateTaskMessage();
-            //    MessagingCenter.Send(message, "StartSyncScheduleStateTaskMessage");
-            //}
+            var message = new StartSyncScheduleStateTaskMessage();
+            MessagingCenter.Send(message, "StartSyncScheduleStateTaskMessage");
         }
 
         protected override void OnDisappearing()
         {
-            //var message = new StopSyncScheduleStateTaskMessage();
-            //MessagingCenter.Send(message, "StopSyncScheduleStateTaskMessage");
+            var message = new StopSyncScheduleStateTaskMessage();
+            MessagingCenter.Send(message, "StopSyncScheduleStateTaskMessage");
         }
 
         void OnDateClicked(Object sender, DateChangedEventArgs e)
@@ -75,7 +72,7 @@ namespace eios
         }
         async void OnSelectedIndexChanged(object sender, EventArgs e)
         {
-            var picker = (Picker)sender;
+            var picker = (Picker) sender;
             int selectedIndex = picker.SelectedIndex;
 
             if (selectedIndex != -1)
@@ -103,6 +100,7 @@ namespace eios
                             "Ошибка",
                             "Вы не подключены!",
                             "ОК");
+                ViewModel.Date = App.DateSelected;
             }
         }
     }

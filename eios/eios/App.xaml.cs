@@ -71,6 +71,7 @@ namespace eios
 
         public static DateTime DateSelected { get; set; }
 
+        public int IdGroupCurrent { get; set; }
         public static List<Group> Groups { get; set; }
 
         private const string DATABASE_NAME = "EIOS_DB.db";
@@ -94,11 +95,16 @@ namespace eios
             MainPage = new NavigationPage(new SplashPage());
         }
 
-        protected override void OnStart()
+        protected async override void OnSleep()
         {
+            //App.Current.Properties["DateNow"] = DateNow.ToString("yyyy-MM-dd");
+            //App.Current.Properties["DateSelected"] = DateSelected.ToString("yyyy-MM-dd");
+            //App.Current.Properties["IdGroupCurrent"] = IdGroupCurrent;
+
+            //await SavePropertiesAsync();
         }
 
-        protected override void OnSleep()
+        protected override void OnStart()
         {
         }
 
