@@ -67,8 +67,6 @@ namespace eios
                 if (App.Current.Properties.ContainsKey("IsLoggedIn") && (bool)App.Current.Properties["IsLoggedIn"])
                 {
                     App.Groups = await App.Database.GetGroups();
-                    var dateNowStr = (string)App.Current.Properties["DateNow"];
-                    App.DateNow = DateTime.Parse(dateNowStr);
                     Application.Current.MainPage = new MainPage();
                 }
                 else

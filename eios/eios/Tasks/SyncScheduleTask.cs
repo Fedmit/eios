@@ -18,6 +18,7 @@ namespace eios.Tasks
 
         public async Task RunSyncSchedule()
         {
+            App.Counter++;
             try
             {
                 if (CrossConnectivity.Current.IsConnected)
@@ -27,16 +28,19 @@ namespace eios.Tasks
                     {
                         DateTime dateNow = await WebApi.Instance.GetDateAsync();
 
-                        if (App.Current.Properties.ContainsKey("DateNow"))
-                        {
-                            var str = (string)App.Current.Properties["DateNow"];
-                            lastDate = DateTime.Parse(str);
-                        }
+                        lastDate = App.DateNow;
 
-                        App.DateNow = dateNow;
+                        App.Current.Properties["DateNow"] = dateNow.ToString("yyyy-MM-dd");
+                        await App.Current.SavePropertiesAsync();
+
+                        App.DateSelected = App.DateNow;
+
+                        Device.BeginInvokeOnMainThread(() => {
+                            MessagingCenter.Send(new OnDateSyncronizedMessage(), "OnDateSyncronizedMessage");
+                        });
                     }
 
-                    if (App.IsTimeTravelMode || lastDate == DateTime.MinValue || lastDate.Date != App.DateNow.Date)
+                    if (App.IsTimeTravelMode || lastDate == DateTime.MinValue || lastDate != App.DateNow)
                     {
                         var groups = await App.Database.GetGroups();
 
@@ -51,10 +55,12 @@ namespace eios.Tasks
                             await App.Database.SetStudents(students);
                         }
                     }
-                    App.Current.Properties["DateNow"] = App.DateNow.ToString("yyyy-MM-dd HH:mm:ss");
-                    await App.Current.SavePropertiesAsync();
                 }
-                
+                else
+                {
+                    App.DateSelected = App.DateNow;
+                }
+
                 isSuccessful = true;
             }
             catch (HttpRequestException)

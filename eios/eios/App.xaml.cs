@@ -11,8 +11,10 @@ using eios.Data;
 
 namespace eios
 {
-	public partial class App : Application
-	{
+    public partial class App : Application
+    {
+        public static int Counter { get; set; }
+
         private static string _login { get; set; }
         public static string Login
         {
@@ -22,7 +24,7 @@ namespace eios
                 {
                     if (App.Current.Properties.ContainsKey("Login"))
                     {
-                        return (string)App.Current.Properties["Login"];
+                        return (string) App.Current.Properties["Login"];
                     }
                     return "";
                 }
@@ -37,11 +39,11 @@ namespace eios
         {
             get
             {
-                if(_password == null)
+                if (_password == null)
                 {
                     if (App.Current.Properties.ContainsKey("Password"))
                     {
-                        return (string)App.Current.Properties["Password"];
+                        return (string) App.Current.Properties["Password"];
                     }
                     return "";
                 }
@@ -55,8 +57,21 @@ namespace eios
         public static bool IsLoading { get; set; } = false;
         public static int IdOccupNow { get; set; } = 8;
         public static bool IsTimeTravelMode { get; set; } = false;
+        
+        public static DateTime DateNow
+        {
+            get
+            {
+                if (Current.Properties.ContainsKey("DateNow") && (string) Current.Properties["DateNow"] != null)
+                {
+                    var dateNowStr = (string) Current.Properties["DateNow"];
+                    return DateTime.Parse(dateNowStr);
+                }
+                return DateTime.MinValue;
+            }
+        }
 
-        public static DateTime DateNow { get; set; }
+        public static DateTime DateSelected { get; set; }
 
         public static List<Group> Groups { get; set; }
 
@@ -74,23 +89,23 @@ namespace eios
             }
         }
 
-        public App ()
-		{
-			InitializeComponent();
+        public App()
+        {
+            InitializeComponent();
 
             MainPage = new NavigationPage(new SplashPage());
-		}
+        }
 
         protected override void OnStart()
         {
         }
 
-        protected override void OnSleep ()
-		{
-		}
+        protected override void OnSleep()
+        {
+        }
 
-		protected override void OnResume ()
-		{
-		}
-	}
+        protected override void OnResume()
+        {
+        }
+    }
 }

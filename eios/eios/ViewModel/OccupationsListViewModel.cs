@@ -16,32 +16,35 @@ namespace eios.ViewModel
     {
         ContentPage Context { get; set; }
 
-        DateTime _date;
+        DateTime _date = DateTime.MinValue;
         public DateTime Date
         {
             get { return _date; }
             set
             {
-                var dateNow = DateTime.Parse((string)App.Current.Properties["DateNow"]);
-                if (value == dateNow)
-                {
-                    _date = value;
-                }
-                else if (CrossConnectivity.Current.IsConnected)
+                Console.WriteLine("value: " + value.ToString("yyyy-MM-dd"));
+                Console.WriteLine("_date: " + _date.ToString("yyyy-MM-dd"));
+                Console.WriteLine("App.DateNow: " + App.DateNow.ToString("yyyy-MM-dd"));
+                Console.WriteLine("App.DateSelected: " + App.DateSelected.ToString("yyyy-MM-dd"));
+
+                if (_date == value) { return; }
+                else if (_date == DateTime.MinValue)
                 {
                     _date = value;
 
-                    IsBusy = true;
-                    App.IsTimeTravelMode = true;
-                    App.DateNow = value;
-                    HandleTaskMessages();
-                    MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
+                    OnPropertyChanged(nameof(Date));
+                    OnPropertyChanged(nameof(DateStr));
+
+                    return;
                 }
-                else
-                {
-                    _date = App.DateNow;
-                    App.IsTimeTravelMode = false;
-                }
+                if (value != App.DateNow) { App.IsTimeTravelMode = true; }
+
+                _date = value;
+                App.DateSelected = value;
+
+                IsBusy = true;
+                App.IsLoading = true;
+                MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
 
                 OnPropertyChanged(nameof(Date));
                 OnPropertyChanged(nameof(DateStr));
@@ -52,7 +55,7 @@ namespace eios.ViewModel
         {
             get
             {
-                if (Date == new DateTime(2016, 6, 1))
+                if (Date == DateTime.MinValue)
                 {
                     return "";
                 }
@@ -67,7 +70,7 @@ namespace eios.ViewModel
             {
                 if (_group == null)
                 {
-                    var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
+                    var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
                     _group = App.Groups.Where(group => group.IdGroup == idGroup).ToList()[0].Name;
                     return "";
                 }
@@ -131,66 +134,57 @@ namespace eios.ViewModel
             Context = context;
 
             IsBusy = true;
-            if (App.IsLoading)
-            {
-                HandleTaskMessages();
-            }
-            else
+            
+            if (!App.IsLoading)
             {
                 Task.Run(async () =>
                 {
-                    var dateNow = DateTime.Parse((string)App.Current.Properties["DateNow"]);
-                    Date = dateNow;
+                    Date = App.DateSelected;
 
-                    var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
+                    var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
                     Group = App.Groups.Where(group => group.IdGroup == idGroup).ToList()[0].Name;
 
                     await UpdateOccupationsList();
                     IsBusy = false;
-
-                    MessagingCenter.Subscribe<OnMarksUpdatedMessage>(this, "OnMarksUpdatedMessage", message =>
-                    {
-                        Device.BeginInvokeOnMainThread(async () =>
-                        {
-                            if (message.IsSuccessful)
-                            {
-                                await UpdateState();
-                            }
-                        });
-                    });
                 });
             }
+
+            HandleTaskMessages();
         }
 
         void HandleTaskMessages()
         {
             OccupationsList = new List<Occupation>();
+
+            MessagingCenter.Subscribe<OnDateSyncronizedMessage>(this, "OnDateSyncronizedMessage", message =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    Date = App.DateSelected;
+                });
+            });
+
+            MessagingCenter.Subscribe<OnMarksUpdatedMessage>(this, "OnMarksUpdatedMessage", message =>
+            {
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    if (message.IsSuccessful && !App.IsLoading)
+                    {
+                        await UpdateState();
+                    }
+                });
+            });
+
             MessagingCenter.Subscribe<OnScheduleSyncronizedMessage>(this, "OnScheduleSyncronizedMessage", message =>
             {
                 Device.BeginInvokeOnMainThread(async () =>
                 {
                     if (message.IsSuccessful)
                     {
-                        var dateNow = DateTime.Parse((string)App.Current.Properties["DateNow"]);
-                        Date = dateNow;
-
-                        var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
+                        var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
                         Group = App.Groups.Where(group => group.IdGroup == idGroup).ToList()[0].Name;
 
                         await UpdateOccupationsList();
-
-                        MessagingCenter.Send(new StartSyncScheduleStateTaskMessage(), "StartSyncScheduleStateTaskMessage");
-
-                        MessagingCenter.Subscribe<OnMarksUpdatedMessage>(this, "OnMarksUpdatedMessage", _message =>
-                        {
-                            Device.BeginInvokeOnMainThread(async () =>
-                            {
-                                if (message.IsSuccessful)
-                                {
-                                    await UpdateState();
-                                }
-                            });
-                        });
                     }
                     else
                     {
@@ -212,7 +206,7 @@ namespace eios.ViewModel
 
         async Task<List<Occupation>> PopulateList()
         {
-            return await App.Database.GetOccupations((int)App.Current.Properties["IdGroupCurrent"]);
+            return await App.Database.GetOccupations((int) App.Current.Properties["IdGroupCurrent"]);
         }
 
         async Task RefreshList()
@@ -224,7 +218,7 @@ namespace eios.ViewModel
 
         async Task UpdateState()
         {
-            var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
+            var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
             var occupationsList = await App.Database.GetOccupations(idGroup);
             OccupationsList = occupationsList;
         }

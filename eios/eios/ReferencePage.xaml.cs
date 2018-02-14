@@ -15,6 +15,8 @@ namespace eios
         public ReferencePage()
         {
             InitializeComponent();
+
+            Console.WriteLine("App.Counter: " + App.Counter);
         }
     }
 }
