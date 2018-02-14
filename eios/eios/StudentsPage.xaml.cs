@@ -18,16 +18,18 @@ namespace eios
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class StudentsPage : ContentPage
     {
-        StudentsListViewModel viewModel;
+        StudentsListViewModel ViewModel { get; set; }
+        OccupationsListViewModel OccupViewModel { get; set; }
 
         Occupation occupation;
 
-        public StudentsPage(Occupation occupation)
+        public StudentsPage(OccupationsListViewModel occupViewModel, Occupation occupation)
         {
             InitializeComponent();
 
-            viewModel = new StudentsListViewModel(occupation);
-            BindingContext = viewModel;
+            OccupViewModel = occupViewModel;
+            ViewModel = new StudentsListViewModel(occupation);
+            BindingContext = ViewModel;
 
             this.occupation = occupation;
             unavaibleButton.IsEnabled = occupation.IdLesson != 0;
@@ -39,7 +41,7 @@ namespace eios
                 if (e.Item is StudentSelect item)
                 {
                     item.IsSelected = !item.IsSelected;
-                    viewModel.OnSite = viewModel.StudentsList.FindAll(s => s.IsSelected.Equals(false)).Count;
+                    ViewModel.OnSite = ViewModel.StudentsList.FindAll(s => s.IsSelected.Equals(false)).Count;
                 }
             };
 
@@ -61,7 +63,7 @@ namespace eios
                     await Navigation.PopAsync();
                     return;
                 }
-                Navigation.InsertPageBefore(new CompletedOccupationPage(this.occupation), this);
+                Navigation.InsertPageBefore(new CompletedOccupationPage(OccupViewModel, this.occupation), this);
                 await Navigation.PopAsync();
             }
             await Navigation.PopAsync();
@@ -70,7 +72,7 @@ namespace eios
         async Task OnMarkClicked(Object sender, AssemblyLoadEventArgs args)
         {
             var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
-            await App.Database.SetAttendence(viewModel.StudentsList, occupation.IdOccupation, idGroup);
+            await App.Database.SetAttendence(ViewModel.StudentsList, occupation.IdOccupation, idGroup);
 
             if (CrossConnectivity.Current.IsConnected)
             {
@@ -79,6 +81,7 @@ namespace eios
                 {
                     await WebApi.Instance.SetAttendAsync(students, occupation);
                     await App.Database.SetSentFlag(occupation.IdOccupation, idGroup);
+                    await OccupViewModel.UpdateState();
                 }
                 catch (HttpRequestException)
                 {
@@ -89,7 +92,7 @@ namespace eios
                 }
             }
 
-            Navigation.InsertPageBefore(new CompletedOccupationPage(this.occupation), this);
+            Navigation.InsertPageBefore(new CompletedOccupationPage(OccupViewModel, this.occupation), this);
             await Navigation.PopAsync();
         }
     }

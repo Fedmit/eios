@@ -38,24 +38,24 @@ namespace eios
                     {
                         return;
                     }
-                    await Navigation.PushAsync((Page)Activator.CreateInstance(item.TargetType, item));
+                    await Navigation.PushAsync((Page)Activator.CreateInstance(item.TargetType, ViewModel, item));
                 }
             };
         }
 
         protected override void OnAppearing()
         {
-            if (!App.IsLoading)
-            {
-                var message = new StartSyncScheduleStateTaskMessage();
-                MessagingCenter.Send(message, "StartSyncScheduleStateTaskMessage");
-            }
+            //if (!App.IsLoading)
+            //{
+            //    var message = new StartSyncScheduleStateTaskMessage();
+            //    MessagingCenter.Send(message, "StartSyncScheduleStateTaskMessage");
+            //}
         }
 
         protected override void OnDisappearing()
         {
-            var message = new StopSyncScheduleStateTaskMessage();
-            MessagingCenter.Send(message, "StopSyncScheduleStateTaskMessage");
+            //var message = new StopSyncScheduleStateTaskMessage();
+            //MessagingCenter.Send(message, "StopSyncScheduleStateTaskMessage");
         }
 
         void OnDateClicked(Object sender, DateChangedEventArgs e)
@@ -83,7 +83,15 @@ namespace eios
                 App.Current.Properties["IdGroupCurrent"] = App.Groups[selectedIndex].IdGroup;
                 ViewModel.Group = App.Groups[selectedIndex].Name;
 
-                await ViewModel.UpdateOccupationsList();
+                if (!App.IsTimeTravelMode)
+                {
+                    await ViewModel.UpdateOccupationsList();
+                }
+                else
+                {
+                    App.IsLoading = true;
+                    MessagingCenter.Send(new StartGetScheduleTaskMessage(), "StartGetScheduleTaskMessage");
+                }
             }
         }
 

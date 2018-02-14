@@ -33,12 +33,38 @@ namespace eios.Model
         [JsonProperty("aud"), Column("aud")]
         public string Aud { get; set; }
 
+        private bool _isChecked = false;
         [Column("is_check")]
-        public bool IsChecked { get; set; }
-        
+        public bool IsChecked
+        {
+            get { return _isChecked; }
+            set
+            {
+                _isChecked = value;
+
+                OnPropertyChanged(nameof(IsChecked));
+                OnPropertyChanged(nameof(CircleColor));
+                OnPropertyChanged(nameof(TextColor));
+                OnPropertyChanged(nameof(TargetType));
+            }
+        }
+
+        private bool _isBlocked = false;
         [Column("is_block")]
-        public bool IsBlocked { get; set; }
-        
+        public bool IsBlocked
+        {
+            get { return _isBlocked; }
+            set
+            {
+                _isBlocked = value;
+
+                OnPropertyChanged(nameof(IsBlocked));
+                OnPropertyChanged(nameof(CircleColor));
+                OnPropertyChanged(nameof(TextColor));
+                OnPropertyChanged(nameof(TargetType));
+            }
+        }
+
         [Column("is_sent")]
         public bool IsSent { get; set; }
 
@@ -47,7 +73,7 @@ namespace eios.Model
         {
             get
             {
-                if (!IsChecked && IdLesson != 0 && (IdOccupation < App.IdOccupNow)) { return "#f7636c"; }
+                if (!IsChecked && IdLesson != 0 && IdOccupation < App.IdOccupNow) { return "#f7636c"; }
                 else if (IsChecked) { return "#acd94e"; }
                 return "#e0e0e0";
             }

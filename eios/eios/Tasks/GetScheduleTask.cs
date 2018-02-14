@@ -20,15 +20,13 @@ namespace eios.Tasks
         {
             if (CrossConnectivity.Current.IsConnected)
             {
-                List<List<Occupation>> data = new List<List<Occupation>>();
+                List<Occupation> data = new List<Occupation>();
                 try
                 {
                     var groups = await App.Database.GetGroups();
 
-                    foreach (var group in groups)
-                    {
-                        data.Add(await WebApi.Instance.GetOccupationsAsync(group.IdGroup));
-                    }
+                    var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
+                    data = await WebApi.Instance.GetOccupationsAsync(idGroup);
 
                     isSuccessful = true;
                 }

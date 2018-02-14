@@ -32,10 +32,6 @@ namespace eios.Tasks
 
                     App.DateSelected = App.DateNow;
 
-                    Device.BeginInvokeOnMainThread(() => {
-                        MessagingCenter.Send(new OnDateSyncronizedMessage(), "OnDateSyncronizedMessage");
-                    });
-
                     if (lastDate == DateTime.MinValue || lastDate != App.DateNow)
                     {
                         var groups = await App.Database.GetGroups();

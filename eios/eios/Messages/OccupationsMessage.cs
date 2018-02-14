@@ -9,6 +9,6 @@ namespace eios.Messages
     {
         public bool IsSuccessful { get; set; }
 
-        public List<List<Occupation>> Data { get; set; }
+        public List<Occupation> Data { get; set; }
     }
 }

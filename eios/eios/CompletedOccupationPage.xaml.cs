@@ -15,11 +15,13 @@ namespace eios
     public partial class CompletedOccupationPage : ContentPage
     {
         Occupation occupation;
+        OccupationsListViewModel OccupViewModel { get; set; }
 
-        public CompletedOccupationPage(Occupation occupation)
+        public CompletedOccupationPage(OccupationsListViewModel occupViewModel,Occupation occupation)
         {
             InitializeComponent();
 
+            OccupViewModel = occupViewModel;
             var viewModel = new CompletedOccupationListViewModel(occupation);
             BindingContext = viewModel;
 
@@ -35,7 +37,7 @@ namespace eios
 
         async void OnEditClicked(Object sender, AssemblyLoadEventArgs args)
         {
-            Navigation.InsertPageBefore(new StudentsPage(this.occupation), this);
+            Navigation.InsertPageBefore(new StudentsPage(OccupViewModel, this.occupation), this);
             await Navigation.PopAsync();
         }
     }

@@ -22,17 +22,13 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Messages\OccupationsMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\OnDateSyncronizedMessage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Messages\OnMarksUpdatedMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\OnScheduleSyncronizedMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\StartGetScheduleTaskMessage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Messages\StartSyncScheduleStateTaskMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\StartSyncScheduleTaskMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\StartSyncUnsentChangesTask.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Messages\StopSyncScheduleStateTaskMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\GroupResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\MarksResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tasks\GetScheduleTask.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Tasks\SyncScheduleStateTask.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tasks\SyncScheduleTask.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tasks\SyncUnsentChangesTask.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\BedgeView.xaml.cs">

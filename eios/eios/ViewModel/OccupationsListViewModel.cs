@@ -12,7 +12,7 @@ using Xamarin.Forms;
 
 namespace eios.ViewModel
 {
-    class OccupationsListViewModel : INotifyPropertyChanged
+    public class OccupationsListViewModel : INotifyPropertyChanged
     {
         ContentPage Context { get; set; }
 
@@ -22,11 +22,6 @@ namespace eios.ViewModel
             get { return _date; }
             set
             {
-                Console.WriteLine("value: " + value.ToString("yyyy-MM-dd"));
-                Console.WriteLine("_date: " + _date.ToString("yyyy-MM-dd"));
-                Console.WriteLine("App.DateNow: " + App.DateNow.ToString("yyyy-MM-dd"));
-                Console.WriteLine("App.DateSelected: " + App.DateSelected.ToString("yyyy-MM-dd"));
-
                 if (_date == value) { return; }
                 else if (_date == DateTime.MinValue)
                 {
@@ -42,8 +37,9 @@ namespace eios.ViewModel
                 App.DateSelected = value;
 
                 IsBusy = true;
-                App.IsLoading = true;
 
+                App.IsTimeTravelMode = true;
+                App.IsLoading = true;
                 MessagingCenter.Send(new StartGetScheduleTaskMessage(), "StartGetScheduleTaskMessage");
 
                 OnPropertyChanged(nameof(Date));
@@ -134,17 +130,20 @@ namespace eios.ViewModel
             Context = context;
 
             IsBusy = true;
-            
+
             if (!App.IsLoading)
             {
                 Task.Run(async () =>
                 {
+                    App.DateSelected = App.DateNow;
                     Date = App.DateSelected;
 
                     var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
                     Group = App.Groups.Where(group => group.IdGroup == idGroup).ToList()[0].Name;
 
                     await UpdateOccupationsList();
+                    await UpdateState();
+
                     IsBusy = false;
                 });
             }
@@ -158,34 +157,15 @@ namespace eios.ViewModel
 
             MessagingCenter.Subscribe<OccupationsMessage>(this, "OccupationsMessage", message =>
             {
-                Device.BeginInvokeOnMainThread(() =>
+                Device.BeginInvokeOnMainThread(async () =>
                 {
                     if (message.IsSuccessful)
                     {
-                        var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
-                        var occupationsList = message.Data.Where(list => list[0].IdGroup == idGroup).ToList()[0];
+                        var occupationsList = message.Data;
                         OccupationsList = occupationsList;
+                        await UpdateState();
 
                         IsBusy = false;
-                    }
-                });
-            });
-
-            MessagingCenter.Subscribe<OnDateSyncronizedMessage>(this, "OnDateSyncronizedMessage", message =>
-            {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    Date = App.DateSelected;
-                });
-            });
-
-            MessagingCenter.Subscribe<OnMarksUpdatedMessage>(this, "OnMarksUpdatedMessage", message =>
-            {
-                Device.BeginInvokeOnMainThread(async () =>
-                {
-                    if (message.IsSuccessful && !App.IsLoading)
-                    {
-                        await UpdateState();
                     }
                 });
             });
@@ -196,10 +176,14 @@ namespace eios.ViewModel
                 {
                     if (message.IsSuccessful)
                     {
+                        App.DateSelected = App.DateNow;
+                        Date = App.DateSelected;
+
                         var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
                         Group = App.Groups.Where(group => group.IdGroup == idGroup).ToList()[0].Name;
 
                         await UpdateOccupationsList();
+                        await UpdateState();
                     }
                     else
                     {
@@ -226,16 +210,41 @@ namespace eios.ViewModel
 
         async Task RefreshList()
         {
-            IsRefreshing = true;
-            await UpdateState();
-            IsRefreshing = false;
+            if (!App.IsLoading)
+            {
+                IsRefreshing = true;
+                await UpdateState();
+                IsRefreshing = false;
+            }
         }
 
-        async Task UpdateState()
+        public async Task UpdateState()
         {
-            var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
-            var occupationsList = await App.Database.GetOccupations(idGroup);
-            OccupationsList = occupationsList;
+            if (CrossConnectivity.Current.IsConnected)
+            {
+                var marksResponse = await WebApi.Instance.GetMarksAsync();
+                var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
+                if (!App.IsTimeTravelMode)
+                {
+                    await App.Database.SetMarks(marksResponse.Data, idGroup);
+                    App.IdOccupNow = marksResponse.IdOccupNow;
+
+                    var occupationsList = await App.Database.GetOccupations(idGroup);
+                    OccupationsList = occupationsList;
+                }
+                else
+                {
+                    App.IdOccupNow = marksResponse.IdOccupNow;
+                    var occupationsList = OccupationsList;
+                    var marks = marksResponse.Data;
+                    for (int i = 0; i < marksResponse.Data.Count; i++)
+                    {
+                        occupationsList[i].IsChecked = marks[i].Checked;
+                        occupationsList[i].IsBlocked = marks[i].Blocked;
+                    }
+                    OccupationsList = occupationsList;
+                }
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

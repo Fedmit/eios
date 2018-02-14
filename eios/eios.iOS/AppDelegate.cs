@@ -40,15 +40,6 @@ namespace eios.iOS
                 await syncScheduleTask.Start();
             });
 
-            SyncScheduleStateTaskService syncScheduleStateTask;
-            syncScheduleStateTask = new SyncScheduleStateTaskService();
-            MessagingCenter.Subscribe<StartSyncScheduleStateTaskMessage>(this, "StartSyncScheduleStateTaskMessage", async message => {
-                await syncScheduleStateTask.Start();
-            });
-            MessagingCenter.Subscribe<StopSyncScheduleStateTaskMessage>(this, "StopSyncScheduleStateTaskMessage", message => {
-                syncScheduleStateTask.Stop();
-            });
-
             SyncUnsentChangesTaskService syncUnsentChangesTask;
             MessagingCenter.Subscribe<StartSyncUnsentChangesTask>(this, "StartSyncUnsentChangesTask", async message => {
                 syncUnsentChangesTask = new SyncUnsentChangesTaskService();
