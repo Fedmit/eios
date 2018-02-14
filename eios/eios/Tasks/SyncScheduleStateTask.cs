@@ -14,7 +14,8 @@ namespace eios.Tasks
     {
         public async Task RunSyncScheduleState(CancellationToken token)
         {
-            await Task.Run(async () => {
+            await Task.Run(async () =>
+            {
                 while (true)
                 {
                     token.ThrowIfCancellationRequested();
@@ -22,7 +23,7 @@ namespace eios.Tasks
                     if (CrossConnectivity.Current.IsConnected)
                     {
                         var marksResponse = await WebApi.Instance.GetMarksAsync();
-                        await App.Database.SetMarks(marksResponse.Data, (int)App.Current.Properties["IdGroupCurrent"]);
+                        await App.Database.SetMarks(marksResponse.Data, (int) App.Current.Properties["IdGroupCurrent"]);
 
                         App.IdOccupNow = marksResponse.IdOccupNow;
                     }
@@ -31,7 +32,8 @@ namespace eios.Tasks
                     {
                         IsSuccessful = true
                     };
-                    Device.BeginInvokeOnMainThread(() => {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
                         MessagingCenter.Send(message, "OnMarksUpdatedMessage");
                     });
 

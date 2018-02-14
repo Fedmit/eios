@@ -37,14 +37,14 @@ namespace eios.ViewModel
 
                     return;
                 }
-                if (value != App.DateNow) { App.IsTimeTravelMode = true; }
 
                 _date = value;
                 App.DateSelected = value;
 
                 IsBusy = true;
                 App.IsLoading = true;
-                MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
+
+                MessagingCenter.Send(new StartGetScheduleTaskMessage(), "StartGetScheduleTaskMessage");
 
                 OnPropertyChanged(nameof(Date));
                 OnPropertyChanged(nameof(DateStr));
@@ -155,6 +155,21 @@ namespace eios.ViewModel
         void HandleTaskMessages()
         {
             OccupationsList = new List<Occupation>();
+
+            MessagingCenter.Subscribe<OccupationsMessage>(this, "OccupationsMessage", message =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    if (message.IsSuccessful)
+                    {
+                        var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
+                        var occupationsList = message.Data.Where(list => list[0].IdGroup == idGroup).ToList()[0];
+                        OccupationsList = occupationsList;
+
+                        IsBusy = false;
+                    }
+                });
+            });
 
             MessagingCenter.Subscribe<OnDateSyncronizedMessage>(this, "OnDateSyncronizedMessage", message =>
             {

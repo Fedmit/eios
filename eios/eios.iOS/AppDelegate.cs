@@ -54,6 +54,12 @@ namespace eios.iOS
                 syncUnsentChangesTask = new SyncUnsentChangesTaskService();
                 await syncUnsentChangesTask.Start();
             });
+
+            GetScheduleTaskService getScheduleTask;
+            MessagingCenter.Subscribe<StartGetScheduleTaskMessage>(this, "StartGetScheduleTaskMessage", async message => {
+                getScheduleTask = new GetScheduleTaskService();
+                await getScheduleTask.Start();
+            });
         }
     }
 }

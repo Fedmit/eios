@@ -18,29 +18,25 @@ namespace eios.Tasks
 
         public async Task RunSyncSchedule()
         {
-            App.Counter++;
             try
             {
                 if (CrossConnectivity.Current.IsConnected)
                 {
                     DateTime lastDate = new DateTime();
-                    if (!App.IsTimeTravelMode)
-                    {
-                        DateTime dateNow = await WebApi.Instance.GetDateAsync();
+                    DateTime dateNow = await WebApi.Instance.GetDateAsync();
 
-                        lastDate = App.DateNow;
+                    lastDate = App.DateNow;
 
-                        App.Current.Properties["DateNow"] = dateNow.ToString("yyyy-MM-dd");
-                        await App.Current.SavePropertiesAsync();
+                    App.Current.Properties["DateNow"] = dateNow.ToString("yyyy-MM-dd");
+                    await App.Current.SavePropertiesAsync();
 
-                        App.DateSelected = App.DateNow;
+                    App.DateSelected = App.DateNow;
 
-                        Device.BeginInvokeOnMainThread(() => {
-                            MessagingCenter.Send(new OnDateSyncronizedMessage(), "OnDateSyncronizedMessage");
-                        });
-                    }
+                    Device.BeginInvokeOnMainThread(() => {
+                        MessagingCenter.Send(new OnDateSyncronizedMessage(), "OnDateSyncronizedMessage");
+                    });
 
-                    if (App.IsTimeTravelMode || lastDate == DateTime.MinValue || lastDate != App.DateNow)
+                    if (lastDate == DateTime.MinValue || lastDate != App.DateNow)
                     {
                         var groups = await App.Database.GetGroups();
 
@@ -55,10 +51,6 @@ namespace eios.Tasks
                             await App.Database.SetStudents(students);
                         }
                     }
-                }
-                else
-                {
-                    App.DateSelected = App.DateNow;
                 }
 
                 isSuccessful = true;

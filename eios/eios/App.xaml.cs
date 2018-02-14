@@ -13,8 +13,6 @@ namespace eios
 {
     public partial class App : Application
     {
-        public static int Counter { get; set; }
-
         private static string _login { get; set; }
         public static string Login
         {
@@ -56,7 +54,6 @@ namespace eios
         public static bool IsUserLoggedIn { get; set; }
         public static bool IsLoading { get; set; } = false;
         public static int IdOccupNow { get; set; } = 8;
-        public static bool IsTimeTravelMode { get; set; } = false;
         
         public static DateTime DateNow
         {
