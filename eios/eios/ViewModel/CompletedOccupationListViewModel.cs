@@ -123,15 +123,13 @@ namespace eios.ViewModel
 
         async Task<List<StudentAttendance>> PopulateList()
         {
-            var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
-
             if (CrossConnectivity.Current.IsConnected)
             {
-                var absentStudents = await WebApi.Instance.GetAttendanceAsync(Occupation.IdOccupation, idGroup);
-                await App.Database.SetAttendence(absentStudents, Occupation.IdOccupation, idGroup);
+                var absentStudents = await WebApi.Instance.GetAttendanceAsync(Occupation.IdOccupation, App.IdGroupCurrent);
+                await App.Database.SetAttendence(absentStudents, Occupation.IdOccupation, App.IdGroupCurrent);
             }
 
-            var attendanceList = await App.Database.GetAttendance(Occupation.IdOccupation, idGroup);
+            var attendanceList = await App.Database.GetAttendance(Occupation.IdOccupation, App.IdGroupCurrent);
 
             return attendanceList;
         }

@@ -22,17 +22,15 @@ namespace eios.Tasks
             {
                 if (CrossConnectivity.Current.IsConnected)
                 {
-                    DateTime lastDate = new DateTime();
                     DateTime dateNow = await WebApi.Instance.GetDateAsync();
 
-                    lastDate = App.DateNow;
+                    var lastDate = App.DateSelected;
 
-                    App.Current.Properties["DateNow"] = dateNow.ToString("yyyy-MM-dd");
+                    App.DateNow = dateNow;
+                    App.DateSelected = dateNow;
                     await App.Current.SavePropertiesAsync();
 
-                    App.DateSelected = App.DateNow;
-
-                    if (lastDate == DateTime.MinValue || lastDate != App.DateNow)
+                    if (lastDate == DateTime.MinValue || lastDate != dateNow)
                     {
                         var groups = await App.Database.GetGroups();
 

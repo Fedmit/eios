@@ -12,8 +12,6 @@ namespace eios.Tasks
 {
     class SyncUnsentChangesTask
     {
-        int idGroup = (int)App.Current.Properties["IdGroupCurrent"];
-
         public async Task RunSyncUnsentChanges()
         {
             while (true)
@@ -35,12 +33,12 @@ namespace eios.Tasks
                                 try
                                 {
                                     await WebApi.Instance.SetAttendAsync(students, occupation);
-                                    await App.Database.SetSentFlag(occupation.IdOccupation, idGroup);
+                                    await App.Database.SetSentFlag(occupation.IdOccupation, App.IdGroupCurrent);
                                 }
                                 catch (HttpRequestException)
                                 {
-                                    await App.Database.DeleteAttendance(occupation.IdOccupation, idGroup);
-                                    await App.Database.SetSentFlag(occupation.IdOccupation, idGroup);
+                                    await App.Database.DeleteAttendance(occupation.IdOccupation, App.IdGroupCurrent);
+                                    await App.Database.SetSentFlag(occupation.IdOccupation, App.IdGroupCurrent);
                                 }
                             }
                         }

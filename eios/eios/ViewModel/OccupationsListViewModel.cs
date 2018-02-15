@@ -14,6 +14,8 @@ namespace eios.ViewModel
 {
     public class OccupationsListViewModel : INotifyPropertyChanged
     {
+        int counter = 0;
+
         ContentPage Context { get; set; }
 
         DateTime _date = DateTime.MinValue;
@@ -38,8 +40,10 @@ namespace eios.ViewModel
                     _date = value;
                     App.DateSelected = value;
 
-                    IsBusy = true;
+                    this.counter++;
+                    Console.WriteLine("this.counter: " + this.counter);
 
+                    IsBusy = true;
                     App.IsLoading = true;
                     MessagingCenter.Send(new StartGetScheduleTaskMessage(), "StartGetScheduleTaskMessage");
                 }
@@ -72,8 +76,7 @@ namespace eios.ViewModel
             {
                 if (_group == null)
                 {
-                    var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
-                    _group = App.Groups.Where(group => group.IdGroup == idGroup).ToList()[0].Name;
+                    _group = App.Groups.Where(group => group.IdGroup == App.IdGroupCurrent).ToList()[0].Name;
                     return "";
                 }
 
@@ -141,10 +144,12 @@ namespace eios.ViewModel
             {
                 Task.Run(async () =>
                 {
+                    var occupations = await App.Database.GetOccupations(App.IdGroupCurrent);
+                    Console.WriteLine(occupations.Count);
+
                     Date = App.DateSelected;
 
-                    var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
-                    Group = App.Groups.Where(group => group.IdGroup == idGroup).ToList()[0].Name;
+                    Group = App.Groups.Where(group => group.IdGroup == App.IdGroupCurrent).ToList()[0].Name;
 
                     await UpdateOccupationsList();
                     await UpdateState();
@@ -166,8 +171,7 @@ namespace eios.ViewModel
                 {
                     if (!App.IsLoading)
                     {
-                        var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
-                        var marks = await App.Database.GetMarks(idGroup);
+                        var marks = await App.Database.GetMarks(App.IdGroupCurrent);
                         for (int i = 0; i < marks.Count; i++)
                         {
                             OccupationsList[i].IsChecked = marks[i].IsChecked;
@@ -185,12 +189,10 @@ namespace eios.ViewModel
                     {
                         if (message.IsFirstTime)
                         {
-                            App.DateSelected = App.DateNow;
                             Date = App.DateSelected;
                         }
 
-                        var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
-                        Group = App.Groups.Where(group => group.IdGroup == idGroup).ToList()[0].Name;
+                        Group = App.Groups.Where(group => group.IdGroup == App.IdGroupCurrent).ToList()[0].Name;
 
                         await UpdateOccupationsList();
                         await UpdateState();
@@ -215,7 +217,7 @@ namespace eios.ViewModel
 
         async Task<List<Occupation>> PopulateList()
         {
-            return await App.Database.GetOccupations((int) App.Current.Properties["IdGroupCurrent"]);
+            return await App.Database.GetOccupations(App.IdGroupCurrent);
         }
 
         async Task RefreshList()
@@ -230,10 +232,10 @@ namespace eios.ViewModel
 
         public async Task UpdateState()
         {
-            if (CrossConnectivity.Current.IsConnected)
+            if (!CrossConnectivity.Current.IsConnected)
             {
                 var marksResponse = await WebApi.Instance.GetMarksAsync();
-                await App.Database.SetMarks(marksResponse.Data, (int) App.Current.Properties["IdGroupCurrent"]);
+                await App.Database.SetMarks(marksResponse.Data, App.IdGroupCurrent);
 
                 App.IdOccupNow = marksResponse.IdOccupNow;
 

@@ -51,27 +51,76 @@ namespace eios
             set { _password = value; }
         }
 
-        public static bool IsUserLoggedIn { get; set; }
+        public static bool IsUserLoggedIn
+        {
+            get
+            {
+                if (Current.Properties.ContainsKey("IsUserLoggedIn"))
+                {
+                    return (bool) Current.Properties["IsUserLoggedIn"];
+                }
+                return false;
+            }
+            set
+            {
+                Current.Properties["IsUserLoggedIn"] = value;
+            }
+        }
         public static bool IsLoading { get; set; } = false;
         public static int IdOccupNow { get; set; } = 8;
         public static bool IsTimeTravelMode { get; set; }
-        
+
         public static DateTime DateNow
         {
             get
             {
-                if (Current.Properties.ContainsKey("DateNow") && (string) Current.Properties["DateNow"] != null)
+                if (Current.Properties.ContainsKey("DateNow"))
                 {
                     var dateNowStr = (string) Current.Properties["DateNow"];
                     return DateTime.Parse(dateNowStr);
                 }
                 return DateTime.MinValue;
             }
+            set
+            {
+                Current.Properties["DateNow"] = value.ToString("yyyy-MM-dd");
+            }
         }
 
-        public static DateTime DateSelected { get; set; }
+        public static DateTime DateSelected
+        {
+            get
+            {
+                if (Current.Properties.ContainsKey("DateSelected"))
+                {
+                    var dateNowStr = (string) Current.Properties["DateSelected"];
+                    return DateTime.Parse(dateNowStr);
+                }
+                return DateTime.MinValue;
+            }
+            set
+            {
+                Current.Properties["DateSelected"] = value.ToString("yyyy-MM-dd");
+            }
+        }
 
-        public int IdGroupCurrent { get; set; }
+        public static int IdGroupCurrent
+        {
+            get
+            {
+                if (Current.Properties.ContainsKey("IdGroupCurrent"))
+                {
+                    return (int) Current.Properties["IdGroupCurrent"];
+                }
+                return 0;
+            }
+            set
+            {
+                Current.Properties["IdGroupCurrent"] = value;
+            }
+        }
+
+        public static List<Group> _groups;
         public static List<Group> Groups { get; set; }
 
         private const string DATABASE_NAME = "EIOS_DB.db";
@@ -95,13 +144,8 @@ namespace eios
             MainPage = new NavigationPage(new SplashPage());
         }
 
-        protected async override void OnSleep()
+        protected override void OnSleep()
         {
-            //App.Current.Properties["DateNow"] = DateNow.ToString("yyyy-MM-dd");
-            //App.Current.Properties["DateSelected"] = DateSelected.ToString("yyyy-MM-dd");
-            //App.Current.Properties["IdGroupCurrent"] = IdGroupCurrent;
-
-            //await SavePropertiesAsync();
         }
 
         protected override void OnStart()

@@ -29,7 +29,7 @@ namespace eios
 
             if (CrossConnectivity.Current.IsConnected)
             {
-                if (App.Current.Properties.ContainsKey("IsLoggedIn") && (bool)App.Current.Properties["IsLoggedIn"])
+                if (App.IsUserLoggedIn)
                 {
                     try
                     {
@@ -64,7 +64,7 @@ namespace eios
             {
                 await Task.Delay(1000);
 
-                if (App.Current.Properties.ContainsKey("IsLoggedIn") && (bool)App.Current.Properties["IsLoggedIn"])
+                if (App.IsUserLoggedIn)
                 {
                     App.Groups = await App.Database.GetGroups();
                     Application.Current.MainPage = new MainPage();

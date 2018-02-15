@@ -23,7 +23,7 @@ namespace eios.Tasks
                     if (CrossConnectivity.Current.IsConnected)
                     {
                         var marksResponse = await WebApi.Instance.GetMarksAsync();
-                        await App.Database.SetMarks(marksResponse.Data, (int) App.Current.Properties["IdGroupCurrent"]);
+                        await App.Database.SetMarks(marksResponse.Data, App.IdGroupCurrent);
 
                         App.IdOccupNow = marksResponse.IdOccupNow;
                     }
