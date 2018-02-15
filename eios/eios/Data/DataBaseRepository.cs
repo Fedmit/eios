@@ -118,7 +118,7 @@ namespace eios.Data
             try
             {
                 var occupations = await database.QueryAsync<Occupation>(
-                    "SELECT id_occup FROM Occupations WHERE is_checked = 1 AND is_blocked = 0 AND id_group = ?",
+                    "SELECT id_occup FROM Occupations WHERE (is_checked = 0 OR is_blocked = 0) AND id_group = ?",
                     idGroup
                 );
                 return occupations.Count != 0 ? occupations : null;
