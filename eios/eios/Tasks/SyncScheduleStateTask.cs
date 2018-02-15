@@ -26,12 +26,12 @@ namespace eios.Tasks
                         await App.Database.SetMarks(marksResponse.Data, App.IdGroupCurrent);
 
                         App.IdOccupNow = marksResponse.IdOccupNow;
-                    }
 
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                        MessagingCenter.Send(new OnMarksUpdatedMessage(), "OnMarksUpdatedMessage");
-                    });
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            MessagingCenter.Send(new OnMarksUpdatedMessage(), "OnMarksUpdatedMessage");
+                        });
+                    }
 
                     await Task.Delay(5000);
                 }

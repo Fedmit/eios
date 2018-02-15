@@ -14,8 +14,6 @@ namespace eios.ViewModel
 {
     public class OccupationsListViewModel : INotifyPropertyChanged
     {
-        int counter = 0;
-
         ContentPage Context { get; set; }
 
         DateTime _date = DateTime.MinValue;
@@ -39,9 +37,6 @@ namespace eios.ViewModel
                 {
                     _date = value;
                     App.DateSelected = value;
-
-                    this.counter++;
-                    Console.WriteLine("this.counter: " + this.counter);
 
                     IsBusy = true;
                     App.IsLoading = true;
@@ -232,7 +227,7 @@ namespace eios.ViewModel
 
         public async Task UpdateState()
         {
-            if (!CrossConnectivity.Current.IsConnected)
+            if (CrossConnectivity.Current.IsConnected)
             {
                 var marksResponse = await WebApi.Instance.GetMarksAsync();
                 await App.Database.SetMarks(marksResponse.Data, App.IdGroupCurrent);

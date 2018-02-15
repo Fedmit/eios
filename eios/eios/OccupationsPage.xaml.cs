@@ -45,14 +45,14 @@ namespace eios
 
         protected override void OnAppearing()
         {
-            //var message = new StartSyncScheduleStateTaskMessage();
-            //MessagingCenter.Send(message, "StartSyncScheduleStateTaskMessage");
+            var message = new StartSyncScheduleStateTaskMessage();
+            MessagingCenter.Send(message, "StartSyncScheduleStateTaskMessage");
         }
 
         protected override void OnDisappearing()
         {
-            //var message = new StopSyncScheduleStateTaskMessage();
-            //MessagingCenter.Send(message, "StopSyncScheduleStateTaskMessage");
+            var message = new StopSyncScheduleStateTaskMessage();
+            MessagingCenter.Send(message, "StopSyncScheduleStateTaskMessage");
         }
 
         void OnDateClicked(Object sender, DateChangedEventArgs e)
