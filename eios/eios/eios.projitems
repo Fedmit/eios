@@ -21,6 +21,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)InverseBoolConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\OnAttendanceSyncronizedMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\OnDateSyncronizedMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\OnMarksUpdateMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\OnScheduleSyncronizedMessage.cs" />

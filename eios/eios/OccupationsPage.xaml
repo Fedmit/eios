@@ -70,7 +70,7 @@
                 x:Name="datePicker"
                 Date="{Binding Date, Mode=TwoWay}"
                 DateSelected="OnDateSelected"
-                IsVisible="False"
+                IsVisible="False">
                 <DatePicker.MinimumDate>6/01/2016</DatePicker.MinimumDate>
                 <DatePicker.MaximumDate>6/30/2020</DatePicker.MaximumDate>
             </DatePicker>

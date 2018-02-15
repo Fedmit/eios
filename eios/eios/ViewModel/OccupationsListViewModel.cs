@@ -39,7 +39,7 @@ namespace eios.ViewModel
                     App.DateSelected = value;
 
                     IsBusy = true;
-                    App.IsLoading = true;
+                    App.IsScheduleSync = true;
                     MessagingCenter.Send(new StartGetScheduleTaskMessage(), "StartGetScheduleTaskMessage");
                 }
                 else
@@ -135,7 +135,7 @@ namespace eios.ViewModel
 
             IsBusy = true;
 
-            if (!App.IsLoading)
+            if (!App.IsScheduleSync)
             {
                 Task.Run(async () =>
                 {
@@ -164,7 +164,7 @@ namespace eios.ViewModel
             {
                 Device.BeginInvokeOnMainThread(async () =>
                 {
-                    if (!App.IsLoading)
+                    if (!App.IsScheduleSync)
                     {
                         var marks = await App.Database.GetMarks(App.IdGroupCurrent);
                         for (int i = 0; i < marks.Count; i++)
@@ -217,7 +217,7 @@ namespace eios.ViewModel
 
         async Task RefreshList()
         {
-            if (!App.IsLoading)
+            if (!App.IsScheduleSync)
             {
                 IsRefreshing = true;
                 await UpdateState();

@@ -45,7 +45,7 @@ namespace eios
 
                     App.Groups = await App.Database.GetGroups();
 
-                    App.IsLoading = true;
+                    App.IsScheduleSync = true;
 
                     MessagingCenter.Send(new StartSyncUnsentChangesTask(), "StartSyncUnsentChangesTask");
 

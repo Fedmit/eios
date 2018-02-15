@@ -57,7 +57,7 @@ namespace eios
 
         void OnDateClicked(Object sender, DateChangedEventArgs e)
         {
-            if (!App.IsLoading)
+            if (!App.IsScheduleSync)
             {
                 datePicker.Focus();
             }
@@ -65,7 +65,7 @@ namespace eios
 
         void OnGroupClicked(Object sender)
         {
-            if (!App.IsLoading)
+            if (!App.IsScheduleSync)
             {
                 groupPicker.Focus();
             }

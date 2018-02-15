@@ -18,6 +18,7 @@ namespace eios.Tasks
 
         public async Task RunGetSchedule()
         {
+            MessagingCenter.Send(new StopSyncAttendanceTaskMessage(), "StopSyncAttendanceTaskMessage");
             try
             {
                 isSuccessful = false;
@@ -50,7 +51,10 @@ namespace eios.Tasks
                 MessagingCenter.Send(message, "OnScheduleSyncronizedMessage");
             });
 
-            App.IsLoading = false;
+            App.IsScheduleSync = false;
+
+            App.IsAttendanceSync = true;
+            MessagingCenter.Send(new StartSyncAttendanceTaskMessage(), "StartSyncAttendanceTaskMessage");
         }
     }
 }

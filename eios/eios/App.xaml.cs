@@ -66,7 +66,8 @@ namespace eios
                 Current.Properties["IsUserLoggedIn"] = value;
             }
         }
-        public static bool IsLoading { get; set; } = false;
+        public static bool IsScheduleSync { get; set; } = false;
+        public static bool IsAttendanceSync { get; set; } = false;
         public static int IdOccupNow { get; set; } = 8;
         public static bool IsTimeTravelMode { get; set; }
 

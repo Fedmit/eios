@@ -16,16 +16,16 @@ namespace eios.Tasks
             {
                 if (CrossConnectivity.Current.IsConnected)
                 {
-                    var unsentOccupations = await App.Database.GetUnsentOccupations();
+                    var unsyncOccupations = await App.Database.GetUnsyncOccupations();
 
-                    if (unsentOccupations == null)
+                    if (unsyncOccupations == null)
                     {
                         MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
                         return;
                     }
                     else
                     {
-                        foreach (var occupation in unsentOccupations)
+                        foreach (var occupation in unsyncOccupations)
                         {
                             if (CrossConnectivity.Current.IsConnected)
                             {
