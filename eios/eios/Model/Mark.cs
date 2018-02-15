@@ -11,9 +11,9 @@ namespace eios.Model
         public int Id { get; set; }
 
         [JsonProperty("checked")]
-        public bool Checked { get; set; }
+        public bool IsChecked { get; set; }
 
         [JsonProperty("blocked")]
-        public bool Blocked { get; set; }
+        public bool IsBlocked { get; set; }
     }
 }

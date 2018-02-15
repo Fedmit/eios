@@ -31,17 +31,42 @@ namespace eios.Droid
 
         void WireUpTask()
         {
-            MessagingCenter.Subscribe<StartSyncScheduleTaskMessage>(this, "StartSyncScheduleTaskMessage", message => {
+            MessagingCenter.Subscribe<StartSyncScheduleStateTaskMessage>(this, "StartSyncScheduleStateTaskMessage", message =>
+            {
+                var intent = new Intent(this, typeof(SyncScheduleStateTaskService));
+                StartService(intent);
+            });
+            MessagingCenter.Subscribe<StopSyncScheduleStateTaskMessage>(this, "StopSyncScheduleStateTaskMessage", message =>
+            {
+                var intent = new Intent(this, typeof(SyncScheduleStateTaskService));
+                StopService(intent);
+            });
+
+            MessagingCenter.Subscribe<StartSyncAttendanceTaskMessage>(this, "StartSyncAttendanceTaskMessage", message =>
+            {
+                var intent = new Intent(this, typeof(SyncAttendanceTaskService));
+                StartService(intent);
+            });
+            MessagingCenter.Subscribe<StopSyncAttendanceTaskMessage>(this, "StopSyncAttendanceTaskMessage", message =>
+            {
+                var intent = new Intent(this, typeof(SyncAttendanceTaskService));
+                StopService(intent);
+            });
+
+            MessagingCenter.Subscribe<StartSyncScheduleTaskMessage>(this, "StartSyncScheduleTaskMessage", message =>
+            {
                 var intent = new Intent(this, typeof(SyncScheduleTaskService));
                 StartService(intent);
             });
 
-            MessagingCenter.Subscribe<StartSyncUnsentChangesTask>(this, "StartSyncUnsentChangesTask", message => {
+            MessagingCenter.Subscribe<StartSyncUnsentChangesTask>(this, "StartSyncUnsentChangesTask", message =>
+            {
                 var intent = new Intent(this, typeof(SyncUnsentChangesTaskService));
                 StartService(intent);
             });
 
-            MessagingCenter.Subscribe<StartGetScheduleTaskMessage>(this, "StartGetScheduleTaskMessage", message => {
+            MessagingCenter.Subscribe<StartGetScheduleTaskMessage>(this, "StartGetScheduleTaskMessage", message =>
+            {
                 var intent = new Intent(this, typeof(GetScheduleTaskService));
                 StartService(intent);
             });

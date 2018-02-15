@@ -26,7 +26,7 @@ namespace eios
         {
             ViewModel = new OccupationsListViewModel(this);
             BindingContext = ViewModel;
-            
+
             InitializeComponent();
 
             listView.ItemTapped += async (sender, e) =>
@@ -38,29 +38,26 @@ namespace eios
                     {
                         return;
                     }
-                    await Navigation.PushAsync((Page)Activator.CreateInstance(item.TargetType, ViewModel, item));
+                    await Navigation.PushAsync((Page) Activator.CreateInstance(item.TargetType, ViewModel, item));
                 }
             };
         }
 
         protected override void OnAppearing()
         {
-            //if (!App.IsLoading)
-            //{
-            //    var message = new StartSyncScheduleStateTaskMessage();
-            //    MessagingCenter.Send(message, "StartSyncScheduleStateTaskMessage");
-            //}
+            var message = new StartSyncScheduleStateTaskMessage();
+            MessagingCenter.Send(message, "StartSyncScheduleStateTaskMessage");
         }
 
         protected override void OnDisappearing()
         {
-            //var message = new StopSyncScheduleStateTaskMessage();
-            //MessagingCenter.Send(message, "StopSyncScheduleStateTaskMessage");
+            var message = new StopSyncScheduleStateTaskMessage();
+            MessagingCenter.Send(message, "StopSyncScheduleStateTaskMessage");
         }
 
         void OnDateClicked(Object sender, DateChangedEventArgs e)
         {
-            if (!App.IsLoading)
+            if (!App.IsScheduleSync)
             {
                 datePicker.Focus();
             }
@@ -68,30 +65,24 @@ namespace eios
 
         void OnGroupClicked(Object sender)
         {
-            if (!App.IsLoading)
+            if (!App.IsScheduleSync)
             {
                 groupPicker.Focus();
             }
         }
         async void OnSelectedIndexChanged(object sender, EventArgs e)
         {
-            var picker = (Picker)sender;
+            var picker = (Picker) sender;
             int selectedIndex = picker.SelectedIndex;
 
             if (selectedIndex != -1)
             {
-                App.Current.Properties["IdGroupCurrent"] = App.Groups[selectedIndex].IdGroup;
                 ViewModel.Group = App.Groups[selectedIndex].Name;
 
-                if (!App.IsTimeTravelMode)
-                {
-                    await ViewModel.UpdateOccupationsList();
-                }
-                else
-                {
-                    App.IsLoading = true;
-                    MessagingCenter.Send(new StartGetScheduleTaskMessage(), "StartGetScheduleTaskMessage");
-                }
+                App.IdGroupCurrent = App.Groups[selectedIndex].IdGroup;
+                await App.Current.SavePropertiesAsync();
+
+                await ViewModel.UpdateOccupationsList();
             }
         }
 
@@ -103,6 +94,7 @@ namespace eios
                             "Ошибка",
                             "Вы не подключены!",
                             "ОК");
+                ViewModel.Date = App.DateSelected;
             }
         }
     }

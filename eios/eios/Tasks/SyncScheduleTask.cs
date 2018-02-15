@@ -22,22 +22,23 @@ namespace eios.Tasks
             {
                 if (CrossConnectivity.Current.IsConnected)
                 {
-                    DateTime lastDate = new DateTime();
                     DateTime dateNow = await WebApi.Instance.GetDateAsync();
 
-                    lastDate = App.DateNow;
+                    var lastDate = App.DateSelected;
 
-                    App.Current.Properties["DateNow"] = dateNow.ToString("yyyy-MM-dd");
+                    App.DateNow = dateNow;
+                    App.DateSelected = dateNow;
                     await App.Current.SavePropertiesAsync();
 
-                    App.DateSelected = App.DateNow;
-
-                    if (lastDate == DateTime.MinValue || lastDate != App.DateNow)
+                    if (lastDate == DateTime.MinValue || lastDate != dateNow)
                     {
                         var groups = await App.Database.GetGroups();
 
-                        await App.Database.DeleteThisShits();
-                        await App.Database.CreateTables();
+                        await App.Database.DropTable<Student>();
+                        await App.Database.DropTable<Occupation>();
+                        await App.Database.CreateTable<Student>();
+                        await App.Database.CreateTable<Occupation>();
+
                         foreach (var group in groups)
                         {
                             var occupations = await WebApi.Instance.GetOccupationsAsync(group.IdGroup);
@@ -48,7 +49,6 @@ namespace eios.Tasks
                         }
                     }
                 }
-
                 isSuccessful = true;
             }
             catch (HttpRequestException)
@@ -58,13 +58,18 @@ namespace eios.Tasks
 
             var message = new OnScheduleSyncronizedMessage()
             {
-                IsSuccessful = isSuccessful
+                IsSuccessful = isSuccessful,
+                IsFirstTime = true
             };
-            Device.BeginInvokeOnMainThread(() => {
+            Device.BeginInvokeOnMainThread(() =>
+            {
                 MessagingCenter.Send(message, "OnScheduleSyncronizedMessage");
             });
 
-            App.IsLoading = false;
+            App.IsScheduleSync = false;
+
+            App.IsAttendanceSync = true;
+            MessagingCenter.Send(new StartSyncAttendanceTaskMessage(), "StartSyncAttendanceTaskMessage");
         }
     }
 }

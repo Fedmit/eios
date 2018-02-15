@@ -74,7 +74,7 @@ namespace eios.Data
             dynamicJson.password = App.Password;
             dynamicJson.type = "get_mark";
             dynamicJson.date = App.DateSelected.ToString("yyyy-MM-dd");
-            dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
+            dynamicJson.id_group = App.IdGroupCurrent;
 
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
@@ -227,7 +227,7 @@ namespace eios.Data
             dynamicJson.password = App.Password;
             dynamicJson.type = "get_attend_info";
             dynamicJson.id_occup = idOccupation;
-            dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
+            dynamicJson.id_group = App.IdGroupCurrent;
             dynamicJson.date = App.DateSelected.ToString("yyyy-MM-dd");
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
@@ -269,7 +269,7 @@ namespace eios.Data
             dynamicJson.login = App.Login;
             dynamicJson.password = App.Password;
             dynamicJson.type = "set_attend";
-            dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
+            dynamicJson.id_group = App.IdGroupCurrent;
             dynamicJson.date = App.DateSelected.ToString("yyyy-MM-dd");
             dynamicJson.id_occup = occupation.IdOccupation;
             dynamicJson.id_lesson = occupation.IdLesson;
@@ -292,10 +292,6 @@ namespace eios.Data
                 );
                 response.EnsureSuccessStatusCode();
             }
-            catch (HttpRequestException ex)
-            {
-                throw ex;
-            }
             catch (Exception ex)
             {
                 Console.WriteLine("SetAttendAsync(): " + ex.Message);
@@ -308,7 +304,7 @@ namespace eios.Data
             dynamicJson.login = App.Login;
             dynamicJson.password = App.Password;
             dynamicJson.type = "set_attend";
-            dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
+            dynamicJson.id_group = App.IdGroupCurrent;
             dynamicJson.date = App.DateSelected.ToString("yyyy-MM-dd");
             dynamicJson.id_occup = occupation.IdOccupation;
             dynamicJson.id_lesson = occupation.IdLesson;

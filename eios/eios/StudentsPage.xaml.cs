@@ -49,17 +49,16 @@ namespace eios
 
         async void OnUnaviableClicked(Object sender, AssemblyLoadEventArgs args)
         {
-            var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
             if (CrossConnectivity.Current.IsConnected)
             {
                 try
                 {
                     await WebApi.Instance.SetNullAttendAsync(occupation);
-                    await App.Database.SetSentFlag(occupation.IdOccupation, idGroup);
+                    await App.Database.SetSyncFlag(occupation.IdOccupation, App.IdGroupCurrent);
                 }
                 catch (HttpRequestException)
                 {
-                    await App.Database.DeleteAttendance(occupation.IdOccupation, idGroup);
+                    await App.Database.DeleteAttendance(occupation.IdOccupation, App.IdGroupCurrent);
                     await Navigation.PopAsync();
                     return;
                 }
@@ -71,8 +70,7 @@ namespace eios
 
         async Task OnMarkClicked(Object sender, AssemblyLoadEventArgs args)
         {
-            var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
-            await App.Database.SetAttendence(ViewModel.StudentsList, occupation.IdOccupation, idGroup);
+            await App.Database.SetAttendence(ViewModel.StudentsList, occupation.IdOccupation, App.IdGroupCurrent);
 
             if (CrossConnectivity.Current.IsConnected)
             {
@@ -80,12 +78,12 @@ namespace eios
                 try
                 {
                     await WebApi.Instance.SetAttendAsync(students, occupation);
-                    await App.Database.SetSentFlag(occupation.IdOccupation, idGroup);
+                    await App.Database.SetSyncFlag(occupation.IdOccupation, App.IdGroupCurrent);
                     await OccupViewModel.UpdateState();
                 }
                 catch (HttpRequestException)
                 {
-                    await App.Database.DeleteAttendance(occupation.IdOccupation, idGroup);
+                    await App.Database.DeleteAttendance(occupation.IdOccupation, App.IdGroupCurrent);
 
                     await Navigation.PopAsync();
                     return;

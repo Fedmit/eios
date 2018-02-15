@@ -1,4 +1,5 @@
 ﻿using eios.Data;
+using eios.Messages;
 using eios.Model;
 using Plugin.Connectivity;
 using System;
@@ -7,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace eios.ViewModel
 {
@@ -115,25 +117,31 @@ namespace eios.ViewModel
             {
                 IsBusy = true;
 
-                StudentsList = await PopulateList();
+                Console.WriteLine("App.IsAttendanceSync: " + App.IsAttendanceSync);
+                if (!App.IsAttendanceSync)
+                {
+                    StudentsList = await PopulateList();
+                    IsBusy = false;
+                }
+                else
+                {
+                    MessagingCenter.Subscribe<OnAttendanceSyncronizedMessage>(this, "OnAttendanceSyncronizedMessage", message =>
+                    {
+                        Device.BeginInvokeOnMainThread(async () =>
+                        {
+                            StudentsList = await PopulateList();
+                            IsBusy = false;
 
-                IsBusy = false;
+                            MessagingCenter.Unsubscribe<OnAttendanceSyncronizedMessage>(this, "OnAttendanceSyncronizedMessage");
+                        });
+                    });
+                }
             });
         }
 
         async Task<List<StudentAttendance>> PopulateList()
         {
-            var idGroup = (int)App.Current.Properties["IdGroupCurrent"];
-
-            if (CrossConnectivity.Current.IsConnected)
-            {
-                var absentStudents = await WebApi.Instance.GetAttendanceAsync(Occupation.IdOccupation, idGroup);
-                await App.Database.SetAttendence(absentStudents, Occupation.IdOccupation, idGroup);
-            }
-
-            var attendanceList = await App.Database.GetAttendance(Occupation.IdOccupation, idGroup);
-
-            return attendanceList;
+            return await App.Database.GetAttendance(Occupation.IdOccupation, App.IdGroupCurrent);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -20,15 +20,23 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Messages\OccupationsMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)InverseBoolConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\OnAttendanceSyncronizedMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\OnDateSyncronizedMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\OnMarksUpdateMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\OnScheduleSyncronizedMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\StartGetScheduleTaskMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\StartSyncAttendanceTaskMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\StartSyncScheduleStateTaskMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\StartSyncScheduleTaskMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\StartSyncUnsentChangesTask.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\StopSyncAttendanceTaskMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\StopSyncScheduleStateTaskMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\GroupResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\MarksResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tasks\GetScheduleTask.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tasks\SyncAttendanceTask.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tasks\SyncScheduleStateTask.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tasks\SyncScheduleTask.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tasks\SyncUnsentChangesTask.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\BedgeView.xaml.cs">

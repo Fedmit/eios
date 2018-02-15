@@ -29,7 +29,7 @@ namespace eios
 
             if (CrossConnectivity.Current.IsConnected)
             {
-                if (App.Current.Properties.ContainsKey("IsLoggedIn") && (bool)App.Current.Properties["IsLoggedIn"])
+                if (App.IsUserLoggedIn)
                 {
                     try
                     {
@@ -45,9 +45,8 @@ namespace eios
 
                     App.Groups = await App.Database.GetGroups();
 
-                    App.IsLoading = true;
+                    App.IsScheduleSync = true;
 
-                    MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
                     MessagingCenter.Send(new StartSyncUnsentChangesTask(), "StartSyncUnsentChangesTask");
 
                     Application.Current.MainPage = new MainPage();
@@ -64,7 +63,7 @@ namespace eios
             {
                 await Task.Delay(1000);
 
-                if (App.Current.Properties.ContainsKey("IsLoggedIn") && (bool)App.Current.Properties["IsLoggedIn"])
+                if (App.IsUserLoggedIn)
                 {
                     App.Groups = await App.Database.GetGroups();
                     Application.Current.MainPage = new MainPage();

@@ -17,13 +17,13 @@ namespace eios
         Occupation occupation;
         OccupationsListViewModel OccupViewModel { get; set; }
 
-        public CompletedOccupationPage(OccupationsListViewModel occupViewModel,Occupation occupation)
+        public CompletedOccupationPage(OccupationsListViewModel occupViewModel, Occupation occupation)
         {
-            InitializeComponent();
-
             OccupViewModel = occupViewModel;
             var viewModel = new CompletedOccupationListViewModel(occupation);
             BindingContext = viewModel;
+
+            InitializeComponent();
 
             this.occupation = occupation;
 

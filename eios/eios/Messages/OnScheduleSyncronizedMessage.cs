@@ -7,5 +7,7 @@ namespace eios.Messages
     public class OnScheduleSyncronizedMessage
     {
         public bool IsSuccessful { get; set; }
+
+        public bool IsFirstTime { get; set; }
     }
 }

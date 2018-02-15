@@ -33,14 +33,19 @@ namespace eios.ViewModel
                     return;
                 }
 
-                _date = value;
-                App.DateSelected = value;
+                if (CrossConnectivity.Current.IsConnected)
+                {
+                    _date = value;
+                    App.DateSelected = value;
 
-                IsBusy = true;
-
-                App.IsTimeTravelMode = true;
-                App.IsLoading = true;
-                MessagingCenter.Send(new StartGetScheduleTaskMessage(), "StartGetScheduleTaskMessage");
+                    IsBusy = true;
+                    App.IsScheduleSync = true;
+                    MessagingCenter.Send(new StartGetScheduleTaskMessage(), "StartGetScheduleTaskMessage");
+                }
+                else
+                {
+                    _date = App.DateSelected;
+                }
 
                 OnPropertyChanged(nameof(Date));
                 OnPropertyChanged(nameof(DateStr));
@@ -66,8 +71,7 @@ namespace eios.ViewModel
             {
                 if (_group == null)
                 {
-                    var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
-                    _group = App.Groups.Where(group => group.IdGroup == idGroup).ToList()[0].Name;
+                    _group = App.Groups.Where(group => group.IdGroup == App.IdGroupCurrent).ToList()[0].Name;
                     return "";
                 }
 
@@ -131,15 +135,16 @@ namespace eios.ViewModel
 
             IsBusy = true;
 
-            if (!App.IsLoading)
+            if (!App.IsScheduleSync)
             {
                 Task.Run(async () =>
                 {
-                    App.DateSelected = App.DateNow;
+                    var occupations = await App.Database.GetOccupations(App.IdGroupCurrent);
+                    Console.WriteLine(occupations.Count);
+
                     Date = App.DateSelected;
 
-                    var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
-                    Group = App.Groups.Where(group => group.IdGroup == idGroup).ToList()[0].Name;
+                    Group = App.Groups.Where(group => group.IdGroup == App.IdGroupCurrent).ToList()[0].Name;
 
                     await UpdateOccupationsList();
                     await UpdateState();
@@ -155,17 +160,18 @@ namespace eios.ViewModel
         {
             OccupationsList = new List<Occupation>();
 
-            MessagingCenter.Subscribe<OccupationsMessage>(this, "OccupationsMessage", message =>
+            MessagingCenter.Subscribe<OnMarksUpdatedMessage>(this, "OnMarksUpdatedMessage", message =>
             {
                 Device.BeginInvokeOnMainThread(async () =>
                 {
-                    if (message.IsSuccessful)
+                    if (!App.IsScheduleSync)
                     {
-                        var occupationsList = message.Data;
-                        OccupationsList = occupationsList;
-                        await UpdateState();
-
-                        IsBusy = false;
+                        var marks = await App.Database.GetMarks(App.IdGroupCurrent);
+                        for (int i = 0; i < marks.Count; i++)
+                        {
+                            OccupationsList[i].IsChecked = marks[i].IsChecked;
+                            OccupationsList[i].IsBlocked = marks[i].IsBlocked;
+                        }
                     }
                 });
             });
@@ -176,11 +182,12 @@ namespace eios.ViewModel
                 {
                     if (message.IsSuccessful)
                     {
-                        App.DateSelected = App.DateNow;
-                        Date = App.DateSelected;
+                        if (message.IsFirstTime)
+                        {
+                            Date = App.DateSelected;
+                        }
 
-                        var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
-                        Group = App.Groups.Where(group => group.IdGroup == idGroup).ToList()[0].Name;
+                        Group = App.Groups.Where(group => group.IdGroup == App.IdGroupCurrent).ToList()[0].Name;
 
                         await UpdateOccupationsList();
                         await UpdateState();
@@ -205,12 +212,12 @@ namespace eios.ViewModel
 
         async Task<List<Occupation>> PopulateList()
         {
-            return await App.Database.GetOccupations((int) App.Current.Properties["IdGroupCurrent"]);
+            return await App.Database.GetOccupations(App.IdGroupCurrent);
         }
 
         async Task RefreshList()
         {
-            if (!App.IsLoading)
+            if (!App.IsScheduleSync)
             {
                 IsRefreshing = true;
                 await UpdateState();
@@ -223,27 +230,11 @@ namespace eios.ViewModel
             if (CrossConnectivity.Current.IsConnected)
             {
                 var marksResponse = await WebApi.Instance.GetMarksAsync();
-                var idGroup = (int) App.Current.Properties["IdGroupCurrent"];
-                if (!App.IsTimeTravelMode)
-                {
-                    await App.Database.SetMarks(marksResponse.Data, idGroup);
-                    App.IdOccupNow = marksResponse.IdOccupNow;
+                await App.Database.SetMarks(marksResponse.Data, App.IdGroupCurrent);
 
-                    var occupationsList = await App.Database.GetOccupations(idGroup);
-                    OccupationsList = occupationsList;
-                }
-                else
-                {
-                    App.IdOccupNow = marksResponse.IdOccupNow;
-                    var occupationsList = OccupationsList;
-                    var marks = marksResponse.Data;
-                    for (int i = 0; i < marksResponse.Data.Count; i++)
-                    {
-                        occupationsList[i].IsChecked = marks[i].Checked;
-                        occupationsList[i].IsBlocked = marks[i].Blocked;
-                    }
-                    OccupationsList = occupationsList;
-                }
+                App.IdOccupNow = marksResponse.IdOccupNow;
+
+                MessagingCenter.Send(new OnMarksUpdatedMessage(), "OnMarksUpdatedMessage");
             }
         }
 

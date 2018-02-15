@@ -74,18 +74,21 @@ namespace eios
                 return;
             }
 
+            await App.Database.DropTable<Group>();
+            await App.Database.CreateTable<Group>();
             await App.Database.SetGroup(response.Data);
+
             App.Groups = response.Data;
 
-            App.Current.Properties["IdGroupCurrent"] = response.Data[0].IdGroup;
-            App.Current.Properties["Fullname"] = response.Fullname;
-            App.Current.Properties["IsLoggedIn"] = true;
+            App.IdGroupCurrent = response.Data[0].IdGroup;
+            App.IsUserLoggedIn = true;
+
             App.Current.Properties["Login"] = App.Login;
             App.Current.Properties["Password"] = App.Password;
+
             await App.Current.SavePropertiesAsync();
 
-            App.IsLoading = true;
-
+            App.IsScheduleSync = true;
             MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
 
             Application.Current.MainPage = new MainPage();
