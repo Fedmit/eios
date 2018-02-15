@@ -8,7 +8,7 @@
     Title="Меню">
     <ContentPage.Content>
         <StackLayout
-            BackgroundColor="#BDBDBD">
+            BackgroundColor="#3d3d3d">
             <ListView
                 x:Name="menuTop"
                 VerticalOptions="Start"
@@ -47,6 +47,7 @@
             <ListView
                 x:Name="menuBottom"
                 VerticalOptions="EndAndExpand"
+                BackgroundColor="#3d3d3d"
                 HeightRequest="90">
                 <ListView.ItemTemplate>
                     <DataTemplate>
