@@ -34,7 +34,7 @@ namespace eios.Model
         public string Aud { get; set; }
 
         private bool _isChecked = false;
-        [Column("is_check")]
+        [Column("is_checked")]
         public bool IsChecked
         {
             get { return _isChecked; }
@@ -50,7 +50,7 @@ namespace eios.Model
         }
 
         private bool _isBlocked = false;
-        [Column("is_block")]
+        [Column("is_blocked")]
         public bool IsBlocked
         {
             get { return _isBlocked; }
@@ -65,15 +65,16 @@ namespace eios.Model
             }
         }
 
-        [Column("is_sent")]
-        public bool IsSent { get; set; }
+        [Column("is_sync")]
+        public bool IsSync { get; set; } = true;
 
         [Ignore]
         public string CircleColor
         {
             get
             {
-                if (!IsChecked && IdLesson != 0 && IdOccupation < App.IdOccupNow) { return "#f7636c"; }
+                if (!IsChecked && IdLesson != 0 &&
+                    (IdOccupation < App.IdOccupNow || App.DateNow != App.DateSelected)) { return "#f7636c"; }
                 else if (IsChecked) { return "#acd94e"; }
                 return "#e0e0e0";
             }
@@ -118,7 +119,7 @@ namespace eios.Model
                 }
             }
         }
-       
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)

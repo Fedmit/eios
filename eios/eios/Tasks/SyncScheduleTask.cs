@@ -36,6 +36,8 @@ namespace eios.Tasks
 
                         await App.Database.DropTable<Student>();
                         await App.Database.DropTable<Occupation>();
+                        await App.Database.DropTable<StudentAbsent>();
+                        await App.Database.CreateTable<StudentAbsent>();
                         await App.Database.CreateTable<Student>();
                         await App.Database.CreateTable<Occupation>();
 

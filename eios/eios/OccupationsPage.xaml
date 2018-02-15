@@ -4,6 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:eios"
     x:Class="eios.OccupationsPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:InverseBoolConverter
+                x:Key="inverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.ToolbarItems>
         <ToolbarItem
             Name="groupButton"
@@ -29,6 +35,7 @@
                     IsRunning="{Binding IsBusy}" />
                 <ListView
                     x:Name="listView"
+                    IsVisible="{Binding IsBusy, Converter={StaticResource inverter}}"
                     RowHeight="65"
                     SeparatorVisibility="None"
                     ItemsSource="{Binding OccupationsList}"
@@ -63,7 +70,7 @@
                 x:Name="datePicker"
                 Date="{Binding Date, Mode=TwoWay}"
                 DateSelected="OnDateSelected"
-                IsVisible="False">
+                IsVisible="False"
                 <DatePicker.MinimumDate>6/01/2016</DatePicker.MinimumDate>
                 <DatePicker.MaximumDate>6/30/2020</DatePicker.MaximumDate>
             </DatePicker>

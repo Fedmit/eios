@@ -292,10 +292,6 @@ namespace eios.Data
                 );
                 response.EnsureSuccessStatusCode();
             }
-            catch (HttpRequestException ex)
-            {
-                throw ex;
-            }
             catch (Exception ex)
             {
                 Console.WriteLine("SetAttendAsync(): " + ex.Message);

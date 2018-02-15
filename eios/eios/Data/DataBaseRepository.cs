@@ -103,7 +103,7 @@ namespace eios.Data
         {
             try
             {
-                return await database.QueryAsync<Occupation>("SELECT id_occup, is_check, is_block FROM Occupations WHERE id_group = ?", idGroup);
+                return await database.QueryAsync<Occupation>("SELECT id_occup, is_checked, is_blocked FROM Occupations WHERE id_group = ?", idGroup);
             }
             catch (SQLiteException ex)
             {
@@ -146,8 +146,8 @@ namespace eios.Data
                 );
                 for (int i = 0; i < cache.Count; i++)
                 {
-                    cache[i].IsChecked = marks[i].Checked;
-                    cache[i].IsBlocked = marks[i].Blocked;
+                    cache[i].IsChecked = marks[i].IsChecked;
+                    cache[i].IsBlocked = marks[i].IsBlocked;
                 }
                 await database.UpdateAllAsync(cache);
             }
@@ -182,7 +182,7 @@ namespace eios.Data
             }
         }
 
-        public async Task SetSentFlag(int idOccupation, int idGroup)
+        public async Task SetSyncFlag(int idOccupation, int idGroup)
         {
             try
             {
@@ -190,7 +190,7 @@ namespace eios.Data
                     "SELECT * FROM Occupations WHERE id_occup = ? AND id_group = ?",
                     idOccupation, idGroup
                 );
-                list[0].IsSent = true;
+                list[0].IsSync = true;
                 await database.UpdateAllAsync(list);
             }
             catch (SQLiteException ex)
@@ -203,9 +203,11 @@ namespace eios.Data
         {
             try
             {
-                return await database.QueryAsync<Occupation>(
-                    "SELECT * FROM Occupations WHERE is_sent = 0 AND is_check = 1"
+                var unsentOccups = await database.QueryAsync<Occupation>(
+                    "SELECT * FROM Occupations WHERE is_sync = 0"
                 );
+
+                return unsentOccups.Count != 0 ? unsentOccups : null;
             }
             catch (SQLiteException ex)
             {
@@ -282,7 +284,7 @@ namespace eios.Data
                     idGroup
                 );
 
-                if(absentStudents != null)
+                if (absentStudents != null)
                 {
                     await database.InsertAllAsync(absentStudents);
                 }

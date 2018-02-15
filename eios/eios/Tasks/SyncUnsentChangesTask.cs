@@ -1,10 +1,8 @@
 ﻿using eios.Data;
 using eios.Messages;
 using Plugin.Connectivity;
-using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -19,33 +17,29 @@ namespace eios.Tasks
                 if (CrossConnectivity.Current.IsConnected)
                 {
                     var unsentOccupations = await App.Database.GetUnsentOccupations();
-                    if (unsentOccupations != null)
+
+                    if (unsentOccupations == null)
+                    {
+                        MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
+                        return;
+                    }
+                    else
                     {
                         foreach (var occupation in unsentOccupations)
                         {
-                            if (!CrossConnectivity.Current.IsConnected)
+                            if (CrossConnectivity.Current.IsConnected)
                             {
-                                return;
-                            }
-                            var students = await App.Database.GetAbsentStudents(occupation.IdOccupation, occupation.IdGroup);
-                            if (App.Current.Properties.ContainsKey("DateNow"))
-                            {
-                                try
-                                {
-                                    await WebApi.Instance.SetAttendAsync(students, occupation);
-                                    await App.Database.SetSentFlag(occupation.IdOccupation, App.IdGroupCurrent);
-                                }
-                                catch (HttpRequestException)
-                                {
-                                    await App.Database.DeleteAttendance(occupation.IdOccupation, App.IdGroupCurrent);
-                                    await App.Database.SetSentFlag(occupation.IdOccupation, App.IdGroupCurrent);
-                                }
+                                var students = await App.Database.GetAbsentStudents(occupation.IdOccupation, occupation.IdGroup);
+                                await WebApi.Instance.SetAttendAsync(students, occupation);
+                                await App.Database.SetSyncFlag(occupation.IdOccupation, App.IdGroupCurrent);
                             }
                         }
                     }
                 }
-
-                await Task.Delay(10000);
+                else
+                {
+                    await Task.Delay(5000);
+                }
             }
         }
     }

@@ -54,7 +54,7 @@ namespace eios
                 try
                 {
                     await WebApi.Instance.SetNullAttendAsync(occupation);
-                    await App.Database.SetSentFlag(occupation.IdOccupation, App.IdGroupCurrent);
+                    await App.Database.SetSyncFlag(occupation.IdOccupation, App.IdGroupCurrent);
                 }
                 catch (HttpRequestException)
                 {
@@ -78,7 +78,7 @@ namespace eios
                 try
                 {
                     await WebApi.Instance.SetAttendAsync(students, occupation);
-                    await App.Database.SetSentFlag(occupation.IdOccupation, App.IdGroupCurrent);
+                    await App.Database.SetSyncFlag(occupation.IdOccupation, App.IdGroupCurrent);
                     await OccupViewModel.UpdateState();
                 }
                 catch (HttpRequestException)
