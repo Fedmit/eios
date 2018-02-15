@@ -38,8 +38,8 @@ namespace eios
         async void OnForgotPasswordButtonClicked(Object sender, AssemblyLoadEventArgs args)
         {
             await ShowMessage(
-                "",
-                "В случае, если был утерян доступ к учебным данным к системе ЭИОС - обратитесь в библиотеку в 3 корпусе",
+                "Как получить пароль",
+                "В случае, если был утерян доступ к учетным данным к системе ЭИОС - обратитесь в библиотеку в 3 корпусе",
                 "OK"
             );
         }
