@@ -52,7 +52,7 @@
                         x:Name="loginButton"
                         Text="Войти"
                         FontSize="18"
-                        TextColor="Black"
+                        TextColor="White"
                         BorderColor="Black"
                         BackgroundColor="#8BC34A"
                         WidthRequest="130"

@@ -83,7 +83,7 @@
                     BorderColor="Black"
                     BackgroundColor="#8BC34A"
                     Text="Изменить"
-                    TextColor="Black"
+                    TextColor="White"
                     Clicked="OnEditClicked" />
             </StackLayout>
         </StackLayout>

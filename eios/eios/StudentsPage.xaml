@@ -78,7 +78,7 @@
                     IsEnabled="False"
                     HorizontalOptions="Start"
                     Text="Пары нет"
-                    TextColor="Black"
+                    TextColor="White"
                     Clicked="OnUnaviableClicked" />
                 <Button
                     x:Name="markButton"
@@ -87,7 +87,7 @@
                     BorderColor="Black"
                     BackgroundColor="#8BC34A"
                     Text="Отметить"
-                    TextColor="Black"
+                    TextColor="White"
                     Clicked="OnMarkClicked" />
             </StackLayout>
         </StackLayout>
