@@ -95,6 +95,7 @@ namespace eios.Data
 
                 var content = await response.Content.ReadAsStringAsync();
                 marksResponse = JsonConvert.DeserializeObject<MarksResponse>(content);
+                marksResponse.Data = marksResponse.Data.OrderBy(occup => occup.IdOccupation).ToList();
             }
             catch (Exception ex)
             {
