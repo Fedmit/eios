@@ -5,6 +5,7 @@ using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -160,9 +161,10 @@ namespace eios.ViewModel
             {
                 Device.BeginInvokeOnMainThread(async () =>
                 {
-                    if (!App.IsScheduleSync)
+                    var marks = await App.Database.GetMarks(App.IdGroupCurrent);
+
+                    if (marks != null)
                     {
-                        var marks = await App.Database.GetMarks(App.IdGroupCurrent);
                         for (int i = 0; i < marks.Count; i++)
                         {
                             OccupationsList[i].IsChecked = marks[i].IsChecked;

@@ -144,6 +144,9 @@
     <BundleResource Include="Resources\uncheck.png" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="HockeySDK.Xamarin">
+      <Version>5.1.2</Version>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>10.0.3</Version>
     </PackageReference>

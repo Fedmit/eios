@@ -19,6 +19,7 @@ namespace eios.Tasks
         public async Task RunGetSchedule()
         {
             MessagingCenter.Send(new StopSyncAttendanceTaskMessage(), "StopSyncAttendanceTaskMessage");
+            Console.WriteLine("-----New Date-----");
             try
             {
                 isSuccessful = false;

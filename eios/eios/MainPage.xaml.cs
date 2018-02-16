@@ -1,4 +1,5 @@
-﻿using eios.Model;
+﻿using eios.Messages;
+using eios.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,8 @@ namespace eios
                 // При нажатии на выход открываем экран с входом
                 if (item.TargetType == typeof(LoginPage))
                 {
+                    MessagingCenter.Send(new StopSyncAttendanceTaskMessage(), "StopSyncAttendanceTaskMessage");
+
                     App.DateNow = DateTime.MinValue;
                     App.DateSelected = DateTime.MinValue;
                     App.IdGroupCurrent = 0;

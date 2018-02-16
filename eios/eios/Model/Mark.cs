@@ -8,7 +8,7 @@ namespace eios.Model
     public class Mark
     {
         [JsonProperty("id_occup")]
-        public int Id { get; set; }
+        public int IdOccupation { get; set; }
 
         [JsonProperty("checked")]
         public bool IsChecked { get; set; }

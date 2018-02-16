@@ -162,9 +162,10 @@ namespace eios.Data
             try
             {
                 var cache = await database.QueryAsync<Occupation>(
-                    "SELECT * FROM Occupations WHERE id_group = ?",
+                    "SELECT * FROM Occupations WHERE id_group = ? ORDER BY id_occup",
                     idGroup
                 );
+                
                 for (int i = 0; i < cache.Count; i++)
                 {
                     cache[i].IsChecked = marks[i].IsChecked;
@@ -279,7 +280,7 @@ namespace eios.Data
                 await database.InsertAllAsync(absentStudents);
 
                 var occupationsList = await database.QueryAsync<Occupation>(
-                    "SELECT * FROM Occupations WHERE id_group = ?",
+                    "SELECT * FROM Occupations WHERE id_group = ? ORDER BY id_occup",
                     idGroup
                 );
 
@@ -314,21 +315,6 @@ namespace eios.Data
                 {
                     await database.InsertAllAsync(absentStudents);
                 }
-
-                var occupationsList = await database.QueryAsync<Occupation>(
-                    "SELECT * FROM Occupations WHERE id_group = ?",
-                    idGroup
-                );
-
-                foreach (var occup in occupationsList)
-                {
-                    if (occup.IdOccupation == idOccupation)
-                    {
-                        occup.IsChecked = true;
-                    }
-                }
-
-                await database.UpdateAllAsync(occupationsList);
             }
             catch (SQLiteException ex)
             {

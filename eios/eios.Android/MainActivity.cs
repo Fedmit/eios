@@ -10,6 +10,7 @@ using Xamarin.Forms;
 using eios.Messages;
 using eios.Droid.Services;
 using Android.Content;
+using HockeyApp.Android;
 
 namespace eios.Droid
 {
@@ -22,6 +23,9 @@ namespace eios.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
+
+            base.OnResume();
+            CrashManager.Register(this, "db48f2e1dad14d83811e8834bb8940b3");
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
