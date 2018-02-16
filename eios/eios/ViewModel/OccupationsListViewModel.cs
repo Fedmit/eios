@@ -135,15 +135,13 @@ namespace eios.ViewModel
 
             IsBusy = true;
 
+            HandleTaskMessages();
+
             if (!App.IsScheduleSync)
             {
                 Task.Run(async () =>
                 {
-                    var occupations = await App.Database.GetOccupations(App.IdGroupCurrent);
-                    Console.WriteLine(occupations.Count);
-
                     Date = App.DateSelected;
-
                     Group = App.Groups.Where(group => group.IdGroup == App.IdGroupCurrent).ToList()[0].Name;
 
                     await UpdateOccupationsList();
@@ -152,8 +150,6 @@ namespace eios.ViewModel
                     IsBusy = false;
                 });
             }
-
-            HandleTaskMessages();
         }
 
         void HandleTaskMessages()
@@ -217,10 +213,14 @@ namespace eios.ViewModel
 
         async Task RefreshList()
         {
-            if (!App.IsScheduleSync)
+            if (!App.IsScheduleSync && CrossConnectivity.Current.IsConnected)
             {
                 IsRefreshing = true;
                 await UpdateState();
+                IsRefreshing = false;
+            }
+            else
+            {
                 IsRefreshing = false;
             }
         }

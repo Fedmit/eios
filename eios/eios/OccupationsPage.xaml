@@ -49,23 +49,25 @@
                                     Orientation="Horizontal"
                                     Spacing="10">
                                     <StackLayout
-                                    Orientation="Horizontal"
-                                    HorizontalOptions="StartAndExpand"
-                                    Margin="20,0"
-                                    Spacing="20">
+                                        Orientation="Horizontal"
+                                        HorizontalOptions="StartAndExpand"
+                                        Margin="20,0"
+                                        Spacing="20">
                                         <local:BedgeView
-                                        Size="50" />
+                                            Size="50" />
                                         <Label
-                                        Text="{Binding Name}"
-                                        VerticalOptions="Center"
-                                        FontSize="16" />
+                                            Text="{Binding Name}"
+                                            VerticalOptions="Center"
+                                            FontSize="16" />
                                     </StackLayout>
-                                    <StackLayout HorizontalOptions="EndAndExpand">
+                                    <StackLayout
+                                        HorizontalOptions="EndAndExpand"
+                                        WidthRequest="60"
+                                        Margin="20,0">
                                         <Label
-                                        Text="{Binding Aud}"
-                                            HorizontalOptions="CenterAndExpand"
-                                            VerticalOptions="CenterAndExpand"
-                                        WidthRequest="60" />
+                                            Text="{Binding Aud}"
+                                            HorizontalOptions="EndAndExpand"
+                                            VerticalOptions="CenterAndExpand" />
                                     </StackLayout>
                                 </StackLayout>
                             </ViewCell>

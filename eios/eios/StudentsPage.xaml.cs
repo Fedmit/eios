@@ -1,13 +1,10 @@
 ﻿using eios.Data;
+using eios.Messages;
 using eios.Model;
 using eios.ViewModel;
 using Plugin.Connectivity;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
@@ -70,6 +67,7 @@ namespace eios
 
         async Task OnMarkClicked(Object sender, AssemblyLoadEventArgs args)
         {
+            markButton.IsEnabled = false;
             await App.Database.SetAttendence(ViewModel.StudentsList, occupation.IdOccupation, App.IdGroupCurrent);
 
             if (CrossConnectivity.Current.IsConnected)
@@ -88,6 +86,10 @@ namespace eios
                     await Navigation.PopAsync();
                     return;
                 }
+            }
+            else
+            {
+                MessagingCenter.Send(new OnMarksUpdatedMessage(), "OnMarksUpdatedMessage");
             }
 
             Navigation.InsertPageBefore(new CompletedOccupationPage(OccupViewModel, this.occupation), this);

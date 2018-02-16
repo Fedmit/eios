@@ -103,7 +103,10 @@ namespace eios.Data
         {
             try
             {
-                var marks = await database.QueryAsync<Occupation>("SELECT id_occup, is_checked, is_blocked FROM Occupations WHERE id_group = ?", idGroup);
+                var marks = await database.QueryAsync<Occupation>(
+                    "SELECT id_occup, is_checked, is_blocked FROM Occupations WHERE id_group = ? ORDER BY id_occup",
+                    idGroup
+                );
                 return marks.Count != 0 ? marks : null;
             }
             catch (SQLiteException ex)
@@ -238,7 +241,11 @@ namespace eios.Data
         {
             try
             {
-                return await database.QueryAsync<StudentAbsent>("SELECT id_student FROM Attendance WHERE id_occup = ? AND id_group = ?", idOccupation, idGroup);
+                return await database.QueryAsync<StudentAbsent>(
+                    "SELECT id_student FROM Attendance WHERE id_occup = ? AND id_group = ?",
+                    idOccupation,
+                    idGroup
+                );
             }
             catch (SQLiteException ex)
             {
@@ -281,6 +288,7 @@ namespace eios.Data
                     if (occup.IdOccupation == idOccupation)
                     {
                         occup.IsChecked = true;
+                        occup.IsSync = false;
                     }
                 }
 

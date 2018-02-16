@@ -27,7 +27,7 @@ namespace eios
 
             this.occupation = occupation;
 
-            editButton.IsEnabled = occupation.IsBlocked != false;
+            editButton.IsEnabled = !occupation.IsBlocked;
 
             studentListView.ItemTapped += (sender, e) =>
             {

@@ -280,7 +280,6 @@ namespace eios.Data
 
             try
             {
-                Console.WriteLine(json);
                 HttpClient client = new HttpClient();
                 var response = await client.PostAsync(
                     _baseUrl,
