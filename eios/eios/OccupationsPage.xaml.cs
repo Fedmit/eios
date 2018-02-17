@@ -29,6 +29,11 @@ namespace eios
 
             InitializeComponent();
 
+            datePicker.MaximumDate = App.DateNow;
+            datePicker.MinimumDate = App.DateNow.AddDays(-5);
+            datePicker.Date = App.DateSelected;
+            datePicker.DateSelected += OnDateSelected;
+
             listView.ItemTapped += async (sender, e) =>
             {
                 listView.SelectedItem = null;
@@ -88,13 +93,30 @@ namespace eios
 
         async void OnDateSelected(object sender, DateChangedEventArgs e)
         {
-            if (!CrossConnectivity.Current.IsConnected && e.NewDate != App.DateNow)
+            if (!App.IsScheduleSync)
             {
-                await DisplayAlert(
-                            "Ошибка",
-                            "Вы не подключены!",
-                            "ОК");
-                ViewModel.Date = App.DateSelected;
+                if (e.NewDate == App.DateSelected)
+                {
+                    return;
+                }
+                else if (CrossConnectivity.Current.IsConnected && e.NewDate != App.DateSelected)
+                {
+                    App.DateSelected = e.NewDate;
+                    await App.Current.SavePropertiesAsync();
+
+                    ViewModel.IsBusy = true;
+                    ViewModel.Date = e.NewDate.ToString("dd/MM/yyyy") + "  ▼";
+                    App.IsScheduleSync = true;
+                    MessagingCenter.Send(new StartGetScheduleTaskMessage(), "StartGetScheduleTaskMessage");
+                }
+                else
+                {
+                    await DisplayAlert(
+                                "Ошибка",
+                                "Вы не подключены!",
+                                "ОК");
+                        datePicker.Date = App.DateSelected;
+                }
             }
         }
     }

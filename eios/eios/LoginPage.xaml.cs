@@ -80,6 +80,9 @@ namespace eios
 
             App.Groups = response.Data;
 
+            DateTime dateNow = await WebApi.Instance.GetDateAsync();
+            App.DateNow = dateNow;
+
             App.IdGroupCurrent = response.Data[0].IdGroup;
             App.IsUserLoggedIn = true;
 

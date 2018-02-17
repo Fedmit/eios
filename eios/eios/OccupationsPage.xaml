@@ -20,7 +20,7 @@
         <ToolbarItem
             Name="calendarButton"
             Order="Primary"
-            Text="{Binding DateStr}"
+            Text="{Binding Date}"
             Priority="0"
             Activated="OnDateClicked" />
     </ContentPage.ToolbarItems>
@@ -77,12 +77,8 @@
             </StackLayout>
             <DatePicker
                 x:Name="datePicker"
-                Date="{Binding Date, Mode=TwoWay}"
-                DateSelected="OnDateSelected"
-                IsVisible="False">
-                <DatePicker.MinimumDate>6/01/2016</DatePicker.MinimumDate>
-                <DatePicker.MaximumDate>6/30/2020</DatePicker.MaximumDate>
-            </DatePicker>
+                IsEnabled="{Binding IsBusy, Converter={StaticResource inverter}}"
+                IsVisible="False" />
             <Picker
                 x:Name="groupPicker"
                 IsVisible="False"
