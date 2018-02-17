@@ -35,7 +35,6 @@
                     x:Name="loginEntry"
                     HorizontalTextAlignment="Center"
                     Placeholder="Логин"
-                    Text="s517644114"
                     TextColor="Black"
                     PlaceholderColor="Gray"
                     VerticalOptions="Center" />
@@ -44,7 +43,6 @@
                     HorizontalTextAlignment="Center"
                     Placeholder="Пароль"
                     PlaceholderColor="Gray"
-                    Text="xO1XX3dx"
                     IsPassword="true"
                     TextColor="Black"
                     WidthRequest="200"
