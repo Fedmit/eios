@@ -141,7 +141,8 @@ namespace eios.ViewModel
 
         async Task<List<StudentAttendance>> PopulateList()
         {
-            return await App.Database.GetAttendance(Occupation.IdOccupation, App.IdGroupCurrent);
+            var studentsList = await App.Database.GetAttendance(Occupation.IdOccupation, App.IdGroupCurrent);
+            return studentsList.OrderBy(e => e.IsAbsent ? 0 : 1).ToList();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

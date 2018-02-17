@@ -22,12 +22,7 @@ namespace eios.Tasks
             {
                 if (CrossConnectivity.Current.IsConnected)
                 {
-                    var lastDate = App.DateSelected;
-
-                    App.DateSelected = App.DateNow;
-                    await App.Current.SavePropertiesAsync();
-
-                    if (lastDate == DateTime.MinValue || lastDate != App.DateNow)
+                    if (App.LastDate == DateTime.MinValue || App.LastDate != App.DateNow)
                     {
                         var groups = await App.Database.GetGroups();
 

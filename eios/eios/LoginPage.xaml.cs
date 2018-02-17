@@ -82,6 +82,8 @@ namespace eios
 
             DateTime dateNow = await WebApi.Instance.GetDateAsync();
             App.DateNow = dateNow;
+            App.LastDate = App.DateSelected;
+            App.DateSelected = dateNow;
 
             App.IdGroupCurrent = response.Data[0].IdGroup;
             App.IsUserLoggedIn = true;

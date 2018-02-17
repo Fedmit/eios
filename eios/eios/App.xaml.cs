@@ -105,6 +105,8 @@ namespace eios
             }
         }
 
+        public static DateTime LastDate { get; set; }
+
         public static int IdGroupCurrent
         {
             get

@@ -47,6 +47,9 @@ namespace eios
 
                     DateTime dateNow = await WebApi.Instance.GetDateAsync();
                     App.DateNow = dateNow;
+                    App.LastDate = App.DateSelected;
+                    App.DateSelected = dateNow;
+                    await App.Current.SavePropertiesAsync();
 
                     App.IsScheduleSync = true;
                     MessagingCenter.Send(new StartSyncUnsentChangesTask(), "StartSyncUnsentChangesTask");
