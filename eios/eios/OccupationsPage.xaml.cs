@@ -30,7 +30,7 @@ namespace eios
             InitializeComponent();
 
             datePicker.MaximumDate = App.DateNow;
-            datePicker.MinimumDate = App.DateNow.AddDays(-5);
+            datePicker.MinimumDate = new DateTime(2018, 2, 5);
             datePicker.Date = App.DateSelected;
             datePicker.DateSelected += OnDateSelected;
 
