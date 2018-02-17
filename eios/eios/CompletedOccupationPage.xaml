@@ -10,7 +10,7 @@
                 x:Name="occupationName"
                 Text="{Binding OccupationName}"
                 HorizontalOptions="Center"
-                Margin="0,5,0,0"/>
+                Margin="0,5,0,0" />
             <StackLayout
                 Orientation="Horizontal"
                 HorizontalOptions="FillAndExpand"
