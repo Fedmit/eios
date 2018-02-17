@@ -5,16 +5,17 @@
     xmlns:local="clr-namespace:eios"
     x:Class="eios.StudentsPage">
     <ContentPage.Content>
-        <StackLayout
-            Padding="20,5,20,20">
+        <StackLayout>
             <Label
                 x:Name="occupationName"
                 Text="{Binding OccupationName}"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center"
+                Margin="0,5,0,0" />
             <StackLayout
                 Orientation="Horizontal"
                 HorizontalOptions="FillAndExpand"
-                Spacing="10">
+                Spacing="10"
+                Margin="20,0">
                 <Label
                     x:Name="occupationTime"
                     Text="{Binding OccupationTime}"
@@ -25,10 +26,10 @@
                     HorizontalOptions="EndAndExpand" />
             </StackLayout>
             <StackLayout
-                Orientation="Horizontal"
-                Margin="20,0">
+                Orientation="Horizontal">
                 <StackLayout
-                    Orientation="Horizontal">
+                    Orientation="Horizontal"
+                    Margin="20,0">
                     <Label
                         Text="Всего:"
                         HorizontalOptions="Start" />
@@ -37,6 +38,7 @@
                 </StackLayout>
                 <StackLayout
                     Orientation="Horizontal"
+                    Margin="20,0"
                     HorizontalOptions="EndAndExpand">
                     <Label
                         Text="Присутствуют:"
@@ -55,6 +57,7 @@
                         <ViewCell>
                             <StackLayout
                                 Orientation="Horizontal"
+                                Padding="20,0"
                                 Spacing="20">
                                 <Image
                                     Source="{Binding IconSource}"
@@ -69,7 +72,8 @@
                 </ListView.ItemTemplate>
             </ListView>
             <StackLayout
-                Orientation="Horizontal">
+                Orientation="Horizontal"
+                Margin="20,0,20,5">
                 <Button
                     x:Name="unavaibleButton"
                     WidthRequest="120"
