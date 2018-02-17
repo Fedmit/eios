@@ -62,7 +62,7 @@
                                     </StackLayout>
                                     <StackLayout
                                         HorizontalOptions="EndAndExpand"
-                                        WidthRequest="60"
+                                        WidthRequest="65"
                                         Margin="20,0">
                                         <Label
                                             Text="{Binding Aud}"
