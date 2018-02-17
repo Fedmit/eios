@@ -17,51 +17,14 @@ namespace eios.ViewModel
     {
         ContentPage Context { get; set; }
 
-        DateTime _date = DateTime.MinValue;
-        public DateTime Date
+        string _date;
+        public string Date
         {
             get { return _date; }
             set
             {
-                if (_date == value) { return; }
-                else if (_date == DateTime.MinValue)
-                {
-                    _date = value;
-
-                    OnPropertyChanged(nameof(Date));
-                    OnPropertyChanged(nameof(DateStr));
-
-                    return;
-                }
-
-                if (CrossConnectivity.Current.IsConnected)
-                {
-                    _date = value;
-                    App.DateSelected = value;
-
-                    IsBusy = true;
-                    App.IsScheduleSync = true;
-                    MessagingCenter.Send(new StartGetScheduleTaskMessage(), "StartGetScheduleTaskMessage");
-                }
-                else
-                {
-                    _date = App.DateSelected;
-                }
-
+                _date = value;
                 OnPropertyChanged(nameof(Date));
-                OnPropertyChanged(nameof(DateStr));
-            }
-        }
-
-        public string DateStr
-        {
-            get
-            {
-                if (Date == DateTime.MinValue)
-                {
-                    return "";
-                }
-                return Date.ToString("dd/MM/yyyy") + "  ▼";
             }
         }
 
@@ -142,8 +105,8 @@ namespace eios.ViewModel
             {
                 Task.Run(async () =>
                 {
-                    Date = App.DateSelected;
                     Group = App.Groups.Where(group => group.IdGroup == App.IdGroupCurrent).ToList()[0].Name;
+                    Date = App.DateSelected.ToString("dd/MM/yyyy") + "  ▼";
 
                     await UpdateOccupationsList();
                     await UpdateState();
@@ -180,12 +143,8 @@ namespace eios.ViewModel
                 {
                     if (message.IsSuccessful)
                     {
-                        if (message.IsFirstTime)
-                        {
-                            Date = App.DateSelected;
-                        }
-
                         Group = App.Groups.Where(group => group.IdGroup == App.IdGroupCurrent).ToList()[0].Name;
+                        Date = App.DateSelected.ToString("dd/MM/yyyy") + "  ▼";
 
                         await UpdateOccupationsList();
                         await UpdateState();
@@ -232,7 +191,10 @@ namespace eios.ViewModel
             if (CrossConnectivity.Current.IsConnected)
             {
                 var marksResponse = await WebApi.Instance.GetMarksAsync();
-                await App.Database.SetMarks(marksResponse.Data, App.IdGroupCurrent);
+                if (marksResponse != null && marksResponse.Data != null)
+                {
+                    await App.Database.SetMarks(marksResponse.Data, App.IdGroupCurrent);
+                }
 
                 App.IdOccupNow = marksResponse.IdOccupNow;
 

@@ -4,6 +4,7 @@ using SQLite;
 using Xamarin.Forms;
 using eios.Model;
 using System;
+using System.Diagnostics;
 
 namespace eios.Data
 {
@@ -165,7 +166,7 @@ namespace eios.Data
                     "SELECT * FROM Occupations WHERE id_group = ? ORDER BY id_occup",
                     idGroup
                 );
-                
+
                 for (int i = 0; i < cache.Count; i++)
                 {
                     cache[i].IsChecked = marks[i].IsChecked;

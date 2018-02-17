@@ -45,7 +45,6 @@ namespace eios.Tasks
             var message = new OnScheduleSyncronizedMessage()
             {
                 IsSuccessful = isSuccessful,
-                IsFirstTime = false
             };
             Device.BeginInvokeOnMainThread(() =>
             {

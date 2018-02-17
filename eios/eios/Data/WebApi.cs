@@ -256,6 +256,9 @@ namespace eios.Data
                     student.IdGroup = idGroup;
                 }
             }
+            catch (HttpRequestException)
+            {
+            }
             catch (Exception ex)
             {
                 Console.WriteLine("GetAttendanceAsync(): " + ex.Message);

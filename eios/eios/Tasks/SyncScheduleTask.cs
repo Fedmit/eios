@@ -22,15 +22,12 @@ namespace eios.Tasks
             {
                 if (CrossConnectivity.Current.IsConnected)
                 {
-                    DateTime dateNow = await WebApi.Instance.GetDateAsync();
-
                     var lastDate = App.DateSelected;
 
-                    App.DateNow = dateNow;
-                    App.DateSelected = dateNow;
+                    App.DateSelected = App.DateNow;
                     await App.Current.SavePropertiesAsync();
 
-                    if (lastDate == DateTime.MinValue || lastDate != dateNow)
+                    if (lastDate == DateTime.MinValue || lastDate != App.DateNow)
                     {
                         var groups = await App.Database.GetGroups();
 
@@ -59,7 +56,6 @@ namespace eios.Tasks
             var message = new OnScheduleSyncronizedMessage()
             {
                 IsSuccessful = isSuccessful,
-                IsFirstTime = true
             };
             Device.BeginInvokeOnMainThread(() =>
             {

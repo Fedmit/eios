@@ -45,8 +45,10 @@ namespace eios
 
                     App.Groups = await App.Database.GetGroups();
 
-                    App.IsScheduleSync = true;
+                    DateTime dateNow = await WebApi.Instance.GetDateAsync();
+                    App.DateNow = dateNow;
 
+                    App.IsScheduleSync = true;
                     MessagingCenter.Send(new StartSyncUnsentChangesTask(), "StartSyncUnsentChangesTask");
 
                     Application.Current.MainPage = new MainPage();
