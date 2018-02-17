@@ -10,7 +10,7 @@
                 x:Name="occupationName"
                 Text="{Binding OccupationName}"
                 HorizontalOptions="Center"
-                Margin="0,5,0,0"/>
+                Margin="0,5,0,0" />
             <StackLayout
                 Orientation="Horizontal"
                 HorizontalOptions="FillAndExpand"
@@ -84,7 +84,7 @@
                     WidthRequest="120"
                     HorizontalOptions="Center"
                     BorderColor="Black"
-                    BackgroundColor="#8BC34A"
+                    BackgroundColor="#00695C"
                     Text="Изменить"
                     TextColor="White"
                     Margin="0,0,0,5"

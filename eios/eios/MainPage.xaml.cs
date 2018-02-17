@@ -26,35 +26,40 @@ namespace eios
                 // При нажатии на выход открываем экран с входом
                 if (item.TargetType == typeof(LoginPage))
                 {
-                    MessagingCenter.Send(new StopSyncAttendanceTaskMessage(), "StopSyncAttendanceTaskMessage");
+                    var answer = await DisplayAlert("Выход из профиля", "Вы действительно хотите выйти из профиля?", "Да", "Нет");
+                    if (answer)
+                    {
+                        MessagingCenter.Send(new StopSyncAttendanceTaskMessage(), "StopSyncAttendanceTaskMessage");
 
-                    App.DateNow = DateTime.MinValue;
-                    App.DateSelected = DateTime.MinValue;
-                    App.IdGroupCurrent = 0;
-                    App.IsUserLoggedIn = false;
-                    App.Current.Properties["Login"] = null;
-                    App.Current.Properties["Password"] = null;
-                    await App.Current.SavePropertiesAsync();
+                        App.DateNow = DateTime.MinValue;
+                        App.DateSelected = DateTime.MinValue;
+                        App.IdGroupCurrent = 0;
+                        App.IsUserLoggedIn = false;
+                        App.Current.Properties["Login"] = null;
+                        App.Current.Properties["Password"] = null;
+                        await App.Current.SavePropertiesAsync();
 
-                    await App.Database.DropTable<Group>();
-                    await App.Database.DropTable<Occupation>();
-                    await App.Database.DropTable<Student>();
-                    await App.Database.DropTable<StudentAbsent>();
+                        await App.Database.DropTable<Group>();
+                        await App.Database.DropTable<Occupation>();
+                        await App.Database.DropTable<Student>();
+                        await App.Database.DropTable<StudentAbsent>();
 
-                    Application.Current.MainPage = new NavigationPage(new LoginPage());
-                    return;
+                        Application.Current.MainPage = new NavigationPage(new LoginPage());
+                    }
                 }
-
-                // Открываем новый экран, если мы не выбрали текущий пункт меню
-                var current = (NavigationPage) Detail;
-                if (item.TargetType != current.CurrentPage.GetType())
+                else
                 {
-                    Detail = new NavigationPage((Page) Activator.CreateInstance(item.TargetType));
+                    // Открываем новый экран, если мы не выбрали текущий пункт меню
+                    var current = (NavigationPage) Detail;
+                    if (item.TargetType != current.CurrentPage.GetType())
+                    {
+                        Detail = new NavigationPage((Page) Activator.CreateInstance(item.TargetType));
+                    }
+                    IsPresented = false;
                 }
 
                 masterPage.MenuTop.SelectedItem = null;
                 masterPage.MenuBottom.SelectedItem = null;
-                IsPresented = false;
             }
         }
     }

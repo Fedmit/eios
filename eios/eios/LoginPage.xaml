@@ -33,6 +33,7 @@
                     FontSize="20" />
                 <Entry
                     x:Name="loginEntry"
+                    HorizontalTextAlignment="Center"
                     Placeholder="Логин"
                     Text="s517644114"
                     TextColor="Black"
@@ -40,6 +41,7 @@
                     VerticalOptions="Center" />
                 <Entry
                     x:Name="passwordEntry"
+                    HorizontalTextAlignment="Center"
                     Placeholder="Пароль"
                     PlaceholderColor="Gray"
                     Text="xO1XX3dx"
@@ -54,7 +56,7 @@
                         FontSize="18"
                         TextColor="White"
                         BorderColor="Black"
-                        BackgroundColor="#8BC34A"
+                        BackgroundColor="#00695C"
                         WidthRequest="130"
                         Clicked="OnLoginButtonClicked"
                         HorizontalOptions="Center" />

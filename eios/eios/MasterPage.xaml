@@ -11,19 +11,27 @@
             BackgroundColor="#3d3d3d">
             <ListView
                 x:Name="menuTop"
-                VerticalOptions="Start"
-                HeightRequest="155">
+                VerticalOptions="Start">
+                <ListView.HeightRequest>
+                    <OnPlatform
+                        x:TypeArguments="x:Double">
+                        <On
+                            Platform="Android">155</On>
+                        <On
+                            Platform="iOS">165</On>
+                    </OnPlatform>
+                </ListView.HeightRequest>
                 <ListView.Header>
                     <StackLayout
-                        Padding="40,5,0,10"
+                        Padding="40,5,0,9"
                         Spacing="10"
-                        BackgroundColor="#9E9E9E">
+                        BackgroundColor="#343434">
                         <Label
                             Text="ЭИОС ПГУ"
-                            TextColor="Black" />
+                            TextColor="White" />
                         <Label
                             Text="Журнал посещаемости"
-                            TextColor="Black" />
+                            TextColor="White" />
                     </StackLayout>
                 </ListView.Header>
                 <ListView.ItemTemplate>
@@ -47,8 +55,16 @@
             <ListView
                 x:Name="menuBottom"
                 VerticalOptions="EndAndExpand"
-                BackgroundColor="#3d3d3d"
-                HeightRequest="90">
+                BackgroundColor="#3d3d3d">
+                <ListView.HeightRequest>
+                    <OnPlatform
+                        x:TypeArguments="x:Double">
+                        <On
+                            Platform="Android">90</On>
+                        <On
+                            Platform="iOS">100</On>
+                    </OnPlatform>
+                </ListView.HeightRequest>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <view:MenuListCell

@@ -70,7 +70,7 @@ namespace eios
 
         void OnGroupClicked(Object sender)
         {
-            if (!App.IsScheduleSync)
+            if (!App.IsScheduleSync  && App.Groups.Count != 1)
             {
                 groupPicker.Focus();
             }
