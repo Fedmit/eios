@@ -26,7 +26,7 @@ namespace eios.Data
             dynamicJson.password = App.Password;
             dynamicJson.type = "get_info";
             dynamicJson.id_group = idGroup;
-            dynamicJson.date = App.DateNow.ToString("yyyy-MM-dd");
+            dynamicJson.date = App.DateSelected.ToString("yyyy-MM-dd");
 
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
@@ -73,8 +73,8 @@ namespace eios.Data
             dynamicJson.login = App.Login;
             dynamicJson.password = App.Password;
             dynamicJson.type = "get_mark";
-            dynamicJson.date = App.DateNow.ToString("yyyy-MM-dd");
-            dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
+            dynamicJson.date = App.DateSelected.ToString("yyyy-MM-dd");
+            dynamicJson.id_group = App.IdGroupCurrent;
 
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
@@ -95,6 +95,7 @@ namespace eios.Data
 
                 var content = await response.Content.ReadAsStringAsync();
                 marksResponse = JsonConvert.DeserializeObject<MarksResponse>(content);
+                marksResponse.Data = marksResponse.Data.OrderBy(occup => occup.IdOccupation).ToList();
             }
             catch (Exception ex)
             {
@@ -227,8 +228,8 @@ namespace eios.Data
             dynamicJson.password = App.Password;
             dynamicJson.type = "get_attend_info";
             dynamicJson.id_occup = idOccupation;
-            dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
-            dynamicJson.date = App.DateNow.ToString("yyyy-MM-dd");
+            dynamicJson.id_group = App.IdGroupCurrent;
+            dynamicJson.date = App.DateSelected.ToString("yyyy-MM-dd");
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
@@ -255,6 +256,9 @@ namespace eios.Data
                     student.IdGroup = idGroup;
                 }
             }
+            catch (HttpRequestException)
+            {
+            }
             catch (Exception ex)
             {
                 Console.WriteLine("GetAttendanceAsync(): " + ex.Message);
@@ -269,8 +273,8 @@ namespace eios.Data
             dynamicJson.login = App.Login;
             dynamicJson.password = App.Password;
             dynamicJson.type = "set_attend";
-            dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
-            dynamicJson.date = App.DateNow.ToString("yyyy-MM-dd");
+            dynamicJson.id_group = App.IdGroupCurrent;
+            dynamicJson.date = App.DateSelected.ToString("yyyy-MM-dd");
             dynamicJson.id_occup = occupation.IdOccupation;
             dynamicJson.id_lesson = occupation.IdLesson;
             dynamicJson.id_aud = occupation.IdAud;
@@ -280,7 +284,6 @@ namespace eios.Data
 
             try
             {
-                Console.WriteLine(json);
                 HttpClient client = new HttpClient();
                 var response = await client.PostAsync(
                     _baseUrl,
@@ -291,10 +294,6 @@ namespace eios.Data
                     )
                 );
                 response.EnsureSuccessStatusCode();
-            }
-            catch (HttpRequestException ex)
-            {
-                throw ex;
             }
             catch (Exception ex)
             {
@@ -308,8 +307,8 @@ namespace eios.Data
             dynamicJson.login = App.Login;
             dynamicJson.password = App.Password;
             dynamicJson.type = "set_attend";
-            dynamicJson.id_group = App.Current.Properties["IdGroupCurrent"];
-            dynamicJson.date = App.DateNow.ToString("yyyy-MM-dd");
+            dynamicJson.id_group = App.IdGroupCurrent;
+            dynamicJson.date = App.DateSelected.ToString("yyyy-MM-dd");
             dynamicJson.id_occup = occupation.IdOccupation;
             dynamicJson.id_lesson = occupation.IdLesson;
             dynamicJson.id_aud = occupation.IdAud;

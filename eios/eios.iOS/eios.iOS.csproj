@@ -94,9 +94,11 @@
     <Compile Include="CircleViewRenderer.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Services\GetScheduleTaskService.cs" />
+    <Compile Include="Services\SyncAttendanceTaskService.cs" />
+    <Compile Include="Services\SyncScheduleStateTaskService.cs" />
     <Compile Include="SQLite_IOS.cs" />
     <Compile Include="Services\SyncScheduleTaskService.cs" />
-    <Compile Include="Services\SyncScheduleStateTaskService.cs" />
     <Compile Include="Services\SyncUnsentChangesTaskService.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
@@ -142,6 +144,9 @@
     <BundleResource Include="Resources\uncheck.png" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="HockeySDK.Xamarin">
+      <Version>5.1.2</Version>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>10.0.3</Version>
     </PackageReference>

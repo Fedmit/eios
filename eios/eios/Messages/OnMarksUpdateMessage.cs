@@ -7,6 +7,5 @@ namespace eios.Messages
 {
     public class OnMarksUpdatedMessage
     {
-        public bool IsSuccessful { get; set; }
     }
 }

@@ -22,26 +22,20 @@ namespace eios.Tasks
             {
                 if (CrossConnectivity.Current.IsConnected)
                 {
-                    DateTime lastDate = new DateTime();
-                    if (!App.IsTimeTravelMode)
-                    {
-                        DateTime dateNow = await WebApi.Instance.GetDateAsync();
+                    var lastDate = App.DateSelected;
 
-                        if (App.Current.Properties.ContainsKey("DateNow"))
-                        {
-                            var str = (string)App.Current.Properties["DateNow"];
-                            lastDate = DateTime.Parse(str);
-                        }
+                    App.DateSelected = App.DateNow;
+                    await App.Current.SavePropertiesAsync();
 
-                        App.DateNow = dateNow;
-                    }
-
-                    if (App.IsTimeTravelMode || lastDate == DateTime.MinValue || lastDate.Date != App.DateNow.Date)
+                    if (lastDate == DateTime.MinValue || lastDate != App.DateNow)
                     {
                         var groups = await App.Database.GetGroups();
 
-                        await App.Database.DeleteThisShits();
-                        await App.Database.CreateTables();
+                        await App.Database.DropTable<Student>();
+                        await App.Database.DropTable<Occupation>();
+                        await App.Database.CreateTable<Student>();
+                        await App.Database.CreateTable<Occupation>();
+
                         foreach (var group in groups)
                         {
                             var occupations = await WebApi.Instance.GetOccupationsAsync(group.IdGroup);
@@ -51,10 +45,7 @@ namespace eios.Tasks
                             await App.Database.SetStudents(students);
                         }
                     }
-                    App.Current.Properties["DateNow"] = App.DateNow.ToString("yyyy-MM-dd HH:mm:ss");
-                    await App.Current.SavePropertiesAsync();
                 }
-                
                 isSuccessful = true;
             }
             catch (HttpRequestException)
@@ -64,13 +55,17 @@ namespace eios.Tasks
 
             var message = new OnScheduleSyncronizedMessage()
             {
-                IsSuccessful = isSuccessful
+                IsSuccessful = isSuccessful,
             };
-            Device.BeginInvokeOnMainThread(() => {
+            Device.BeginInvokeOnMainThread(() =>
+            {
                 MessagingCenter.Send(message, "OnScheduleSyncronizedMessage");
             });
 
-            App.IsLoading = false;
+            App.IsScheduleSync = false;
+
+            App.IsAttendanceSync = true;
+            MessagingCenter.Send(new StartSyncAttendanceTaskMessage(), "StartSyncAttendanceTaskMessage");
         }
     }
 }

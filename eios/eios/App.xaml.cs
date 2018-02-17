@@ -11,8 +11,8 @@ using eios.Data;
 
 namespace eios
 {
-	public partial class App : Application
-	{
+    public partial class App : Application
+    {
         private static string _login { get; set; }
         public static string Login
         {
@@ -22,7 +22,7 @@ namespace eios
                 {
                     if (App.Current.Properties.ContainsKey("Login"))
                     {
-                        return (string)App.Current.Properties["Login"];
+                        return (string) App.Current.Properties["Login"];
                     }
                     return "";
                 }
@@ -37,11 +37,11 @@ namespace eios
         {
             get
             {
-                if(_password == null)
+                if (_password == null)
                 {
                     if (App.Current.Properties.ContainsKey("Password"))
                     {
-                        return (string)App.Current.Properties["Password"];
+                        return (string) App.Current.Properties["Password"];
                     }
                     return "";
                 }
@@ -51,13 +51,77 @@ namespace eios
             set { _password = value; }
         }
 
-        public static bool IsUserLoggedIn { get; set; }
-        public static bool IsLoading { get; set; } = false;
+        public static bool IsUserLoggedIn
+        {
+            get
+            {
+                if (Current.Properties.ContainsKey("IsUserLoggedIn"))
+                {
+                    return (bool) Current.Properties["IsUserLoggedIn"];
+                }
+                return false;
+            }
+            set
+            {
+                Current.Properties["IsUserLoggedIn"] = value;
+            }
+        }
+        public static bool IsScheduleSync { get; set; } = false;
+        public static bool IsAttendanceSync { get; set; } = false;
         public static int IdOccupNow { get; set; } = 8;
-        public static bool IsTimeTravelMode { get; set; } = false;
+        public static bool IsTimeTravelMode { get; set; }
 
-        public static DateTime DateNow { get; set; }
+        public static DateTime DateNow
+        {
+            get
+            {
+                if (Current.Properties.ContainsKey("DateNow"))
+                {
+                    var dateNowStr = (string) Current.Properties["DateNow"];
+                    return DateTime.Parse(dateNowStr);
+                }
+                return DateTime.MinValue;
+            }
+            set
+            {
+                Current.Properties["DateNow"] = value.ToString("yyyy-MM-dd");
+            }
+        }
 
+        public static DateTime DateSelected
+        {
+            get
+            {
+                if (Current.Properties.ContainsKey("DateSelected"))
+                {
+                    var dateNowStr = (string) Current.Properties["DateSelected"];
+                    return DateTime.Parse(dateNowStr);
+                }
+                return DateTime.MinValue;
+            }
+            set
+            {
+                Current.Properties["DateSelected"] = value.ToString("yyyy-MM-dd");
+            }
+        }
+
+        public static int IdGroupCurrent
+        {
+            get
+            {
+                if (Current.Properties.ContainsKey("IdGroupCurrent"))
+                {
+                    return (int) Current.Properties["IdGroupCurrent"];
+                }
+                return 0;
+            }
+            set
+            {
+                Current.Properties["IdGroupCurrent"] = value;
+            }
+        }
+
+        public static List<Group> _groups;
         public static List<Group> Groups { get; set; }
 
         private const string DATABASE_NAME = "EIOS_DB.db";
@@ -74,23 +138,23 @@ namespace eios
             }
         }
 
-        public App ()
-		{
-			InitializeComponent();
+        public App()
+        {
+            InitializeComponent();
 
             MainPage = new NavigationPage(new SplashPage());
-		}
+        }
+
+        protected override void OnSleep()
+        {
+        }
 
         protected override void OnStart()
         {
         }
 
-        protected override void OnSleep ()
-		{
-		}
-
-		protected override void OnResume ()
-		{
-		}
-	}
+        protected override void OnResume()
+        {
+        }
+    }
 }

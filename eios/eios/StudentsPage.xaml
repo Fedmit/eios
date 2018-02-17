@@ -10,55 +10,54 @@
                 x:Name="occupationName"
                 Text="{Binding OccupationName}"
                 HorizontalOptions="Center"
-                Margin="0,20,0,0"/>
+                Margin="0,5,0,0" />
             <StackLayout
                 Orientation="Horizontal"
                 HorizontalOptions="FillAndExpand"
-                Spacing="10">
+                Spacing="10"
+                Margin="20,0">
                 <Label
                     x:Name="occupationTime"
                     Text="{Binding OccupationTime}"
-                    HorizontalOptions="Start"
-                    Margin="20,0,0,0"/>
+                    HorizontalOptions="Start" />
                 <Label
                     x:Name="occupationAud"
                     Text="{Binding OccupationAud}"
-                    Margin="0,0,20,0"
                     HorizontalOptions="EndAndExpand" />
             </StackLayout>
             <StackLayout
                 Orientation="Horizontal">
                 <StackLayout
-                    Orientation="Horizontal">
+                    Orientation="Horizontal"
+                    Margin="20,0">
                     <Label
                         Text="Всего:"
-                        Margin="20,0,0,0"
-                        HorizontalOptions="Start"/>
+                        HorizontalOptions="Start" />
                     <Label
-                        Text="{Binding Total}"/>
+                        Text="{Binding Total}" />
                 </StackLayout>
                 <StackLayout
                     Orientation="Horizontal"
+                    Margin="20,0"
                     HorizontalOptions="EndAndExpand">
                     <Label
                         Text="Присутствуют:"
-                        HorizontalOptions="EndAndExpand"/>
+                        HorizontalOptions="EndAndExpand" />
                     <Label
-                        Text="{Binding OnSite}"
-                        Margin="0,0,20,0"/>
+                        Text="{Binding OnSite}" />
                 </StackLayout>
             </StackLayout>
             <ListView
                 x:Name="studentListView"
                 SeparatorVisibility="None"
                 RowHeight="50"
-                Margin="20,0,0,20"
                 ItemsSource="{Binding StudentsList}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout
                                 Orientation="Horizontal"
+                                Padding="20,0"
                                 Spacing="20">
                                 <Image
                                     Source="{Binding IconSource}"
@@ -73,7 +72,8 @@
                 </ListView.ItemTemplate>
             </ListView>
             <StackLayout
-                Orientation="Horizontal">
+                Orientation="Horizontal"
+                Margin="20,0,20,5">
                 <Button
                     x:Name="unavaibleButton"
                     WidthRequest="120"
@@ -82,8 +82,7 @@
                     IsEnabled="False"
                     HorizontalOptions="Start"
                     Text="Пары нет"
-                    TextColor="Black"
-                    Margin="20"
+                    TextColor="White"
                     Clicked="OnUnaviableClicked" />
                 <Button
                     x:Name="markButton"
@@ -92,8 +91,7 @@
                     BorderColor="Black"
                     BackgroundColor="#8BC34A"
                     Text="Отметить"
-                    Margin="20"
-                    TextColor="Black"
+                    TextColor="White"
                     Clicked="OnMarkClicked" />
             </StackLayout>
         </StackLayout>

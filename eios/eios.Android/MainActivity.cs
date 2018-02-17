@@ -10,6 +10,7 @@ using Xamarin.Forms;
 using eios.Messages;
 using eios.Droid.Services;
 using Android.Content;
+using HockeyApp.Android;
 
 namespace eios.Droid
 {
@@ -23,6 +24,9 @@ namespace eios.Droid
 
             base.OnCreate(bundle);
 
+            base.OnResume();
+            CrashManager.Register(this, "db48f2e1dad14d83811e8834bb8940b3");
+
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
 
@@ -31,22 +35,43 @@ namespace eios.Droid
 
         void WireUpTask()
         {
-            MessagingCenter.Subscribe<StartSyncScheduleTaskMessage>(this, "StartSyncScheduleTaskMessage", message => {
-                var intent = new Intent(this, typeof(SyncScheduleTaskService));
-                StartService(intent);
-            });
-
-            MessagingCenter.Subscribe<StartSyncScheduleStateTaskMessage>(this, "StartSyncScheduleStateTaskMessage", message => {
+            MessagingCenter.Subscribe<StartSyncScheduleStateTaskMessage>(this, "StartSyncScheduleStateTaskMessage", message =>
+            {
                 var intent = new Intent(this, typeof(SyncScheduleStateTaskService));
                 StartService(intent);
             });
-            MessagingCenter.Subscribe<StopSyncScheduleStateTaskMessage>(this, "StopSyncScheduleStateTaskMessage", message => {
+            MessagingCenter.Subscribe<StopSyncScheduleStateTaskMessage>(this, "StopSyncScheduleStateTaskMessage", message =>
+            {
                 var intent = new Intent(this, typeof(SyncScheduleStateTaskService));
                 StopService(intent);
             });
 
-            MessagingCenter.Subscribe<StartSyncUnsentChangesTask>(this, "StartSyncUnsentChangesTask", message => {
+            MessagingCenter.Subscribe<StartSyncAttendanceTaskMessage>(this, "StartSyncAttendanceTaskMessage", message =>
+            {
+                var intent = new Intent(this, typeof(SyncAttendanceTaskService));
+                StartService(intent);
+            });
+            MessagingCenter.Subscribe<StopSyncAttendanceTaskMessage>(this, "StopSyncAttendanceTaskMessage", message =>
+            {
+                var intent = new Intent(this, typeof(SyncAttendanceTaskService));
+                StopService(intent);
+            });
+
+            MessagingCenter.Subscribe<StartSyncScheduleTaskMessage>(this, "StartSyncScheduleTaskMessage", message =>
+            {
+                var intent = new Intent(this, typeof(SyncScheduleTaskService));
+                StartService(intent);
+            });
+
+            MessagingCenter.Subscribe<StartSyncUnsentChangesTask>(this, "StartSyncUnsentChangesTask", message =>
+            {
                 var intent = new Intent(this, typeof(SyncUnsentChangesTaskService));
+                StartService(intent);
+            });
+
+            MessagingCenter.Subscribe<StartGetScheduleTaskMessage>(this, "StartGetScheduleTaskMessage", message =>
+            {
+                var intent = new Intent(this, typeof(GetScheduleTaskService));
                 StartService(intent);
             });
         }

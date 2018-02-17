@@ -106,7 +106,7 @@ namespace eios.ViewModel
 
         async Task<List<StudentSelect>> PopulateList()
         {
-            return await App.Database.GetStudents((int)App.Current.Properties["IdGroupCurrent"]);
+            return await App.Database.GetStudents(App.IdGroupCurrent);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

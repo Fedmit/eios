@@ -26,8 +26,13 @@ namespace eios
         {
             ViewModel = new OccupationsListViewModel(this);
             BindingContext = ViewModel;
-            
+
             InitializeComponent();
+
+            datePicker.MaximumDate = App.DateNow;
+            datePicker.MinimumDate = App.DateNow.AddDays(-5);
+            datePicker.Date = App.DateSelected;
+            datePicker.DateSelected += OnDateSelected;
 
             listView.ItemTapped += async (sender, e) =>
             {
@@ -38,18 +43,15 @@ namespace eios
                     {
                         return;
                     }
-                    await Navigation.PushAsync((Page)Activator.CreateInstance(item.TargetType, item));
+                    await Navigation.PushAsync((Page) Activator.CreateInstance(item.TargetType, ViewModel, item));
                 }
             };
         }
 
         protected override void OnAppearing()
         {
-            if (!App.IsLoading)
-            {
-                var message = new StartSyncScheduleStateTaskMessage();
-                MessagingCenter.Send(message, "StartSyncScheduleStateTaskMessage");
-            }
+            var message = new StartSyncScheduleStateTaskMessage();
+            MessagingCenter.Send(message, "StartSyncScheduleStateTaskMessage");
         }
 
         protected override void OnDisappearing()
@@ -60,7 +62,7 @@ namespace eios
 
         void OnDateClicked(Object sender, DateChangedEventArgs e)
         {
-            if (!App.IsLoading)
+            if (!App.IsScheduleSync)
             {
                 datePicker.Focus();
             }
@@ -68,20 +70,22 @@ namespace eios
 
         void OnGroupClicked(Object sender)
         {
-            if (!App.IsLoading)
+            if (!App.IsScheduleSync)
             {
                 groupPicker.Focus();
             }
         }
         async void OnSelectedIndexChanged(object sender, EventArgs e)
         {
-            var picker = (Picker)sender;
+            var picker = (Picker) sender;
             int selectedIndex = picker.SelectedIndex;
 
             if (selectedIndex != -1)
             {
-                App.Current.Properties["IdGroupCurrent"] = App.Groups[selectedIndex].IdGroup;
                 ViewModel.Group = App.Groups[selectedIndex].Name;
+
+                App.IdGroupCurrent = App.Groups[selectedIndex].IdGroup;
+                await App.Current.SavePropertiesAsync();
 
                 await ViewModel.UpdateOccupationsList();
             }
@@ -89,12 +93,30 @@ namespace eios
 
         async void OnDateSelected(object sender, DateChangedEventArgs e)
         {
-            if (!CrossConnectivity.Current.IsConnected && e.NewDate != App.DateNow)
+            if (!App.IsScheduleSync)
             {
-                await DisplayAlert(
-                            "Ошибка",
-                            "Вы не подключены!",
-                            "ОК");
+                if (e.NewDate == App.DateSelected)
+                {
+                    return;
+                }
+                else if (CrossConnectivity.Current.IsConnected && e.NewDate != App.DateSelected)
+                {
+                    App.DateSelected = e.NewDate;
+                    await App.Current.SavePropertiesAsync();
+
+                    ViewModel.IsBusy = true;
+                    ViewModel.Date = e.NewDate.ToString("dd/MM/yyyy") + "  ▼";
+                    App.IsScheduleSync = true;
+                    MessagingCenter.Send(new StartGetScheduleTaskMessage(), "StartGetScheduleTaskMessage");
+                }
+                else
+                {
+                    await DisplayAlert(
+                                "Ошибка",
+                                "Вы не подключены!",
+                                "ОК");
+                        datePicker.Date = App.DateSelected;
+                }
             }
         }
     }

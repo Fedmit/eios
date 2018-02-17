@@ -1,4 +1,6 @@
-﻿using System;
+﻿using eios.Messages;
+using eios.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,16 +26,20 @@ namespace eios
                 // При нажатии на выход открываем экран с входом
                 if (item.TargetType == typeof(LoginPage))
                 {
-                    App.Current.Properties["IdGroupCurrent"] = null;
-                    App.Current.Properties["Fullname"] = null;
-                    App.Current.Properties["IsLoggedIn"] = false;
+                    MessagingCenter.Send(new StopSyncAttendanceTaskMessage(), "StopSyncAttendanceTaskMessage");
+
+                    App.DateNow = DateTime.MinValue;
+                    App.DateSelected = DateTime.MinValue;
+                    App.IdGroupCurrent = 0;
+                    App.IsUserLoggedIn = false;
                     App.Current.Properties["Login"] = null;
                     App.Current.Properties["Password"] = null;
-                    App.Current.Properties["DateNow"] = "1970-01-01 01:02:03";
                     await App.Current.SavePropertiesAsync();
 
-                    await App.Database.DeleteThisShits();
-                    await App.Database.DeleteGroupsTable();
+                    await App.Database.DropTable<Group>();
+                    await App.Database.DropTable<Occupation>();
+                    await App.Database.DropTable<Student>();
+                    await App.Database.DropTable<StudentAbsent>();
 
                     Application.Current.MainPage = new NavigationPage(new LoginPage());
                     return;

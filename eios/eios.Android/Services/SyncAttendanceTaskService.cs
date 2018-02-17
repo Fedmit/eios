@@ -16,7 +16,7 @@ using eios.Tasks;
 namespace eios.Droid.Services
 {
     [Service]
-    public class SyncScheduleStateTaskService : Service
+    public class SyncAttendanceTaskService : Service
     {
         CancellationTokenSource _cts;
 
@@ -33,8 +33,8 @@ namespace eios.Droid.Services
             {
                 try
                 {
-                    var task = new SyncScheduleStateTask();
-                    task.RunSyncScheduleState(_cts.Token).Wait();
+                    var task = new SyncAttendanceTask();
+                    task.RunSyncAttendance(_cts.Token).Wait();
                 }
                 catch (Android.OS.OperationCanceledException)
                 {

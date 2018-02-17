@@ -29,7 +29,7 @@ namespace eios
 
             if (CrossConnectivity.Current.IsConnected)
             {
-                if (App.Current.Properties.ContainsKey("IsLoggedIn") && (bool)App.Current.Properties["IsLoggedIn"])
+                if (App.IsUserLoggedIn)
                 {
                     try
                     {
@@ -45,9 +45,10 @@ namespace eios
 
                     App.Groups = await App.Database.GetGroups();
 
-                    App.IsLoading = true;
+                    DateTime dateNow = await WebApi.Instance.GetDateAsync();
+                    App.DateNow = dateNow;
 
-                    MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
+                    App.IsScheduleSync = true;
                     MessagingCenter.Send(new StartSyncUnsentChangesTask(), "StartSyncUnsentChangesTask");
 
                     Application.Current.MainPage = new MainPage();
@@ -64,11 +65,9 @@ namespace eios
             {
                 await Task.Delay(1000);
 
-                if (App.Current.Properties.ContainsKey("IsLoggedIn") && (bool)App.Current.Properties["IsLoggedIn"])
+                if (App.IsUserLoggedIn)
                 {
                     App.Groups = await App.Database.GetGroups();
-                    var dateNowStr = (string)App.Current.Properties["DateNow"];
-                    App.DateNow = DateTime.Parse(dateNowStr);
                     Application.Current.MainPage = new MainPage();
                 }
                 else

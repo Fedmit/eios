@@ -33,21 +33,48 @@ namespace eios.Model
         [JsonProperty("aud"), Column("aud")]
         public string Aud { get; set; }
 
-        [Column("is_check")]
-        public bool IsChecked { get; set; }
-        
-        [Column("is_block")]
-        public bool IsBlocked { get; set; }
-        
-        [Column("is_sent")]
-        public bool IsSent { get; set; }
+        private bool _isChecked = false;
+        [Column("is_checked")]
+        public bool IsChecked
+        {
+            get { return _isChecked; }
+            set
+            {
+                _isChecked = value;
+
+                OnPropertyChanged(nameof(IsChecked));
+                OnPropertyChanged(nameof(CircleColor));
+                OnPropertyChanged(nameof(TextColor));
+                OnPropertyChanged(nameof(TargetType));
+            }
+        }
+
+        private bool _isBlocked = false;
+        [Column("is_blocked")]
+        public bool IsBlocked
+        {
+            get { return _isBlocked; }
+            set
+            {
+                _isBlocked = value;
+
+                OnPropertyChanged(nameof(IsBlocked));
+                OnPropertyChanged(nameof(CircleColor));
+                OnPropertyChanged(nameof(TextColor));
+                OnPropertyChanged(nameof(TargetType));
+            }
+        }
+
+        [Column("is_sync")]
+        public bool IsSync { get; set; } = true;
 
         [Ignore]
         public string CircleColor
         {
             get
             {
-                if (!IsChecked && IdLesson != 0 && (IdOccupation < App.IdOccupNow || App.IsTimeTravelMode)) { return "#f7636c"; }
+                if (!IsChecked && IdLesson != 0 &&
+                    (IdOccupation < App.IdOccupNow || App.DateNow != App.DateSelected)) { return "#f7636c"; }
                 else if (IsChecked) { return "#acd94e"; }
                 return "#e0e0e0";
             }
@@ -58,7 +85,7 @@ namespace eios.Model
         {
             get
             {
-                if (!IsChecked && (IdLesson == 0 || (IdOccupation >= App.IdOccupNow && !App.IsTimeTravelMode))) { return "#000000"; }
+                if (!IsChecked && (IdLesson == 0 || (IdOccupation >= App.IdOccupNow))) { return "#000000"; }
                 return "#FFFFFF";
             }
         }
@@ -92,7 +119,7 @@ namespace eios.Model
                 }
             }
         }
-       
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)

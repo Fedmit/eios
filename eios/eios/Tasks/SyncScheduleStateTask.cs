@@ -14,26 +14,27 @@ namespace eios.Tasks
     {
         public async Task RunSyncScheduleState(CancellationToken token)
         {
-            await Task.Run(async () => {
+            await Task.Run(async () =>
+            {
                 while (true)
                 {
                     token.ThrowIfCancellationRequested();
 
-                    if (CrossConnectivity.Current.IsConnected)
+                    if (CrossConnectivity.Current.IsConnected && !App.IsScheduleSync)
                     {
                         var marksResponse = await WebApi.Instance.GetMarksAsync();
-                        await App.Database.SetMarks(marksResponse.Data, (int)App.Current.Properties["IdGroupCurrent"]);
+                        if (marksResponse != null && marksResponse.Data != null)
+                        {
+                            await App.Database.SetMarks(marksResponse.Data, App.IdGroupCurrent);
+                        }
 
                         App.IdOccupNow = marksResponse.IdOccupNow;
-                    }
 
-                    var message = new OnMarksUpdatedMessage()
-                    {
-                        IsSuccessful = true
-                    };
-                    Device.BeginInvokeOnMainThread(() => {
-                        MessagingCenter.Send(message, "OnMarksUpdatedMessage");
-                    });
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            MessagingCenter.Send(new OnMarksUpdatedMessage(), "OnMarksUpdatedMessage");
+                        });
+                    }
 
                     await Task.Delay(5000);
                 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace eios.Messages
 {
-    class StopSyncScheduleStateTaskMessage
+    public class StartGetScheduleTaskMessage
     {
     }
 }

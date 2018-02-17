@@ -4,6 +4,7 @@ using System.Linq;
 using eios.iOS.Services;
 using eios.Messages;
 using Foundation;
+using HockeyApp.iOS;
 using UIKit;
 using Xamarin.Forms;
 
@@ -24,6 +25,11 @@ namespace eios.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            var manager = BITHockeyManager.SharedHockeyManager;
+            manager.Configure("db48f2e1dad14d83811e8834bb8940b3");
+            manager.StartManager();
+            manager.Authenticator.AuthenticateInstallation(); // This line is obsolete in crash only builds
+
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 
@@ -34,25 +40,47 @@ namespace eios.iOS
 
         void WireUpTask()
         {
+            SyncScheduleStateTaskService syncScheduleStateTask;
+            syncScheduleStateTask = new SyncScheduleStateTaskService();
+            MessagingCenter.Subscribe<StartSyncScheduleStateTaskMessage>(this, "StartSyncScheduleStateTaskMessage", async message =>
+            {
+                await syncScheduleStateTask.Start();
+            });
+            MessagingCenter.Subscribe<StopSyncScheduleStateTaskMessage>(this, "StopSyncScheduleStateTaskMessage", message =>
+            {
+                syncScheduleStateTask.Stop();
+            });
+
+            SyncAttendanceTaskService syncAttendanceTaskService;
+            syncAttendanceTaskService = new SyncAttendanceTaskService();
+            MessagingCenter.Subscribe<StartSyncScheduleStateTaskMessage>(this, "StartSyncScheduleStateTaskMessage", async message =>
+            {
+                await syncAttendanceTaskService.Start();
+            });
+            MessagingCenter.Subscribe<StopSyncScheduleStateTaskMessage>(this, "StopSyncScheduleStateTaskMessage", message =>
+            {
+                syncAttendanceTaskService.Stop();
+            });
+
             SyncScheduleTaskService syncScheduleTask;
-            MessagingCenter.Subscribe<StartSyncScheduleTaskMessage>(this, "StartSyncScheduleTaskMessage", async message => {
+            MessagingCenter.Subscribe<StartSyncScheduleTaskMessage>(this, "StartSyncScheduleTaskMessage", async message =>
+            {
                 syncScheduleTask = new SyncScheduleTaskService();
                 await syncScheduleTask.Start();
             });
 
-            SyncScheduleStateTaskService syncScheduleStateTask;
-            syncScheduleStateTask = new SyncScheduleStateTaskService();
-            MessagingCenter.Subscribe<StartSyncScheduleStateTaskMessage>(this, "StartSyncScheduleStateTaskMessage", async message => {
-                await syncScheduleStateTask.Start();
-            });
-            MessagingCenter.Subscribe<StopSyncScheduleStateTaskMessage>(this, "StopSyncScheduleStateTaskMessage", message => {
-                syncScheduleStateTask.Stop();
-            });
-
             SyncUnsentChangesTaskService syncUnsentChangesTask;
-            MessagingCenter.Subscribe<StartSyncUnsentChangesTask>(this, "StartSyncUnsentChangesTask", async message => {
+            MessagingCenter.Subscribe<StartSyncUnsentChangesTask>(this, "StartSyncUnsentChangesTask", async message =>
+            {
                 syncUnsentChangesTask = new SyncUnsentChangesTaskService();
                 await syncUnsentChangesTask.Start();
+            });
+
+            GetScheduleTaskService getScheduleTask;
+            MessagingCenter.Subscribe<StartGetScheduleTaskMessage>(this, "StartGetScheduleTaskMessage", async message =>
+            {
+                getScheduleTask = new GetScheduleTaskService();
+                await getScheduleTask.Start();
             });
         }
     }
