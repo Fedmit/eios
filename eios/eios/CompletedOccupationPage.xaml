@@ -5,12 +5,12 @@
     xmlns:local="clr-namespace:eios"
     x:Class="eios.CompletedOccupationPage">
     <ContentPage.Content>
-        <StackLayout
-            Padding="20,5,20,20">
+        <StackLayout>
             <Label
                 x:Name="occupationName"
                 Text="{Binding OccupationName}"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center"
+                Margin="0,20,0,0"/>
             <StackLayout
                 Orientation="Horizontal"
                 HorizontalOptions="FillAndExpand"
@@ -18,19 +18,21 @@
                 <Label
                     x:Name="occupationTime"
                     Text="{Binding OccupationTime}"
-                    HorizontalOptions="Start" />
+                    HorizontalOptions="Start" 
+                    Margin="20,0,0,0"/>
                 <Label
                     x:Name="occupationAud"
                     Text="{Binding OccupationAud}"
+                    Margin="0,0,20,0"
                     HorizontalOptions="EndAndExpand" />
             </StackLayout>
             <StackLayout
-                Orientation="Horizontal"
-                Margin="20,0">
+                Orientation="Horizontal">
                 <StackLayout
                     Orientation="Horizontal">
                     <Label
                         Text="Всего:"
+                        Margin="20,0,0,0"
                         HorizontalOptions="Start" />
                     <Label
                         Text="{Binding Total}" />
@@ -42,7 +44,8 @@
                         Text="Присутствуют:"
                         HorizontalOptions="EndAndExpand" />
                     <Label
-                        Text="{Binding PresentTotal}" />
+                        Text="{Binding PresentTotal}"
+                        Margin="0,0,20,0"/>
                 </StackLayout>
             </StackLayout>
             <ActivityIndicator
@@ -55,6 +58,7 @@
                 x:Name="studentListView"
                 SeparatorVisibility="None"
                 RowHeight="50"
+                Margin="20,0,0,20"
                 ItemsSource="{Binding StudentsList}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -83,6 +87,7 @@
                     BorderColor="Black"
                     BackgroundColor="#8BC34A"
                     Text="Изменить"
+                    Margin="20"
                     TextColor="Black"
                     Clicked="OnEditClicked" />
             </StackLayout>
