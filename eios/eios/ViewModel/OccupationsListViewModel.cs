@@ -38,8 +38,14 @@ namespace eios.ViewModel
                     _group = App.Groups.Where(group => group.IdGroup == App.IdGroupCurrent).ToList()[0].Name;
                     return "";
                 }
-
-                return _group + "  ▼";
+                else if (App.Groups.Count == 1)
+                {
+                    return _group;
+                }
+                else
+                {
+                    return _group + "  ▼";
+                }
             }
             set
             {
