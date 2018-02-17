@@ -19,8 +19,16 @@ namespace eios
 
         protected override bool OnBackButtonPressed()
         {
-            App.Current.MainPage = new MainPage();
-            return true;
+            if (App.IsUserLoggedIn)
+            {
+                App.Current.MainPage = new MainPage();
+                return true;
+            }
+            else
+            {
+                base.OnBackButtonPressed();
+                return false;
+            }
         }
     }
 }
