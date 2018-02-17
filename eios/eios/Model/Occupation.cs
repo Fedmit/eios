@@ -75,7 +75,7 @@ namespace eios.Model
             {
                 if (!IsChecked && IdLesson != 0 &&
                     (IdOccupation < App.IdOccupNow || App.DateNow != App.DateSelected)) { return "#f7636c"; }
-                else if (IsChecked) { return "#acd94e"; }
+                else if (IsChecked) { return "#0fa87a"; }
                 return "#e0e0e0";
             }
         }

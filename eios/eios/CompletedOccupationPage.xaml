@@ -84,7 +84,7 @@
                     WidthRequest="120"
                     HorizontalOptions="Center"
                     BorderColor="Black"
-                    BackgroundColor="#8BC34A"
+                    BackgroundColor="#00695C"
                     Text="Изменить"
                     TextColor="White"
                     Margin="0,0,0,5"
