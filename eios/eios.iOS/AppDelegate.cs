@@ -16,6 +16,10 @@ namespace eios.iOS
     [Register("AppDelegate")]
     public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
     {
+        SyncScheduleStateTaskService syncScheduleStateTask = new SyncScheduleStateTaskService();
+        SyncAttendanceTaskService syncAttendanceTaskService = new SyncAttendanceTaskService();
+        SyncUnsentChangesTaskService syncUnsentChangesTask = new SyncUnsentChangesTaskService();
+
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
         // method you should instantiate the window, load the UI into it and then make the window
@@ -40,8 +44,6 @@ namespace eios.iOS
 
         void WireUpTask()
         {
-            SyncScheduleStateTaskService syncScheduleStateTask;
-            syncScheduleStateTask = new SyncScheduleStateTaskService();
             MessagingCenter.Subscribe<StartSyncScheduleStateTaskMessage>(this, "StartSyncScheduleStateTaskMessage", async message =>
             {
                 await syncScheduleStateTask.Start();
@@ -51,8 +53,6 @@ namespace eios.iOS
                 syncScheduleStateTask.Stop();
             });
 
-            SyncAttendanceTaskService syncAttendanceTaskService;
-            syncAttendanceTaskService = new SyncAttendanceTaskService();
             MessagingCenter.Subscribe<StartSyncScheduleStateTaskMessage>(this, "StartSyncScheduleStateTaskMessage", async message =>
             {
                 await syncAttendanceTaskService.Start();
@@ -62,24 +62,24 @@ namespace eios.iOS
                 syncAttendanceTaskService.Stop();
             });
 
-            SyncScheduleTaskService syncScheduleTask;
             MessagingCenter.Subscribe<StartSyncScheduleTaskMessage>(this, "StartSyncScheduleTaskMessage", async message =>
             {
-                syncScheduleTask = new SyncScheduleTaskService();
+                var syncScheduleTask = new SyncScheduleTaskService();
                 await syncScheduleTask.Start();
             });
 
-            SyncUnsentChangesTaskService syncUnsentChangesTask;
             MessagingCenter.Subscribe<StartSyncUnsentChangesTask>(this, "StartSyncUnsentChangesTask", async message =>
             {
-                syncUnsentChangesTask = new SyncUnsentChangesTaskService();
                 await syncUnsentChangesTask.Start();
             });
+            MessagingCenter.Subscribe<StopSyncUnsentChangesTask>(this, "StopSyncUnsentChangesTask", message =>
+            {
+                syncUnsentChangesTask.Stop();
+            });
 
-            GetScheduleTaskService getScheduleTask;
             MessagingCenter.Subscribe<StartGetScheduleTaskMessage>(this, "StartGetScheduleTaskMessage", async message =>
             {
-                getScheduleTask = new GetScheduleTaskService();
+                var getScheduleTask = new GetScheduleTaskService();
                 await getScheduleTask.Start();
             });
         }

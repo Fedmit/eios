@@ -86,6 +86,7 @@
                     Clicked="OnUnaviableClicked" />
                 <Button
                     x:Name="markButton"
+                    IsEnabled="{Binding IsReadyToMark}"
                     WidthRequest="120"
                     HorizontalOptions="EndAndExpand"
                     BorderColor="Black"

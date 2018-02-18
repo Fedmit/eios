@@ -4,6 +4,7 @@ using eios.Model;
 using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -18,8 +19,9 @@ namespace eios.Tasks
 
         public async Task RunGetSchedule()
         {
+            Debug.WriteLine("TaskDebugger: GetScheduleTask. New Date selected");
+
             MessagingCenter.Send(new StopSyncAttendanceTaskMessage(), "StopSyncAttendanceTaskMessage");
-            Console.WriteLine("-----New Date-----");
             try
             {
                 isSuccessful = false;

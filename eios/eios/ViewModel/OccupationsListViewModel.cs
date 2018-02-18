@@ -200,9 +200,8 @@ namespace eios.ViewModel
                 if (marksResponse != null && marksResponse.Data != null)
                 {
                     await App.Database.SetMarks(marksResponse.Data, App.IdGroupCurrent);
+                    App.IdOccupNow = marksResponse.IdOccupNow;
                 }
-
-                App.IdOccupNow = marksResponse.IdOccupNow;
 
                 MessagingCenter.Send(new OnMarksUpdatedMessage(), "OnMarksUpdatedMessage");
             }

@@ -4,6 +4,7 @@ using eios.Model;
 using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,6 +18,8 @@ namespace eios.Tasks
         {
             await Task.Run(async () =>
             {
+                Debug.WriteLine("TaskDebugger: SyncAttendanceTask");
+
                 await App.Database.DropTable<StudentAbsent>();
                 await App.Database.CreateTable<StudentAbsent>();
 
@@ -35,6 +38,8 @@ namespace eios.Tasks
                 App.IsAttendanceSync = false;
                 while (true)
                 {
+                    Debug.WriteLine("TaskDebugger: SyncAttendanceTask' iteration");
+
                     token.ThrowIfCancellationRequested();
 
                     var unblockedOccups = await App.Database.GetUnblockedOccupations(App.IdGroupCurrent);

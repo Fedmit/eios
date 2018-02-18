@@ -3,6 +3,7 @@ using eios.Messages;
 using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,6 +19,8 @@ namespace eios.Tasks
             {
                 while (true)
                 {
+                    Debug.WriteLine("TaskDebugger: SyncScheduleStateTask' iteration");
+
                     token.ThrowIfCancellationRequested();
 
                     if (CrossConnectivity.Current.IsConnected && !App.IsScheduleSync)

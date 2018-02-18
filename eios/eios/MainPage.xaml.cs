@@ -31,6 +31,7 @@ namespace eios
                     if (answer)
                     {
                         MessagingCenter.Send(new StopSyncAttendanceTaskMessage(), "StopSyncAttendanceTaskMessage");
+                        MessagingCenter.Send(new StopSyncUnsentChangesTask(), "StopSyncUnsentChangesTask");
 
                         DeleteCredentials();
 
