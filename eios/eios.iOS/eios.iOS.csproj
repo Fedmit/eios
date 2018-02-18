@@ -169,6 +169,102 @@
   <ItemGroup>
     <BundleResource Include="Resources\info_icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\4.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\6.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\7.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\8.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\9.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\10.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\11.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\12.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\13.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\14.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\15.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\16.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\17.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\19.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\20.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\21.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\login.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\zapil.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\nenorm.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\norm.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\group.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\studinfo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\total.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\students.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\absent.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\okay.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\menu.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\green.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\white.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\eios\eios.projitems" Label="Shared" />
 </Project>

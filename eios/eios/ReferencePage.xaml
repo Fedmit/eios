@@ -21,6 +21,9 @@
             <Label HorizontalOptions="Center"
                    Text="Для входа в систему введите свой логин и пароль в соответствующие поля ввода, а затем нажмите кнопку 'Вход'. При вводе коректных данных приложение перейдет на следующий экран, при вводе некорректных – выведет соответствующее сообщение."
                    />
+            <Image Source="login.jpg"/>
+            <Label Text="При вводе верных данных приложение перейдет на следующий экран, при вводе некорректных – выведет соответствующее сообщение.
+"/>
             <Label HorizontalOptions="Center">
                 <Label.FormattedText>
                     <FormattedString>
@@ -30,6 +33,7 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
+            <Image Source="zapil.jpg"/>
             <Label HorizontalOptions="Center">
                 <Label.FormattedText>
                     <FormattedString>
@@ -55,12 +59,27 @@
                 </Label.FormattedText>
             </Label>
             <StackLayout Orientation="Horizontal">
-                <Image Source=""/>
-                <Label Text=" - занятие не отмечено"/>
+                <Image Source="white.jpg"
+                       WidthRequest="72"
+                   HeightRequest="72"/>
+                <Label Text=" занятие не отмечено"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal">
-                <Image Source=""/>
-                <Label Text=" - вы забыли отметить посещаемость на данном занятии (только при заполненном расписании и рабочем Интернет-соединении)"/>
+                <Image Source="green.jpg"
+                       WidthRequest="72"
+                   HeightRequest="72"/>
+                <Label Text="вы отметили посещаемость на данном занятии"
+                       HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Image Source="6.jpg"
+                       WidthRequest="72"
+                       HeightRequest="72"/>
+                
+                <Label Text="вы забыли отметить посещаемость на данном занятии (только при заполненном расписании и рабочем Интернет-соединении)"
+                       HorizontalOptions="Center"/>
             </StackLayout>
             <Label HorizontalOptions="Center">
                 <Label.FormattedText>
@@ -70,60 +89,71 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-            <Image Source=""/>
+            <Image Source="nenorm.jpg"/>
             <Label HorizontalOptions="Center"
                    Text="Элемент списка принимает краткий вид, если Вы не заполнили расписание/занятия нет в расписании"/>
-            <Image Source=""/>
+            <Image Source="norm.jpg"/>
             <Label HorizontalOptions="Center"
                    Text="Для того, чтобы отметить посещаемость за определенную дату – выберите ее в диалоговом окне выбора даты, нажав соответствующую кнопку в правой верхней части экрана (по-умолчанию, при наличии Интернет-соединения загружается расписание занятий Вашей группы на сегодняшний день) ."
                    
                     />
-            <Image Source=""/>
+            <Image Source="19.jpg"
+                   HeightRequest="70"
+                   WidthRequest="100"/>
             <Label HorizontalOptions="Center"
-                   Text="Если вы являетесь старостой одновременно нескольких"/>
-            <Label HorizontalOptions="Center"
+                   Text="По-умолчанию, при наличии Интернет-соединения загружается расписание занятий Вашей группы на сегодняшний день .
+Если вы являетесь старостой одновременно нескольких групп, то вы можете открыть расписание необходимой вам группы выбрав ее в диалоговом окне выбора группы, нажав соответствующую кнопку в правой верхней части экрана.
+"/>
+                <Image Source="group.jpg"
+                       HeightRequest="70"
+                   WidthRequest="100"/>
+                <Label HorizontalOptions="Center"
                    Text="Экран занятия"
                    FontAttributes="Bold"
                    />
-            <Label HorizontalOptions="Center"
-                   Text="На экране занятия вы можете внести, изменить или просмотреть данные о посещаемости. На данном экране присутствуют следующие элементы:"
+                
+                <Label HorizontalOptions="Center"
+                   Text="На экране занятия вы можете внести, изменить или просмотреть данные о посещаемости. На данном экране присутствуют следующие элементы:
+."
                    />
-            <Image Source=""/>
-            
-            <Label HorizontalOptions="Center"
-                   Text="Строка информации о просматриваемом занятии, включающая в себя время занятия, название предмета и аудиторию."
-                   />
-            <Image Source=""/>
+            <Image Source="studinfo.jpg"/>
             <Label HorizontalOptions="Center"
                    Text="Строка информации о количестве студентов, присутствующих на занятии (количество по списку и на лицо)."
                    />
-            <Image Source=""/>
+            <Image Source="total.jpg"/>
             
             <Label HorizontalOptions="Center"
-                   Text="Список студентов Вашей группы."
-                   />
-            <Label HorizontalOptions="Center"
-                   Text="Для того, чтобы отметить посещаемость на данном занятии – выберите отсутствующих студентов, нажимая на элемент с их ФИО (при этом индикатор рядом с ФИО студента поменяет свой цвет с серого на красный) …
+                   Text="Строка информации о просматриваемом занятии, включающая в себя время занятия, название предмета и аудиторию.
 "
                    />
-            <Image Source=""/>
+            <Image Source="students.jpg"/>
             <Label HorizontalOptions="Center"
-                  Text="…а затем нажмите кнопку «Отметить» в правом нижнем углу экрана"
+                   Text="Список студентов Вашей группы.
+Для того, чтобы отметить посещаемость на данном занятии – выберите отсутствующих студентов, нажимая на элемент с их ФИО.
+"/>
+                <Image Source="okay.jpg"/>
+            <Label HorizontalOptions="Center"
+                  Text="При этом индикатор рядом с ФИО студента поменяет свой цвет с серого на красный) …"
                    />
-            <Image Source=""/>
-            <Label HorizontalOptions="Center"
+            <Image Source="absent.jpg"/>
+                    <Label Text="…а затем нажмите кнопку «Отметить» в правом нижнем углу экрана"/>
+            <Image Source="11.jpg"
+                   HeightRequest="70"
+                   WidthRequest="100"/>
+                    <Label HorizontalOptions="Center"
                    Text="Если вы некорректно отметили посещаемость на занятии, то вы можете изменить данные, нажав кнопку «Изменить» в нижней части экрана…"
                    />
-            <Image Source=""/>
-            <Label HorizontalOptions="Center"
-                   Text="…и внеся корректные данные."
+            <Image Source="9.jpg"
+                   HeightRequest="70"
+                   WidthRequest="100"/>
+                    <Label HorizontalOptions="Center"
+                   Text="…и, внеся корректные данные, снова нажать кнопку 'Отметить'."
                    />
-            <Label HorizontalOptions="Center">
+                    <Label HorizontalOptions="Center">
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Text="Примечание: " FontAttributes="Bold" />
-                        <Span Text="изменение данных о посещаемости возможно только на протяжении занятия и 15 минут после него, по истечении этого времени возможность внесения изменений будет заблокирована. Если же вы не отметили посещаемость во время занятия, то у вас будет возможность отметить посещаемость только 1 раз.
-" />
+                                <Span Text="Примечание: " FontAttributes="Bold" />
+                                <Span Text="изменение данных о посещаемости возможно только на протяжении занятия и 15 минут после него, по истечении этого времени возможность внесения изменений будет заблокирована. Если же вы не отметили посещаемость во время занятия, то у вас будет возможность отметить посещаемость только 1 раз."/>
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
@@ -136,7 +166,9 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-            <Image Source=""/>
+            <Image Source="10.jpg"
+                   HeightRequest="70"
+                   WidthRequest="100"/>
             <Label HorizontalOptions="Center">
                 <Label.FormattedText>
                     <FormattedString>
@@ -153,7 +185,7 @@
                    Text="Переход между экранами приложения возможен как путем непосредственного перехода по нажатию на те или иные элементы управления, так и путем перехода к определенным экранам из меню приложения.
    	Меню приложения можно открыть нажатием кнопки «Меню» на экране расписания или проведя пальцем вправо (сделав «свайп») на любом другом экране (исключая экран загрузки и входа в приложение)."
                    />
-            <Image Source =""/>
+            <Image Source ="menu.jpg"/>
             <Label HorizontalOptions ="Center"
                    Text="Меню приложения содержит следующие пункты:"/>
             <Label HorizontalOptions ="Center"
@@ -170,7 +202,10 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-            <Image Source=""/>
+            <Image Source="info_icon.png"
+                   WidthRequest="72"
+                   HeightRequest="72"
+                   HorizontalOptions="Center"/>
             <Label HorizontalOptions ="Center"
                    Text="Выйти из профиля - по нажатию на данный пункт меню осуществляется выход из аккаунта пользователя.
 "/>
