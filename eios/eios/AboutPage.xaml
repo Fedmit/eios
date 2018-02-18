@@ -5,13 +5,12 @@
     x:Class="eios.AboutPage">
     <ContentPage.Content>
         <StackLayout
-            BackgroundColor="#ffffff">
-            <StackLayout
-                BackgroundColor="#ffffff">
+            BackgroundColor="#ffffff"
+            Padding="0,10,0,15">
                 <Image
                     Source="PSU.jpg"
                     HorizontalOptions="Center"
-                    Margin="0,30,0,10"
+                    Margin="0,25"
                     WidthRequest="100"
                     HeightRequest="100"
                     Aspect="AspectFit" />
@@ -30,29 +29,26 @@
                     HorizontalOptions="Center"
                     Font="18"
                     TextColor="#000000" />
-            </StackLayout>
-            <StackLayout
-                BackgroundColor="#ffffff"
-                VerticalOptions="EndAndExpand"
-                HorizontalOptions="Center">
                 <Image
                     Source="Fot.jpg"
                     HorizontalOptions="Center"
                     VerticalOptions="End"
                     WidthRequest="100"
                     HeightRequest="100"
+                    Margin="0,65,0,25"
                     Aspect="AspectFit" />
                 <Label
                     Text="Центр проектного творчества"
                     HorizontalOptions="Center"
                     Font="18"
+                    Margin="0,15"
                     TextColor="#000000" />
                 <Label
                     Text="2018"
                     HorizontalOptions="Center"
                     Font="18"
+                    Margin="0,35,0,0"
                     TextColor="#000000" />
-            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
