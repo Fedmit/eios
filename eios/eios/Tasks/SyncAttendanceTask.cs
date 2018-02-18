@@ -38,6 +38,9 @@ namespace eios.Tasks
                     token.ThrowIfCancellationRequested();
 
                     var unblockedOccups = await App.Database.GetUnblockedOccupations(App.IdGroupCurrent);
+
+                    await Task.Delay(15000);
+
                     if (unblockedOccups != null)
                     {
                         foreach (var occupation in unblockedOccups)
@@ -45,8 +48,6 @@ namespace eios.Tasks
                             await SyncAttendance(token, occupation.IdOccupation, App.IdGroupCurrent);
                         }
                     }
-
-                    await Task.Delay(15000);
                 }
             }, token);
         }

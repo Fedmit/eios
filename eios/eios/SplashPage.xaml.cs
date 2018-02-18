@@ -29,7 +29,7 @@ namespace eios
 
             if (CrossConnectivity.Current.IsConnected)
             {
-                if (App.IsUserLoggedIn)
+                if (App.IsUserLoggedIn && App.Login != null && App.Password != null)
                 {
                     try
                     {
