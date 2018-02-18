@@ -36,7 +36,6 @@
                     HorizontalTextAlignment="Center"
                     Placeholder="Логин"
                     TextColor="Black"
-                    Text="s517644114"
                     PlaceholderColor="Gray"
                     VerticalOptions="Center" />
                 <Entry
@@ -46,7 +45,6 @@
                     PlaceholderColor="Gray"
                     IsPassword="true"
                     TextColor="Black"
-                    Text="xO1XX3dx"
                     WidthRequest="200"
                     VerticalOptions="Center" />
                 <StackLayout>
