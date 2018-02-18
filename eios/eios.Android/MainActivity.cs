@@ -68,6 +68,11 @@ namespace eios.Droid
                 var intent = new Intent(this, typeof(SyncUnsentChangesTaskService));
                 StartService(intent);
             });
+            MessagingCenter.Subscribe<StopSyncUnsentChangesTask>(this, "StopSyncUnsentChangesTask", message =>
+            {
+                var intent = new Intent(this, typeof(SyncUnsentChangesTaskService));
+                StopService(intent);
+            });
 
             MessagingCenter.Subscribe<StartGetScheduleTaskMessage>(this, "StartGetScheduleTaskMessage", message =>
             {

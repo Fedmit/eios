@@ -117,7 +117,6 @@ namespace eios.ViewModel
             {
                 IsBusy = true;
 
-                Console.WriteLine("App.IsAttendanceSync: " + App.IsAttendanceSync);
                 if (!App.IsAttendanceSync)
                 {
                     StudentsList = await PopulateList();

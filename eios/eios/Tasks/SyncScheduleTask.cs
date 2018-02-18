@@ -4,6 +4,7 @@ using eios.Model;
 using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -18,6 +19,8 @@ namespace eios.Tasks
 
         public async Task RunSyncSchedule()
         {
+            Debug.WriteLine("TaskDebugger: SyncScheduleTask");
+
             try
             {
                 if (CrossConnectivity.Current.IsConnected)

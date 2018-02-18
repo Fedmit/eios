@@ -273,7 +273,7 @@ namespace eios.Data
             dynamicJson.login = App.Login;
             dynamicJson.password = App.Password;
             dynamicJson.type = "set_attend";
-            dynamicJson.id_group = App.IdGroupCurrent;
+            dynamicJson.id_group = occupation.IdGroup;
             dynamicJson.date = App.DateSelected.ToString("yyyy-MM-dd");
             dynamicJson.id_occup = occupation.IdOccupation;
             dynamicJson.id_lesson = occupation.IdLesson;

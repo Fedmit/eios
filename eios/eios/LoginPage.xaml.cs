@@ -100,7 +100,7 @@ namespace eios
             await App.Current.SavePropertiesAsync();
 
             App.IsScheduleSync = true;
-            MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
+            MessagingCenter.Send(new StartSyncUnsentChangesTask(), "StartSyncUnsentChangesTask");
 
             Application.Current.MainPage = new MainPage();
         }
