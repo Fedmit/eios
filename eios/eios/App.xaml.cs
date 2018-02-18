@@ -138,6 +138,13 @@ namespace eios
             InitializeComponent();
 
             MainPage = new NavigationPage(new SplashPage());
+
+            TaskScheduler.UnobservedTaskException += (object sender, UnobservedTaskExceptionEventArgs excArgs) =>
+            {
+                Console.WriteLine("Exception.Message: {0}\n", excArgs.Exception.Message);
+                Console.WriteLine("Exception.InnerException.Message: {0}\n", excArgs.Exception.InnerException.Message);
+                excArgs.SetObserved();
+            };
         }
 
         protected override void OnSleep()
