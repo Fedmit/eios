@@ -33,36 +33,49 @@ namespace eios.Data
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
             List<Occupation> occupations = null;
-            try
+            bool isResponse = false;
+            while (!isResponse)
             {
-                HttpClient client = new HttpClient();
-                var response = await client.PostAsync(
-                    _baseUrl,
-                    new StringContent(
-                        json,
-                        UnicodeEncoding.UTF8,
-                        "application/json"
-                    )
-                );
-                response.EnsureSuccessStatusCode();
-
-                var content = await response.Content.ReadAsStringAsync();
-                occupations = JsonConvert.DeserializeObject<List<Occupation>>(content);
-
-                foreach (var occupation in occupations)
+                try
                 {
-                    occupation.IdGroup = idGroup;
-                }
+                    HttpClient client = new HttpClient();
+                    client.Timeout = new TimeSpan(0, 0, 7);
+                    var response = await client.PostAsync(
+                        _baseUrl,
+                        new StringContent(
+                            json,
+                            UnicodeEncoding.UTF8,
+                            "application/json"
+                        )
+                    );
+                    response.EnsureSuccessStatusCode();
 
-                occupations = occupations.OrderBy(occup => occup.IdOccupation).ToList();
-            }
-            catch (HttpRequestException ex)
-            {
-                throw ex;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("GetOccupationsAsync(): " + ex.Message);
+                    var content = await response.Content.ReadAsStringAsync();
+                    occupations = JsonConvert.DeserializeObject<List<Occupation>>(content);
+
+                    foreach (var occupation in occupations)
+                    {
+                        occupation.IdGroup = idGroup;
+                    }
+
+                    occupations = occupations.OrderBy(occup => occup.IdOccupation).ToList();
+
+                    isResponse = true;
+                }
+                catch (TaskCanceledException ex)
+                {
+                    Debug.WriteLine("GetOccupationsAsync: " + ex.Message);
+                }
+                catch (HttpRequestException ex)
+                {
+                    isResponse = true;
+                    throw ex;
+                }
+                catch (Exception ex)
+                {
+                    isResponse = true;
+                    Console.WriteLine("GetOccupationsAsync(): " + ex.Message);
+                }
             }
 
             return occupations;
@@ -156,31 +169,48 @@ namespace eios.Data
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
             List<Student> students = null;
-            try
+            bool isResponse = false;
+            while (!isResponse)
             {
-                HttpClient client = new HttpClient();
-                var response = await client.PostAsync(
-                    _baseUrl,
-                    new StringContent(
-                        json,
-                        UnicodeEncoding.UTF8,
-                        "application/json"
-                    )
-                );
-                response.EnsureSuccessStatusCode();
-
-                var content = await response.Content.ReadAsStringAsync();
-
-                students = JsonConvert.DeserializeObject<List<Student>>(content);
-
-                foreach (var student in students)
+                try
                 {
-                    student.id_group = idGroup;
+                    HttpClient client = new HttpClient();
+                    client.Timeout = new TimeSpan(0, 0, 7);
+                    var response = await client.PostAsync(
+                        _baseUrl,
+                        new StringContent(
+                            json,
+                            UnicodeEncoding.UTF8,
+                            "application/json"
+                        )
+                    );
+                    response.EnsureSuccessStatusCode();
+
+                    var content = await response.Content.ReadAsStringAsync();
+
+                    students = JsonConvert.DeserializeObject<List<Student>>(content);
+
+                    foreach (var student in students)
+                    {
+                        student.id_group = idGroup;
+                    }
+
+                    isResponse = true;
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("GetStudentsAsync(): " + ex.Message);
+                catch (TaskCanceledException ex)
+                {
+                    Debug.WriteLine("GetOccupationsAsync: " + ex.Message);
+                }
+                catch (HttpRequestException ex)
+                {
+                    isResponse = true;
+                    throw ex;
+                }
+                catch (Exception ex)
+                {
+                    isResponse = true;
+                    Console.WriteLine("GetStudentsAsync(): " + ex.Message);
+                }
             }
 
             return students;

@@ -66,7 +66,7 @@ namespace eios.Tasks
 
                 var isSync = await App.Database.IsSync(idOccupation, idGroup);
 
-                if (CrossConnectivity.Current.IsConnected & isSync)
+                if (CrossConnectivity.Current.IsConnected && isSync)
                 {
                     try
                     {

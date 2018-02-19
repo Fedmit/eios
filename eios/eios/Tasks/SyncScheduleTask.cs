@@ -37,11 +37,8 @@ namespace eios.Tasks
 
                         foreach (var group in groups)
                         {
-                            var occupations = await WebApi.Instance.GetOccupationsAsync(group.IdGroup);
-                            var students = await WebApi.Instance.GetStudentsAsync(group.IdGroup);
-
-                            await App.Database.SetOccupations(occupations);
-                            await App.Database.SetStudents(students);
+                            await SyncOccupations(group.IdGroup);
+                            await SyncStudents(group.IdGroup);
                         }
                     }
                 }
@@ -65,6 +62,48 @@ namespace eios.Tasks
 
             App.IsAttendanceSync = true;
             MessagingCenter.Send(new StartSyncAttendanceTaskMessage(), "StartSyncAttendanceTaskMessage");
+        }
+
+        async Task SyncOccupations(int idGroup)
+        {
+            while (true)
+            {
+                if (CrossConnectivity.Current.IsConnected)
+                {
+                    try
+                    {
+                        var occupations = await WebApi.Instance.GetOccupationsAsync(idGroup);
+                        await App.Database.SetOccupations(occupations);
+                        return;
+                    }
+                    catch (HttpRequestException)
+                    {
+                    }
+                }
+
+                await Task.Delay(5000);
+            }
+        }
+
+        async Task SyncStudents(int idGroup)
+        {
+            while (true)
+            {
+                if (CrossConnectivity.Current.IsConnected)
+                {
+                    try
+                    {
+                        var students = await WebApi.Instance.GetStudentsAsync(idGroup);
+                        await App.Database.SetStudents(students);
+                        return;
+                    }
+                    catch (HttpRequestException)
+                    {
+                    }
+                }
+
+                await Task.Delay(5000);
+            }
         }
     }
 }

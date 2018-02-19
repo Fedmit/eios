@@ -32,8 +32,7 @@ namespace eios.Tasks
 
                     foreach (var group in App.Groups)
                     {
-                        var occupations = await WebApi.Instance.GetOccupationsAsync(group.IdGroup);
-                        await App.Database.SetOccupations(occupations);
+                        await SyncOccupations(group.IdGroup);
                     }
                     isSuccessful = true;
                 }
@@ -56,6 +55,27 @@ namespace eios.Tasks
 
             App.IsAttendanceSync = true;
             MessagingCenter.Send(new StartSyncAttendanceTaskMessage(), "StartSyncAttendanceTaskMessage");
+        }
+
+        async Task SyncOccupations(int idGroup)
+        {
+            while (true)
+            {
+                if (CrossConnectivity.Current.IsConnected)
+                {
+                    try
+                    {
+                        var occupations = await WebApi.Instance.GetOccupationsAsync(idGroup);
+                        await App.Database.SetOccupations(occupations);
+                        return;
+                    }
+                    catch (HttpRequestException)
+                    {
+                    }
+                }
+
+                await Task.Delay(5000);
+            }
         }
     }
 }
