@@ -103,23 +103,6 @@
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Default-568h%402x.png" />
-    <BundleResource Include="Resources\Default-Portrait.png" />
-    <BundleResource Include="Resources\Default-Portrait%402x.png" />
-    <BundleResource Include="Resources\Default.png" />
-    <BundleResource Include="Resources\Default%402x.png" />
-    <BundleResource Include="Resources\Icon-60%402x.png" />
-    <BundleResource Include="Resources\Icon-60%403x.png" />
-    <BundleResource Include="Resources\Icon-76.png" />
-    <BundleResource Include="Resources\Icon-76%402x.png" />
-    <BundleResource Include="Resources\Icon-Small-40.png" />
-    <BundleResource Include="Resources\Icon-Small-40%402x.png" />
-    <BundleResource Include="Resources\Icon-Small-40%403x.png" />
-    <BundleResource Include="Resources\Icon-Small.png" />
-    <BundleResource Include="Resources\Icon-Small%402x.png" />
-    <BundleResource Include="Resources\Icon-Small%403x.png" />
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
   </ItemGroup>
   <ItemGroup>
@@ -127,21 +110,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\PSU.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Fot.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\pguloogo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\check.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\uncheck.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HockeySDK.Xamarin">
@@ -167,70 +135,82 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <BundleResource Include="Resources\zapil.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\absent.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\calend.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default-568h%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default-Portrait.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default-Portrait%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Fot.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\green.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\group.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-60%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-60%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-76.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-76%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-Small%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-Small%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-Small-40.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-Small-40%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-Small-40%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
     <BundleResource Include="Resources\info_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\1.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\2.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\3.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\4.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\6.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\7.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\8.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\9.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\10.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\11.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\12.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\13.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\14.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\15.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\16.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\17.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\19.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\20.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\21.jpg" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\login.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\zapil.jpg" />
+    <BundleResource Include="Resources\menu.jpg" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\nenorm.jpg" />
@@ -239,7 +219,28 @@
     <BundleResource Include="Resources\norm.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\group.jpg" />
+    <BundleResource Include="Resources\okay.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\otmet.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\parano.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\pguloogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\PSU.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\red.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\reotmet.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\students.jpg" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\studinfo.jpg" />
@@ -248,19 +249,10 @@
     <BundleResource Include="Resources\total.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\students.jpg" />
+    <BundleResource Include="Resources\uncheck.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\absent.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\okay.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\menu.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\green.jpg" />
+    <BundleResource Include="Resources\user2.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\white.jpg" />

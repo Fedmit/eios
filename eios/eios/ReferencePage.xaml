@@ -74,7 +74,7 @@
                        HorizontalOptions="Center"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal">
-                <Image Source="6.jpg"
+                <Image Source="red.jpg"
                        WidthRequest="72"
                        HeightRequest="72"/>
                 
@@ -97,7 +97,7 @@
                    Text="Для того, чтобы отметить посещаемость за определенную дату – выберите ее в диалоговом окне выбора даты, нажав соответствующую кнопку в правой верхней части экрана (по-умолчанию, при наличии Интернет-соединения загружается расписание занятий Вашей группы на сегодняшний день) ."
                    
                     />
-            <Image Source="19.jpg"
+            <Image Source="calend.jpg"
                    HeightRequest="70"
                    WidthRequest="100"/>
             <Label HorizontalOptions="Center"
@@ -137,13 +137,13 @@
                    />
             <Image Source="absent.jpg"/>
                     <Label Text="…а затем нажмите кнопку «Отметить» в правом нижнем углу экрана"/>
-            <Image Source="11.jpg"
+            <Image Source="otmet.jpg"
                    HeightRequest="70"
                    WidthRequest="100"/>
                     <Label HorizontalOptions="Center"
                    Text="Если вы некорректно отметили посещаемость на занятии, то вы можете изменить данные, нажав кнопку «Изменить» в нижней части экрана…"
                    />
-            <Image Source="9.jpg"
+            <Image Source="reotmet.jpg"
                    HeightRequest="70"
                    WidthRequest="100"/>
                     <Label HorizontalOptions="Center"
@@ -166,7 +166,7 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-            <Image Source="10.jpg"
+            <Image Source="parano.jpg"
                    HeightRequest="70"
                    WidthRequest="100"/>
             <Label HorizontalOptions="Center">
