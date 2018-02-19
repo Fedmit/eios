@@ -23,9 +23,10 @@ namespace eios.Tasks
 
             try
             {
+                var occupationsFromDB = await App.Database.GetOccupations(App.IdGroupCurrent);
                 if (CrossConnectivity.Current.IsConnected)
                 {
-                    if (App.LastDate == DateTime.MinValue || App.LastDate != App.DateNow)
+                    if (occupationsFromDB == null || App.LastDate == DateTime.MinValue || App.LastDate != App.DateNow)
                     {
                         var groups = await App.Database.GetGroups();
 

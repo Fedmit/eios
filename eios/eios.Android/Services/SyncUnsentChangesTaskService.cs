@@ -35,8 +35,14 @@ namespace eios.Droid.Services
                     var task = new SyncUnsentChangesTask();
                     task.RunSyncUnsentChanges(_cts.Token).Wait();
                 }
-                catch (Android.OS.OperationCanceledException)
+                catch (AggregateException ae)
                 {
+                    foreach (var e in ae.InnerExceptions)
+                    {
+                        if (e is Android.OS.OperationCanceledException)
+                        {
+                        }
+                    }
                 }
             }, _cts.Token);
 

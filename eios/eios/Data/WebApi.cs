@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Dynamic;
 using System.Linq;
 using System.Net.Http;
@@ -234,34 +235,48 @@ namespace eios.Data
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
             List<StudentAbsent> attendance = null;
-            try
+            bool isResponse = false;
+            while (!isResponse)
             {
-                HttpClient client = new HttpClient();
-                var response = await client.PostAsync(
-                    _baseUrl,
-                    new StringContent(
-                        json,
-                        UnicodeEncoding.UTF8,
-                        "application/json"
-                    )
-                );
-                response.EnsureSuccessStatusCode();
-
-                var content = await response.Content.ReadAsStringAsync();
-
-                attendance = JsonConvert.DeserializeObject<List<StudentAbsent>>(content);
-                foreach (var student in attendance)
+                try
                 {
-                    student.IdOccupation = idOccupation;
-                    student.IdGroup = idGroup;
+                    HttpClient client = new HttpClient();
+                    client.Timeout = new TimeSpan(0, 0, 7);
+                    var response = await client.PostAsync(
+                        _baseUrl,
+                        new StringContent(
+                            json,
+                            UnicodeEncoding.UTF8,
+                            "application/json"
+                        )
+                    );
+                    response.EnsureSuccessStatusCode();
+
+                    var content = await response.Content.ReadAsStringAsync();
+
+                    attendance = JsonConvert.DeserializeObject<List<StudentAbsent>>(content);
+                    foreach (var student in attendance)
+                    {
+                        student.IdOccupation = idOccupation;
+                        student.IdGroup = idGroup;
+                    }
+
+                    isResponse = true;
                 }
-            }
-            catch (HttpRequestException)
-            {
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("GetAttendanceAsync(): " + ex.Message);
+                catch (TaskCanceledException ex)
+                {
+                    Debug.WriteLine("GetAttendanceAsync: " + ex.Message);
+                    throw ex;
+                }
+                catch (HttpRequestException)
+                {
+                    isResponse = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("GetAttendanceAsync(): " + ex.Message);
+                    isResponse = true;
+                }
             }
 
             return attendance;

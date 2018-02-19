@@ -29,6 +29,7 @@ namespace eios.Tasks
                     foreach (var occupation in occupations)
                     {
                         await SyncAttendance(token, occupation.IdOccupation, App.IdGroupCurrent);
+                        App.IsAttendanceSync = true;
                     }
                     Device.BeginInvokeOnMainThread(() =>
                     {
@@ -63,13 +64,26 @@ namespace eios.Tasks
             {
                 token.ThrowIfCancellationRequested();
 
-                if (CrossConnectivity.Current.IsConnected)
+                var isSync = await App.Database.IsSync(idOccupation, idGroup);
+
+                if (CrossConnectivity.Current.IsConnected & isSync)
                 {
-                    var attendance = await WebApi.Instance.GetAttendanceAsync(idOccupation, idGroup);
-                    await App.Database.SetAttendence(attendance, idOccupation, idGroup);
-                    return;
+                    try
+                    {
+                        var attendance = await WebApi.Instance.GetAttendanceAsync(idOccupation, idGroup);
+                        await App.Database.SetAttendence(attendance, idOccupation, idGroup);
+                        return;
+                    }
+                    catch (TaskCanceledException)
+                    {
+                    }
                 }
 
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    MessagingCenter.Send(new OnAttendanceSyncronizedMessage(), "OnAttendanceSyncronizedMessage");
+                });
+                App.IsAttendanceSync = false;
                 await Task.Delay(5000);
             }
         }

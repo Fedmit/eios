@@ -27,12 +27,10 @@ namespace eios.Tasks
                 isSuccessful = false;
                 if (CrossConnectivity.Current.IsConnected)
                 {
-                    var groups = await App.Database.GetGroups();
-
                     await App.Database.DropTable<Occupation>();
                     await App.Database.CreateTable<Occupation>();
 
-                    foreach (var group in groups)
+                    foreach (var group in App.Groups)
                     {
                         var occupations = await WebApi.Instance.GetOccupationsAsync(group.IdGroup);
                         await App.Database.SetOccupations(occupations);
@@ -40,8 +38,9 @@ namespace eios.Tasks
                     isSuccessful = true;
                 }
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException ex)
             {
+                Debug.WriteLine("GetScheduleTask: " + ex.Message);
             }
 
             var message = new OnScheduleSyncronizedMessage()

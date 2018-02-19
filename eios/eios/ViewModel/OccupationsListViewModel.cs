@@ -170,7 +170,10 @@ namespace eios.ViewModel
         async public Task UpdateOccupationsList()
         {
             var occupationList = await PopulateList();
-            OccupationsList = occupationList;
+            if (occupationList != null)
+            {
+                OccupationsList = occupationList;
+            }
         }
 
         async Task<List<Occupation>> PopulateList()
@@ -201,9 +204,9 @@ namespace eios.ViewModel
                 {
                     await App.Database.SetMarks(marksResponse.Data, App.IdGroupCurrent);
                     App.IdOccupNow = marksResponse.IdOccupNow;
-                }
 
-                MessagingCenter.Send(new OnMarksUpdatedMessage(), "OnMarksUpdatedMessage");
+                    MessagingCenter.Send(new OnMarksUpdatedMessage(), "OnMarksUpdatedMessage");
+                }
             }
         }
 

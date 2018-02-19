@@ -51,16 +51,11 @@ namespace eios
                 try
                 {
                     await WebApi.Instance.SetNullAttendAsync(occupation);
-                    await App.Database.SetSyncFlag(occupation.IdOccupation, App.IdGroupCurrent);
                 }
                 catch (HttpRequestException)
                 {
-                    await App.Database.DeleteAttendance(occupation.IdOccupation, App.IdGroupCurrent);
-                    await Navigation.PopAsync();
                     return;
                 }
-                Navigation.InsertPageBefore(new CompletedOccupationPage(OccupViewModel, this.occupation), this);
-                await Navigation.PopAsync();
             }
             await Navigation.PopAsync();
         }

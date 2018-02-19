@@ -12,8 +12,6 @@ namespace eios.Tasks
 {
     class SyncUnsentChangesTask
     {
-        bool isFirstTime = true;
-
         public async Task RunSyncUnsentChanges(CancellationToken token)
         {
             await Task.Run(async () =>
@@ -36,9 +34,9 @@ namespace eios.Tasks
                             }
                         }
 
-                        if (isFirstTime)
+                        if (!App.IsScheduleUpToDate)
                         {
-                            isFirstTime = false;
+                            App.IsScheduleUpToDate = true;
                             MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
                         }
                     }

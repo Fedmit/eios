@@ -11,6 +11,7 @@ using Xamarin.Forms.Xaml;
 using eios.Model;
 using System.Net.Http;
 using Plugin.Connectivity;
+using System.Diagnostics;
 
 namespace eios
 {
@@ -31,9 +32,10 @@ namespace eios
             {
                 if (App.IsUserLoggedIn && App.Login != null && App.Password != null)
                 {
+                    GroupResponse groupResponse = null;
                     try
                     {
-                        await WebApi.Instance.GetGroupsAsync();
+                        groupResponse = await WebApi.Instance.GetGroupsAsync();
                     }
                     catch (HttpRequestException)
                     {
@@ -42,8 +44,17 @@ namespace eios
 
                         return;
                     }
+                    var groups = await App.Database.GetGroups();
+                    if (groups != null)
+                    {
+                        App.Groups = groups;
+                    }
+                    else if (groupResponse != null && groupResponse.Data != null)
+                    {
+                        Debug.WriteLine("Группы не было в БД");
 
-                    App.Groups = await App.Database.GetGroups();
+                        App.Groups = groupResponse.Data;
+                    }
 
                     DateTime dateNow = await WebApi.Instance.GetDateAsync();
                     App.DateNow = dateNow;
@@ -70,8 +81,24 @@ namespace eios
 
                 if (App.IsUserLoggedIn)
                 {
-                    App.Groups = await App.Database.GetGroups();
-                    Application.Current.MainPage = new MainPage();
+                    var groups = await App.Database.GetGroups();
+                    var occupations = await App.Database.GetOccupations(App.IdGroupCurrent);
+
+                    if (groups != null && occupations != null)
+                    {
+                        App.Groups = groups;
+                        App.IsScheduleUpToDate = true;
+                        MessagingCenter.Send(new StartSyncUnsentChangesTask(), "StartSyncUnsentChangesTask");
+                        MessagingCenter.Send(new StartSyncAttendanceTaskMessage(), "StartSyncAttendanceTaskMessage");
+                        Application.Current.MainPage = new MainPage();
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Группы не было в БД");
+
+                        Navigation.InsertPageBefore(new LoginPage(), this);
+                        await Navigation.PopAsync();
+                    }
                 }
                 else
                 {
