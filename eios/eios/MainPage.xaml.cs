@@ -38,6 +38,7 @@ namespace eios
                         App.DateNow = DateTime.MinValue;
                         App.DateSelected = DateTime.MinValue;
                         App.IdGroupCurrent = 0;
+                        App.IsScheduleUpToDate = false;
                         App.IsUserLoggedIn = false;
                         await App.Current.SavePropertiesAsync();
 
