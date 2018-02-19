@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Auth;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -74,6 +75,14 @@ namespace eios
                 return;
             }
 
+            Account account = new Account
+
+            {
+                Username = App.Login
+            };
+            account.Properties.Add("Password", App.Password);
+            AccountStore.Create().Save(account, "eios");
+
             await App.Database.DropTable<Group>();
             await App.Database.CreateTable<Group>();
             await App.Database.SetGroup(response.Data);
@@ -88,13 +97,10 @@ namespace eios
             App.IdGroupCurrent = response.Data[0].IdGroup;
             App.IsUserLoggedIn = true;
 
-            App.Current.Properties["Login"] = App.Login;
-            App.Current.Properties["Password"] = App.Password;
-
             await App.Current.SavePropertiesAsync();
 
             App.IsScheduleSync = true;
-            MessagingCenter.Send(new StartSyncScheduleTaskMessage(), "StartSyncScheduleTaskMessage");
+            MessagingCenter.Send(new StartSyncUnsentChangesTask(), "StartSyncUnsentChangesTask");
 
             Application.Current.MainPage = new MainPage();
         }

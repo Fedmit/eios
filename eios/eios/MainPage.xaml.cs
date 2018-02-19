@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Auth;
 using Xamarin.Forms;
 
 namespace eios
@@ -30,13 +31,14 @@ namespace eios
                     if (answer)
                     {
                         MessagingCenter.Send(new StopSyncAttendanceTaskMessage(), "StopSyncAttendanceTaskMessage");
+                        MessagingCenter.Send(new StopSyncUnsentChangesTask(), "StopSyncUnsentChangesTask");
+
+                        DeleteCredentials();
 
                         App.DateNow = DateTime.MinValue;
                         App.DateSelected = DateTime.MinValue;
                         App.IdGroupCurrent = 0;
                         App.IsUserLoggedIn = false;
-                        App.Current.Properties["Login"] = null;
-                        App.Current.Properties["Password"] = null;
                         await App.Current.SavePropertiesAsync();
 
                         await App.Database.DropTable<Group>();
@@ -60,6 +62,15 @@ namespace eios
 
                 masterPage.MenuTop.SelectedItem = null;
                 masterPage.MenuBottom.SelectedItem = null;
+            }
+        }
+
+        private void DeleteCredentials()
+        {
+            var account = AccountStore.Create().FindAccountsForService("eios").FirstOrDefault();
+            if (account != null)
+            {
+                AccountStore.Create().Delete(account, "eios");
             }
         }
     }

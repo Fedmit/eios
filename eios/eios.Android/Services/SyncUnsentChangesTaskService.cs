@@ -18,6 +18,8 @@ namespace eios.Droid.Services
     [Service]
     public class SyncUnsentChangesTaskService : Service
     {
+        CancellationTokenSource _cts;
+
         public override IBinder OnBind(Intent intent)
         {
             return null;
@@ -25,12 +27,37 @@ namespace eios.Droid.Services
 
         public override StartCommandResult OnStartCommand(Intent intent, StartCommandFlags flags, int startId)
         {
+            _cts = new CancellationTokenSource();
+
             Task.Run(() => {
-                var task = new SyncUnsentChangesTask();
-                task.RunSyncUnsentChanges().Wait();
-            });
+                try
+                {
+                    var task = new SyncUnsentChangesTask();
+                    task.RunSyncUnsentChanges(_cts.Token).Wait();
+                }
+                catch (AggregateException ae)
+                {
+                    foreach (var e in ae.InnerExceptions)
+                    {
+                        if (e is Android.OS.OperationCanceledException)
+                        {
+                        }
+                    }
+                }
+            }, _cts.Token);
 
             return StartCommandResult.Sticky;
+        }
+
+        public override void OnDestroy()
+        {
+            if (_cts != null)
+            {
+                _cts.Token.ThrowIfCancellationRequested();
+
+                _cts.Cancel();
+            }
+            base.OnDestroy();
         }
     }
 }

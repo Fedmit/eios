@@ -51,16 +51,11 @@ namespace eios
                 try
                 {
                     await WebApi.Instance.SetNullAttendAsync(occupation);
-                    await App.Database.SetSyncFlag(occupation.IdOccupation, App.IdGroupCurrent);
                 }
                 catch (HttpRequestException)
                 {
-                    await App.Database.DeleteAttendance(occupation.IdOccupation, App.IdGroupCurrent);
-                    await Navigation.PopAsync();
                     return;
                 }
-                Navigation.InsertPageBefore(new CompletedOccupationPage(OccupViewModel, this.occupation), this);
-                await Navigation.PopAsync();
             }
             await Navigation.PopAsync();
         }
@@ -70,27 +65,7 @@ namespace eios
             markButton.IsEnabled = false;
             await App.Database.SetAttendence(ViewModel.StudentsList, occupation.IdOccupation, App.IdGroupCurrent);
 
-            if (CrossConnectivity.Current.IsConnected)
-            {
-                var students = await App.Database.GetAbsentStudents(occupation.IdOccupation, occupation.IdGroup);
-                try
-                {
-                    await WebApi.Instance.SetAttendAsync(students, occupation);
-                    await App.Database.SetSyncFlag(occupation.IdOccupation, App.IdGroupCurrent);
-                    await OccupViewModel.UpdateState();
-                }
-                catch (HttpRequestException)
-                {
-                    await App.Database.DeleteAttendance(occupation.IdOccupation, App.IdGroupCurrent);
-
-                    await Navigation.PopAsync();
-                    return;
-                }
-            }
-            else
-            {
-                MessagingCenter.Send(new OnMarksUpdatedMessage(), "OnMarksUpdatedMessage");
-            }
+            MessagingCenter.Send(new OnMarksUpdatedMessage(), "OnMarksUpdatedMessage");
 
             Navigation.InsertPageBefore(new CompletedOccupationPage(OccupViewModel, this.occupation), this);
             await Navigation.PopAsync();

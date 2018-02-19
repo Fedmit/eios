@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using eios.Data;
+using Xamarin.Auth;
 
 namespace eios
 {
@@ -20,13 +21,9 @@ namespace eios
             {
                 if (_login == null)
                 {
-                    if (App.Current.Properties.ContainsKey("Login"))
-                    {
-                        return (string) App.Current.Properties["Login"];
-                    }
-                    return "";
+                    var account = AccountStore.Create().FindAccountsForService("eios").FirstOrDefault();
+                    _login = account?.Username;
                 }
-
                 return _login;
             }
             set { _login = value; }
@@ -39,13 +36,9 @@ namespace eios
             {
                 if (_password == null)
                 {
-                    if (App.Current.Properties.ContainsKey("Password"))
-                    {
-                        return (string) App.Current.Properties["Password"];
-                    }
-                    return "";
+                    var account = AccountStore.Create().FindAccountsForService("eios").FirstOrDefault();
+                    _password = account?.Properties["Password"];
                 }
-
                 return _password;
             }
             set { _password = value; }
@@ -67,6 +60,7 @@ namespace eios
             }
         }
         public static bool IsScheduleSync { get; set; } = false;
+        public static bool IsScheduleUpToDate { get; set; } = false;
         public static bool IsAttendanceSync { get; set; } = false;
         public static int IdOccupNow { get; set; } = 8;
         public static bool IsTimeTravelMode { get; set; }
@@ -145,6 +139,13 @@ namespace eios
             InitializeComponent();
 
             MainPage = new NavigationPage(new SplashPage());
+
+            TaskScheduler.UnobservedTaskException += (object sender, UnobservedTaskExceptionEventArgs excArgs) =>
+            {
+                Console.WriteLine("Exception.Message: {0}\n", excArgs.Exception.Message);
+                Console.WriteLine("Exception.InnerException.Message: {0}\n", excArgs.Exception.InnerException.Message);
+                excArgs.SetObserved();
+            };
         }
 
         protected override void OnSleep()

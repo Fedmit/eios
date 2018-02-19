@@ -1,4 +1,5 @@
 ﻿using eios.Data;
+using eios.Messages;
 using eios.Model;
 using System;
 using System.Collections.Generic;
@@ -6,11 +7,23 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace eios.ViewModel
 {
     class StudentsListViewModel : INotifyPropertyChanged
     {
+        bool _isReadyToMark = false;
+        public bool IsReadyToMark
+        {
+            get { return _isReadyToMark; }
+            set
+            {
+                _isReadyToMark = value;
+                OnPropertyChanged(nameof(IsReadyToMark));
+            }
+        }
+
         string _occupationTime;
         public string OccupationTime
         {
@@ -94,6 +107,23 @@ namespace eios.ViewModel
             OccupationName = occupation.Name;
             OccupationAud = occupation.Aud;
             _studentsList = new List<StudentSelect>();
+
+            if (!App.IsAttendanceSync)
+            {
+                IsReadyToMark = true;
+            }
+            else
+            {
+                MessagingCenter.Subscribe<OnAttendanceSyncronizedMessage>(this, "OnAttendanceSyncronizedMessage", message =>
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        IsReadyToMark = true;
+
+                        MessagingCenter.Unsubscribe<OnAttendanceSyncronizedMessage>(this, "OnAttendanceSyncronizedMessage");
+                    });
+                });
+            }
 
             Task.Run(async () =>
             {

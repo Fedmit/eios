@@ -29,22 +29,26 @@ namespace eios.Data
 
         public async Task<List<Occupation>> GetOccupations(int idGroup)
         {
+            List<Occupation> occupations = null;
             try
             {
-                return await database.QueryAsync<Occupation>(
+                occupations = await database.QueryAsync<Occupation>(
                     "SELECT * FROM Occupations WHERE id_group = ? ORDER BY id_occup",
                     idGroup
                 );
+                occupations = occupations.Count != 0 ? occupations : null;
             }
             catch (SQLiteException ex)
             {
                 Console.WriteLine(ex.Message);
-                return null;
             }
+
+            return occupations;
         }
 
         public async Task<List<StudentAttendance>> GetAttendance(int idOccupation, int idGroup)
         {
+            List<StudentAttendance> result = null;
             try
             {
                 var students = await database.QueryAsync<Student>(
@@ -55,21 +59,34 @@ namespace eios.Data
                     "SELECT id_student FROM Attendance WHERE id_group = ? AND id_occup = ? ORDER BY id_student",
                     idGroup, idOccupation
                 );
-                var result = new List<StudentAttendance>();
-                int j = 0;
-                for (int i = 0; i < students.Count; i++)
+
+                if (students != null && attendance != null && students.Count != 0)
                 {
-                    if (j != attendance.Count)
+                    result = new List<StudentAttendance>();
+                    int j = 0;
+                    for (int i = 0; i < students.Count; i++)
                     {
-                        if (students[i].Id == attendance[j].Id)
+                        if (j != attendance.Count)
                         {
-                            j++;
-                            result.Add(new StudentAttendance
+                            if (students[i].Id == attendance[j].Id)
                             {
-                                Id = students[i].Id,
-                                FullName = students[i].FullName,
-                                IsAbsent = true
-                            });
+                                j++;
+                                result.Add(new StudentAttendance
+                                {
+                                    Id = students[i].Id,
+                                    FullName = students[i].FullName,
+                                    IsAbsent = true
+                                });
+                            }
+                            else
+                            {
+                                result.Add(new StudentAttendance
+                                {
+                                    Id = students[i].Id,
+                                    FullName = students[i].FullName,
+                                    IsAbsent = false
+                                });
+                            }
                         }
                         else
                         {
@@ -81,57 +98,75 @@ namespace eios.Data
                             });
                         }
                     }
-                    else
-                    {
-                        result.Add(new StudentAttendance
-                        {
-                            Id = students[i].Id,
-                            FullName = students[i].FullName,
-                            IsAbsent = false
-                        });
-                    }
                 }
-                return result;
             }
             catch (SQLiteException ex)
             {
                 Console.WriteLine(ex.Message);
-                return null;
             }
+
+            return result;
         }
 
         public async Task<List<Occupation>> GetMarks(int idGroup)
         {
+            List<Occupation> marks = null;
             try
             {
-                var marks = await database.QueryAsync<Occupation>(
+                marks = await database.QueryAsync<Occupation>(
                     "SELECT id_occup, is_checked, is_blocked FROM Occupations WHERE id_group = ? ORDER BY id_occup",
                     idGroup
                 );
-                return marks.Count != 0 ? marks : null;
+                marks = marks.Count != 0 ? marks : null;
             }
             catch (SQLiteException ex)
             {
                 Console.WriteLine(ex.Message);
-                return null;
             }
+
+            return marks;
         }
 
         public async Task<List<Occupation>> GetUnblockedOccupations(int idGroup)
         {
+            List<Occupation> occupations = null;
             try
             {
-                var occupations = await database.QueryAsync<Occupation>(
-                    "SELECT id_occup FROM Occupations WHERE (is_checked = 0 OR is_blocked = 0) AND id_group = ?",
+                occupations = await database.QueryAsync<Occupation>(
+                    "SELECT id_occup FROM Occupations WHERE (is_checked = 0 OR is_blocked = 0) AND is_sync = 0 AND id_group = ?",
                     idGroup
                 );
-                return occupations.Count != 0 ? occupations : null;
+                occupations = occupations.Count != 0 ? occupations : null;
             }
             catch (SQLiteException ex)
             {
                 Console.WriteLine(ex.Message);
-                return null;
             }
+
+            return occupations;
+        }
+
+        public async Task<bool> IsSync(int idOccupation, int idGroup)
+        {
+            var isSync = false;
+            try
+            {
+                var occupation = await database.QueryAsync<Occupation>(
+                    "SELECT id_occup FROM Occupations WHERE id_occup = ? AND id_group = ?",
+                    idOccupation,
+                    idGroup
+                );
+                if (occupation != null && occupation.Count != 0)
+                {
+                    isSync = occupation[0].IsSync;
+                }
+            }
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return isSync;
         }
 
         public async Task SetStudents(List<Student> students)
@@ -167,12 +202,15 @@ namespace eios.Data
                     idGroup
                 );
 
-                for (int i = 0; i < cache.Count; i++)
+                if (cache != null && cache.Count != 0)
                 {
-                    cache[i].IsChecked = marks[i].IsChecked;
-                    cache[i].IsBlocked = marks[i].IsBlocked;
+                    for (int i = 0; i < cache.Count; i++)
+                    {
+                        cache[i].IsChecked = marks[i].IsChecked;
+                        cache[i].IsBlocked = marks[i].IsBlocked;
+                    }
+                    await database.UpdateAllAsync(cache);
                 }
-                await database.UpdateAllAsync(cache);
             }
             catch (SQLiteException ex)
             {
@@ -194,27 +232,33 @@ namespace eios.Data
 
         public async Task<List<Group>> GetGroups()
         {
+            List<Group> groups = null;
             try
             {
-                return await database.Table<Group>().ToListAsync();
+                groups = await database.Table<Group>().ToListAsync();
+                groups = groups.Count != 0 ? groups : null;
             }
             catch (SQLiteException ex)
             {
                 Console.WriteLine(ex.Message);
-                return null;
             }
+
+            return groups;
         }
 
         public async Task SetSyncFlag(int idOccupation, int idGroup)
         {
             try
             {
-                var list = await database.QueryAsync<Occupation>(
+                var occupation = await database.QueryAsync<Occupation>(
                     "SELECT * FROM Occupations WHERE id_occup = ? AND id_group = ?",
                     idOccupation, idGroup
                 );
-                list[0].IsSync = true;
-                await database.UpdateAllAsync(list);
+                if (occupation != null && occupation.Count != 0)
+                {
+                    occupation[0].IsSync = true;
+                    await database.UpdateAllAsync(occupation);
+                }
             }
             catch (SQLiteException ex)
             {
@@ -224,26 +268,28 @@ namespace eios.Data
 
         public async Task<List<Occupation>> GetUnsyncOccupations()
         {
+            List<Occupation> unsyncOccups = null;
             try
             {
-                var unsyncOccups = await database.QueryAsync<Occupation>(
+                unsyncOccups = await database.QueryAsync<Occupation>(
                     "SELECT * FROM Occupations WHERE is_sync = 0"
                 );
-
-                return unsyncOccups.Count != 0 ? unsyncOccups : null;
+                unsyncOccups = unsyncOccups.Count != 0 ? unsyncOccups : null;
             }
             catch (SQLiteException ex)
             {
                 Console.WriteLine(ex.Message);
-                return null;
             }
+
+            return unsyncOccups;
         }
 
         public async Task<List<StudentAbsent>> GetAbsentStudents(int idOccupation, int idGroup)
         {
+            List<StudentAbsent> absentStudents = null;
             try
             {
-                return await database.QueryAsync<StudentAbsent>(
+                absentStudents = await database.QueryAsync<StudentAbsent>(
                     "SELECT id_student FROM Attendance WHERE id_occup = ? AND id_group = ?",
                     idOccupation,
                     idGroup
@@ -252,8 +298,9 @@ namespace eios.Data
             catch (SQLiteException ex)
             {
                 Console.WriteLine(ex.Message);
-                return null;
             }
+
+            return absentStudents;
         }
 
         public async Task SetAttendence(List<StudentSelect> refreshList, int idOccupation, int idGroup)
@@ -280,21 +327,23 @@ namespace eios.Data
                 );
                 await database.InsertAllAsync(absentStudents);
 
-                var occupationsList = await database.QueryAsync<Occupation>(
+                var occupations = await database.QueryAsync<Occupation>(
                     "SELECT * FROM Occupations WHERE id_group = ? ORDER BY id_occup",
                     idGroup
                 );
 
-                foreach (var occup in occupationsList)
+                if (occupations != null && occupations.Count != 0)
                 {
-                    if (occup.IdOccupation == idOccupation)
+                    foreach (var occup in occupations)
                     {
-                        occup.IsChecked = true;
-                        occup.IsSync = false;
+                        if (occup.IdOccupation == idOccupation)
+                        {
+                            occup.IsChecked = true;
+                            occup.IsSync = false;
+                        }
                     }
+                    await database.UpdateAllAsync(occupations);
                 }
-
-                await database.UpdateAllAsync(occupationsList);
             }
             catch (SQLiteException ex)
             {
@@ -323,47 +372,23 @@ namespace eios.Data
             }
         }
 
-        public async Task DeleteAttendance(int idOccupation, int idGroup)
-        {
-            try
-            {
-                await database.QueryAsync<StudentAbsent>(
-                    "DELETE FROM Attendance WHERE id_occup = ? AND id_group = ?",
-                    idOccupation,
-                    idGroup
-                );
-
-                var occupationsList = await database.QueryAsync<Occupation>(
-                    "SELECT * FROM Occupations WHERE id_occup = ? AND id_group = ?",
-                    idOccupation,
-                    idGroup
-                );
-                occupationsList[0].IsChecked = false;
-
-                await database.QueryAsync<Occupation>(
-                    "DELETE FROM Occupations WHERE id_occup = ? AND id_group = ?",
-                    idOccupation,
-                    idGroup
-                );
-                await database.InsertAllAsync(occupationsList);
-            }
-            catch (SQLiteException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-        }
-
         public async Task<List<StudentSelect>> GetStudents(int idGroup)
         {
+            List<StudentSelect> students = null;
             try
             {
-                return await database.QueryAsync<StudentSelect>("SELECT id_student, fullname FROM Students WHERE id_group =?", idGroup);
+                students = await database.QueryAsync<StudentSelect>(
+                    "SELECT id_student, fullname FROM Students WHERE id_group =?",
+                    idGroup
+                );
+                students = students.Count != 0 ? students : null;
             }
             catch (SQLiteException ex)
             {
                 Console.WriteLine(ex.Message);
-                return null;
             }
+
+            return students;
         }
     }
 }

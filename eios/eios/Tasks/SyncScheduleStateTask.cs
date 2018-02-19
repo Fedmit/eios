@@ -3,6 +3,7 @@ using eios.Messages;
 using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,6 +19,8 @@ namespace eios.Tasks
             {
                 while (true)
                 {
+                    Debug.WriteLine("TaskDebugger: SyncScheduleStateTask' iteration");
+
                     token.ThrowIfCancellationRequested();
 
                     if (CrossConnectivity.Current.IsConnected && !App.IsScheduleSync)
@@ -26,14 +29,13 @@ namespace eios.Tasks
                         if (marksResponse != null && marksResponse.Data != null)
                         {
                             await App.Database.SetMarks(marksResponse.Data, App.IdGroupCurrent);
+                            App.IdOccupNow = marksResponse.IdOccupNow;
+
+                            Device.BeginInvokeOnMainThread(() =>
+                            {
+                                MessagingCenter.Send(new OnMarksUpdatedMessage(), "OnMarksUpdatedMessage");
+                            });
                         }
-
-                        App.IdOccupNow = marksResponse.IdOccupNow;
-
-                        Device.BeginInvokeOnMainThread(() =>
-                        {
-                            MessagingCenter.Send(new OnMarksUpdatedMessage(), "OnMarksUpdatedMessage");
-                        });
                     }
 
                     await Task.Delay(5000);

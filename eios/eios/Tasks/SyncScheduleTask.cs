@@ -4,6 +4,7 @@ using eios.Model;
 using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -18,11 +19,14 @@ namespace eios.Tasks
 
         public async Task RunSyncSchedule()
         {
+            Debug.WriteLine("TaskDebugger: SyncScheduleTask");
+
             try
             {
+                var occupationsFromDB = await App.Database.GetOccupations(App.IdGroupCurrent);
                 if (CrossConnectivity.Current.IsConnected)
                 {
-                    if (App.LastDate == DateTime.MinValue || App.LastDate != App.DateNow)
+                    if (occupationsFromDB == null || App.LastDate == DateTime.MinValue || App.LastDate != App.DateNow)
                     {
                         var groups = await App.Database.GetGroups();
 
@@ -33,11 +37,8 @@ namespace eios.Tasks
 
                         foreach (var group in groups)
                         {
-                            var occupations = await WebApi.Instance.GetOccupationsAsync(group.IdGroup);
-                            var students = await WebApi.Instance.GetStudentsAsync(group.IdGroup);
-
-                            await App.Database.SetOccupations(occupations);
-                            await App.Database.SetStudents(students);
+                            await SyncOccupations(group.IdGroup);
+                            await SyncStudents(group.IdGroup);
                         }
                     }
                 }
@@ -61,6 +62,48 @@ namespace eios.Tasks
 
             App.IsAttendanceSync = true;
             MessagingCenter.Send(new StartSyncAttendanceTaskMessage(), "StartSyncAttendanceTaskMessage");
+        }
+
+        async Task SyncOccupations(int idGroup)
+        {
+            while (true)
+            {
+                if (CrossConnectivity.Current.IsConnected)
+                {
+                    try
+                    {
+                        var occupations = await WebApi.Instance.GetOccupationsAsync(idGroup);
+                        await App.Database.SetOccupations(occupations);
+                        return;
+                    }
+                    catch (HttpRequestException)
+                    {
+                    }
+                }
+
+                await Task.Delay(5000);
+            }
+        }
+
+        async Task SyncStudents(int idGroup)
+        {
+            while (true)
+            {
+                if (CrossConnectivity.Current.IsConnected)
+                {
+                    try
+                    {
+                        var students = await WebApi.Instance.GetStudentsAsync(idGroup);
+                        await App.Database.SetStudents(students);
+                        return;
+                    }
+                    catch (HttpRequestException)
+                    {
+                    }
+                }
+
+                await Task.Delay(5000);
+            }
         }
     }
 }

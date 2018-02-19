@@ -4,6 +4,7 @@ using eios.Model;
 using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -18,28 +19,27 @@ namespace eios.Tasks
 
         public async Task RunGetSchedule()
         {
+            Debug.WriteLine("TaskDebugger: GetScheduleTask. New Date selected");
+
             MessagingCenter.Send(new StopSyncAttendanceTaskMessage(), "StopSyncAttendanceTaskMessage");
-            Console.WriteLine("-----New Date-----");
             try
             {
                 isSuccessful = false;
                 if (CrossConnectivity.Current.IsConnected)
                 {
-                    var groups = await App.Database.GetGroups();
-
                     await App.Database.DropTable<Occupation>();
                     await App.Database.CreateTable<Occupation>();
 
-                    foreach (var group in groups)
+                    foreach (var group in App.Groups)
                     {
-                        var occupations = await WebApi.Instance.GetOccupationsAsync(group.IdGroup);
-                        await App.Database.SetOccupations(occupations);
+                        await SyncOccupations(group.IdGroup);
                     }
                     isSuccessful = true;
                 }
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException ex)
             {
+                Debug.WriteLine("GetScheduleTask: " + ex.Message);
             }
 
             var message = new OnScheduleSyncronizedMessage()
@@ -55,6 +55,27 @@ namespace eios.Tasks
 
             App.IsAttendanceSync = true;
             MessagingCenter.Send(new StartSyncAttendanceTaskMessage(), "StartSyncAttendanceTaskMessage");
+        }
+
+        async Task SyncOccupations(int idGroup)
+        {
+            while (true)
+            {
+                if (CrossConnectivity.Current.IsConnected)
+                {
+                    try
+                    {
+                        var occupations = await WebApi.Instance.GetOccupationsAsync(idGroup);
+                        await App.Database.SetOccupations(occupations);
+                        return;
+                    }
+                    catch (HttpRequestException)
+                    {
+                    }
+                }
+
+                await Task.Delay(5000);
+            }
         }
     }
 }

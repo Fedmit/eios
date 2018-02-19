@@ -85,7 +85,7 @@ namespace eios.Model
         {
             get
             {
-                if (IdLesson != 0 && (IdOccupation < App.IdOccupNow || App.DateNow != App.DateSelected)) { return "#FFFFFF"; }
+                if (IsChecked || (IdLesson != 0 && (IdOccupation < App.IdOccupNow || App.DateNow != App.DateSelected))) { return "#FFFFFF"; }
                 return "#000000";
             }
         }
