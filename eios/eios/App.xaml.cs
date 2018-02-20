@@ -74,7 +74,7 @@ namespace eios
                     var dateNowStr = (string) Current.Properties["DateNow"];
                     return DateTime.Parse(dateNowStr);
                 }
-                return DateTime.MinValue;
+                return new DateTime(2020, 1, 1);
             }
             set
             {

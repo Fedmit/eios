@@ -89,10 +89,26 @@ namespace eios
 
             App.Groups = response.Data;
 
-            DateTime dateNow = await WebApi.Instance.GetDateAsync();
-            App.DateNow = dateNow;
-            App.LastDate = App.DateSelected;
-            App.DateSelected = dateNow;
+            try
+            {
+                DateTime dateNow = await WebApi.Instance.GetDateAsync();
+                if (dateNow != DateTime.MinValue)
+                {
+                    App.DateNow = dateNow;
+                    App.LastDate = App.DateSelected;
+                    App.DateSelected = dateNow;
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                loginButton.IsEnabled = true;
+                activityIndicator.IsRunning = false;
+
+                await ShowMessage("Ошибка", "Произошла ошибка!", "OK");
+                Console.WriteLine(ex.Message);
+
+                return;
+            }
 
             App.IdGroupCurrent = response.Data[0].IdGroup;
             App.IsUserLoggedIn = true;

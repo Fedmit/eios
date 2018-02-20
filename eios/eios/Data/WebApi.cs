@@ -129,30 +129,42 @@ namespace eios.Data
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
             GroupResponse groupResponse = null;
-            try
+            bool isResponse = false;
+            while (!isResponse)
             {
-                HttpClient client = new HttpClient();
-                var response = await client.PostAsync(
-                    _baseUrl,
-                    new StringContent(
-                        json,
-                        UnicodeEncoding.UTF8,
-                        "application/json"
-                    )
-                );
-                response.EnsureSuccessStatusCode();
+                try
+                {
+                    HttpClient client = new HttpClient();
+                    client.Timeout = new TimeSpan(0, 0, 7);
+                    var response = await client.PostAsync(
+                        _baseUrl,
+                        new StringContent(
+                            json,
+                            UnicodeEncoding.UTF8,
+                            "application/json"
+                        )
+                    );
+                    response.EnsureSuccessStatusCode();
 
-                var content = await response.Content.ReadAsStringAsync();
+                    var content = await response.Content.ReadAsStringAsync();
 
-                groupResponse = JsonConvert.DeserializeObject<GroupResponse>(content);
-            }
-            catch (HttpRequestException ex)
-            {
-                throw ex;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("GetGroupsAsync(): " + ex.Message);
+                    groupResponse = JsonConvert.DeserializeObject<GroupResponse>(content);
+                    isResponse = true;
+                }
+                catch (TaskCanceledException ex)
+                {
+                    Debug.WriteLine("GetGroupsAsync: " + ex.Message);
+                }
+                catch (HttpRequestException ex)
+                {
+                    isResponse = true;
+                    throw ex;
+                }
+                catch (Exception ex)
+                {
+                    isResponse = true;
+                    Console.WriteLine("GetGroupsAsync(): " + ex.Message);
+                }
             }
 
             return groupResponse;
@@ -226,27 +238,43 @@ namespace eios.Data
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
             DateTime time = new DateTime();
-            try
+            bool isResponse = false;
+            while (!isResponse)
             {
-                HttpClient client = new HttpClient();
-                var response = await client.PostAsync(
-                    _baseUrl,
-                    new StringContent(
-                        json,
-                        UnicodeEncoding.UTF8,
-                        "application/json"
-                    )
-                );
-                response.EnsureSuccessStatusCode();
+                try
+                {
+                    HttpClient client = new HttpClient();
+                    client.Timeout = new TimeSpan(0, 0, 7);
+                    var response = await client.PostAsync(
+                        _baseUrl,
+                        new StringContent(
+                            json,
+                            UnicodeEncoding.UTF8,
+                            "application/json"
+                        )
+                    );
+                    response.EnsureSuccessStatusCode();
 
-                var content = await response.Content.ReadAsStringAsync();
-                string str = (string) JObject.Parse(content).SelectToken("date");
+                    var content = await response.Content.ReadAsStringAsync();
+                    string str = (string) JObject.Parse(content).SelectToken("date");
 
-                time = DateTime.Parse(str);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("GetDateAsync(): " + ex.Message);
+                    time = DateTime.Parse(str);
+                    isResponse = true;
+                }
+                catch (TaskCanceledException ex)
+                {
+                    Debug.WriteLine("GetDateAsync: " + ex.Message);
+                }
+                catch (HttpRequestException ex)
+                {
+                    isResponse = true;
+                    throw ex;
+                }
+                catch (Exception ex)
+                {
+                    isResponse = true;
+                    Console.WriteLine("GetDateAsync(): " + ex.Message);
+                }
             }
 
             return time;

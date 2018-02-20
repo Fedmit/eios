@@ -33,9 +33,12 @@ namespace eios
                 if (App.IsUserLoggedIn && App.Login != null && App.Password != null)
                 {
                     GroupResponse groupResponse = null;
+                    DateTime dateNow;
                     try
                     {
                         groupResponse = await WebApi.Instance.GetGroupsAsync();
+
+                        dateNow = await WebApi.Instance.GetDateAsync();
                     }
                     catch (HttpRequestException)
                     {
@@ -56,7 +59,6 @@ namespace eios
                         App.Groups = groupResponse.Data;
                     }
 
-                    DateTime dateNow = await WebApi.Instance.GetDateAsync();
                     App.DateNow = dateNow;
                     App.LastDate = App.DateSelected;
                     App.DateSelected = dateNow;
