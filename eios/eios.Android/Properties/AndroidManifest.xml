@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.eios" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="2" android:versionName="1.0.0.1" package="com.creativityprojectcenter.eios" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="21" />
-	<application android:label="eios.Android"></application>
+	<application android:label="ЭИОС ПГУ. Журнал посещаемости" android:icon="@drawable/icon"></application>
 </manifest>
