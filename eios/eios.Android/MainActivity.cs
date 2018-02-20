@@ -24,13 +24,16 @@ namespace eios.Droid
 
             base.OnCreate(bundle);
 
-            base.OnResume();
-            CrashManager.Register(this, "db48f2e1dad14d83811e8834bb8940b3");
-
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
 
             WireUpTask();
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            CrashManager.Register(this, "db48f2e1dad14d83811e8834bb8940b3");
         }
 
         void WireUpTask()
