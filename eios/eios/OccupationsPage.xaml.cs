@@ -102,7 +102,6 @@ namespace eios
                 else if (CrossConnectivity.Current.IsConnected && e.NewDate != App.DateSelected)
                 {
                     App.DateSelected = e.NewDate;
-                    await App.Current.SavePropertiesAsync();
 
                     ViewModel.IsBusy = true;
                     ViewModel.Date = e.NewDate.ToString("dd/MM/yyyy") + "  ▼";

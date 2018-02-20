@@ -94,26 +94,37 @@ namespace eios.Data
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
             MarksResponse marksResponse = null;
-            try
+            bool isResponse = false;
+            while (!isResponse)
             {
-                HttpClient client = new HttpClient();
-                var response = await client.PostAsync(
-                    _baseUrl,
-                    new StringContent(
-                        json,
-                        UnicodeEncoding.UTF8,
-                        "application/json"
-                    )
-                );
-                response.EnsureSuccessStatusCode();
+                try
+                {
+                    HttpClient client = new HttpClient();
+                    client.Timeout = new TimeSpan(0, 0, 7);
+                    var response = await client.PostAsync(
+                        _baseUrl,
+                        new StringContent(
+                            json,
+                            UnicodeEncoding.UTF8,
+                            "application/json"
+                        )
+                    );
+                    response.EnsureSuccessStatusCode();
 
-                var content = await response.Content.ReadAsStringAsync();
-                marksResponse = JsonConvert.DeserializeObject<MarksResponse>(content);
-                marksResponse.Data = marksResponse.Data.OrderBy(occup => occup.IdOccupation).ToList();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("GetMarksAsync(): " + ex.Message);
+                    var content = await response.Content.ReadAsStringAsync();
+                    marksResponse = JsonConvert.DeserializeObject<MarksResponse>(content);
+                    marksResponse.Data = marksResponse.Data.OrderBy(occup => occup.IdOccupation).ToList();
+                    isResponse = true;
+                }
+                catch (TaskCanceledException ex)
+                {
+                    Debug.WriteLine("GetMarksAsync: " + ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    isResponse = true;
+                    Console.WriteLine("GetMarksAsync(): " + ex.Message);
+                }
             }
 
             return marksResponse;
@@ -211,7 +222,7 @@ namespace eios.Data
                 }
                 catch (TaskCanceledException ex)
                 {
-                    Debug.WriteLine("GetOccupationsAsync: " + ex.Message);
+                    Debug.WriteLine("GetStudentsAsync: " + ex.Message);
                 }
                 catch (HttpRequestException ex)
                 {
@@ -355,22 +366,33 @@ namespace eios.Data
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
-            try
+            bool isResponse = false;
+            while (!isResponse)
             {
-                HttpClient client = new HttpClient();
-                var response = await client.PostAsync(
-                    _baseUrl,
-                    new StringContent(
-                        json,
-                        UnicodeEncoding.UTF8,
-                        "application/json"
-                    )
-                );
-                response.EnsureSuccessStatusCode();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("SetAttendAsync(): " + ex.Message);
+                try
+                {
+                    HttpClient client = new HttpClient();
+                    client.Timeout = new TimeSpan(0, 0, 7);
+                    var response = await client.PostAsync(
+                        _baseUrl,
+                        new StringContent(
+                            json,
+                            UnicodeEncoding.UTF8,
+                            "application/json"
+                        )
+                    );
+                    response.EnsureSuccessStatusCode();
+                    isResponse = true;
+                }
+                catch (TaskCanceledException ex)
+                {
+                    Debug.WriteLine("SetAttendAsync: " + ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    isResponse = true;
+                    Console.WriteLine("SetAttendAsync(): " + ex.Message);
+                }
             }
         }
 
@@ -386,31 +408,41 @@ namespace eios.Data
             dynamicJson.id_lesson = occupation.IdLesson;
             dynamicJson.id_aud = occupation.IdAud;
             dynamicJson.data = "Set_canceled";
-
             string json = "";
             json = Newtonsoft.Json.JsonConvert.SerializeObject(dynamicJson);
 
-            try
+            bool isResponse = false;
+            while (!isResponse)
             {
-                Console.WriteLine(json);
-                HttpClient client = new HttpClient();
-                var response = await client.PostAsync(
-                    _baseUrl,
-                    new StringContent(
-                        json,
-                        UnicodeEncoding.UTF8,
-                        "application/json"
-                    )
-                );
-                response.EnsureSuccessStatusCode();
-            }
-            catch (HttpRequestException ex)
-            {
-                throw ex;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("SetNullAttendAsync(): " + ex.Message);
+                try
+                {
+                    HttpClient client = new HttpClient();
+                    client.Timeout = new TimeSpan(0, 0, 7);
+                    var response = await client.PostAsync(
+                        _baseUrl,
+                        new StringContent(
+                            json,
+                            UnicodeEncoding.UTF8,
+                            "application/json"
+                        )
+                    );
+                    response.EnsureSuccessStatusCode();
+                    isResponse = true;
+                }
+                catch (TaskCanceledException ex)
+                {
+                    Debug.WriteLine("SetNullAttendAsync: " + ex.Message);
+                }
+                catch (HttpRequestException ex)
+                {
+                    isResponse = true;
+                    throw ex;
+                }
+                catch (Exception ex)
+                {
+                    isResponse = true;
+                    Console.WriteLine("SetNullAttendAsync(): " + ex.Message);
+                }
             }
         }
     }

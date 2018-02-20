@@ -23,7 +23,7 @@ namespace eios.Tasks
 
                     token.ThrowIfCancellationRequested();
 
-                    if (CrossConnectivity.Current.IsConnected && !App.IsScheduleSync)
+                    if (CrossConnectivity.Current.IsConnected && !App.IsScheduleSync && !App.IsUnsyncAny)
                     {
                         var marksResponse = await WebApi.Instance.GetMarksAsync();
                         if (marksResponse != null && marksResponse.Data != null)

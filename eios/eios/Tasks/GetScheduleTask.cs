@@ -35,6 +35,8 @@ namespace eios.Tasks
                         await SyncOccupations(group.IdGroup);
                     }
                     isSuccessful = true;
+
+                    await App.Current.SavePropertiesAsync();
                 }
             }
             catch (HttpRequestException ex)

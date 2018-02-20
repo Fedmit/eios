@@ -63,6 +63,7 @@ namespace eios
         async Task OnMarkClicked(Object sender, AssemblyLoadEventArgs args)
         {
             markButton.IsEnabled = false;
+            App.IsUnsyncAny = true;
             await App.Database.SetAttendence(ViewModel.StudentsList, occupation.IdOccupation, App.IdGroupCurrent);
 
             MessagingCenter.Send(new OnMarksUpdatedMessage(), "OnMarksUpdatedMessage");

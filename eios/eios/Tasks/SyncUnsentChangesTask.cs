@@ -33,6 +33,10 @@ namespace eios.Tasks
                                 await SyncAttendance(token, occupation);
                             }
                         }
+                        else
+                        {
+                            App.IsUnsyncAny = false;
+                        }
 
                         if (!App.IsScheduleUpToDate)
                         {
