@@ -1,14 +1,17 @@
 ﻿using eios.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Dynamic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
-using System.Net.Sockets;
+using System.Net.Security;
+using System.Security.Authentication;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,7 +21,61 @@ namespace eios.Data
     {
         public static WebApi Instance { get; } = new WebApi();
 
-        static string _baseUrl { get { return "http://lk.pnzgu.ru/ajax/mobile"; } }
+        static string _baseUrl { get { return "https://lk.pnzgu.ru/ajax/mobile"; } }
+
+        static async Task<string> GetResponseAsync(string json)
+        {
+            HttpWebRequest request;
+            HttpWebResponse response;
+
+            ServicePointManager.ServerCertificateValidationCallback = ValidateServerCertificate;
+
+            //request = (HttpWebRequest) WebRequest.Create("https://lk.pnzgu.ru");
+            //response = (HttpWebResponse) request.GetResponse();
+
+            ////retrieve the ssl cert and assign it to an X509Certificate object
+            //X509Certificate cert = request.ServicePoint.Certificate;
+
+            ////convert the X509Certificate to an X509Certificate2 object by passing it into the constructor
+            //X509Certificate2 cert2 = new X509Certificate2(cert);
+
+            request = (HttpWebRequest) System.Net.WebRequest.Create(_baseUrl);
+
+            request.Method = "POST";
+            request.ContentType = "application/json";
+            request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36 OPR/52.0.2871.64";
+            //request.ClientCertificates.Add(cert2);
+
+            StreamWriter writer = new StreamWriter(request.GetRequestStream());
+            writer.WriteLine(json);
+            writer.Close();
+
+            if (request != null) request.GetRequestStream().Close();
+
+            response = (HttpWebResponse) await request.GetResponseAsync();
+            System.IO.StreamReader reader =
+            new System.IO.StreamReader(response.GetResponseStream());
+            String data = reader.ReadToEnd();
+
+            if (response != null) response.GetResponseStream().Close();
+
+            return data;
+        }
+
+        public static bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        {
+            return true;
+        }
+
+        //internal static byte[] ReadFile(string fileName)
+        //{
+        //    FileStream f = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+        //    int size = (int) f.Length;
+        //    byte[] data = new byte[size];
+        //    size = f.Read(data, 0, size);
+        //    f.Close();
+        //    return data;
+        //}
 
         public async Task<List<Occupation>> GetOccupationsAsync(int idGroup)
         {
@@ -38,19 +95,8 @@ namespace eios.Data
             {
                 try
                 {
-                    HttpClient client = new HttpClient();
-                    client.Timeout = new TimeSpan(0, 0, 7);
-                    var response = await client.PostAsync(
-                        _baseUrl,
-                        new StringContent(
-                            json,
-                            UnicodeEncoding.UTF8,
-                            "application/json"
-                        )
-                    );
-                    response.EnsureSuccessStatusCode();
+                    var content = await GetResponseAsync(json);
 
-                    var content = await response.Content.ReadAsStringAsync();
                     occupations = JsonConvert.DeserializeObject<List<Occupation>>(content);
 
                     foreach (var occupation in occupations)
@@ -66,7 +112,7 @@ namespace eios.Data
                 {
                     Debug.WriteLine("GetOccupationsAsync: " + ex.Message);
                 }
-                catch (HttpRequestException ex)
+                catch (WebException ex)
                 {
                     isResponse = true;
                     throw ex;
@@ -99,19 +145,8 @@ namespace eios.Data
             {
                 try
                 {
-                    HttpClient client = new HttpClient();
-                    client.Timeout = new TimeSpan(0, 0, 7);
-                    var response = await client.PostAsync(
-                        _baseUrl,
-                        new StringContent(
-                            json,
-                            UnicodeEncoding.UTF8,
-                            "application/json"
-                        )
-                    );
-                    response.EnsureSuccessStatusCode();
+                    var content = await GetResponseAsync(json);
 
-                    var content = await response.Content.ReadAsStringAsync();
                     marksResponse = JsonConvert.DeserializeObject<MarksResponse>(content);
                     marksResponse.Data = marksResponse.Data.OrderBy(occup => occup.IdOccupation).ToList();
                     isResponse = true;
@@ -145,19 +180,7 @@ namespace eios.Data
             {
                 try
                 {
-                    HttpClient client = new HttpClient();
-                    client.Timeout = new TimeSpan(0, 0, 7);
-                    var response = await client.PostAsync(
-                        _baseUrl,
-                        new StringContent(
-                            json,
-                            UnicodeEncoding.UTF8,
-                            "application/json"
-                        )
-                    );
-                    response.EnsureSuccessStatusCode();
-
-                    var content = await response.Content.ReadAsStringAsync();
+                    var content = await GetResponseAsync(json);
 
                     groupResponse = JsonConvert.DeserializeObject<GroupResponse>(content);
                     isResponse = true;
@@ -166,7 +189,7 @@ namespace eios.Data
                 {
                     Debug.WriteLine("GetGroupsAsync: " + ex.Message);
                 }
-                catch (HttpRequestException ex)
+                catch (WebException ex)
                 {
                     isResponse = true;
                     throw ex;
@@ -180,6 +203,31 @@ namespace eios.Data
 
             return groupResponse;
         }
+
+        //public bool MyRemoteCertificateValidationCallback(System.Object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        //{
+        //    bool isOk = true;
+        //    // If there are errors in the certificate chain, look at each error to determine the cause. 
+        //    if (sslPolicyErrors != SslPolicyErrors.None)
+        //    {
+        //        for (int i = 0; i < chain.ChainStatus.Length; i++)
+        //        {
+        //            if (chain.ChainStatus[i].Status != X509ChainStatusFlags.RevocationStatusUnknown)
+        //            {
+        //                chain.ChainPolicy.RevocationFlag = X509RevocationFlag.EntireChain;
+        //                chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
+        //                chain.ChainPolicy.UrlRetrievalTimeout = new TimeSpan(0, 1, 0);
+        //                chain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllFlags;
+        //                bool chainIsValid = chain.Build((X509Certificate2) certificate);
+        //                if (!chainIsValid)
+        //                {
+        //                    isOk = false;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return isOk;
+        //}
 
         public async Task<List<Student>> GetStudentsAsync(int idGroup)
         {
@@ -197,19 +245,7 @@ namespace eios.Data
             {
                 try
                 {
-                    HttpClient client = new HttpClient();
-                    client.Timeout = new TimeSpan(0, 0, 7);
-                    var response = await client.PostAsync(
-                        _baseUrl,
-                        new StringContent(
-                            json,
-                            UnicodeEncoding.UTF8,
-                            "application/json"
-                        )
-                    );
-                    response.EnsureSuccessStatusCode();
-
-                    var content = await response.Content.ReadAsStringAsync();
+                    var content = await GetResponseAsync(json);
 
                     students = JsonConvert.DeserializeObject<List<Student>>(content);
 
@@ -224,7 +260,7 @@ namespace eios.Data
                 {
                     Debug.WriteLine("GetStudentsAsync: " + ex.Message);
                 }
-                catch (HttpRequestException ex)
+                catch (WebException ex)
                 {
                     isResponse = true;
                     throw ex;
@@ -254,19 +290,8 @@ namespace eios.Data
             {
                 try
                 {
-                    HttpClient client = new HttpClient();
-                    client.Timeout = new TimeSpan(0, 0, 7);
-                    var response = await client.PostAsync(
-                        _baseUrl,
-                        new StringContent(
-                            json,
-                            UnicodeEncoding.UTF8,
-                            "application/json"
-                        )
-                    );
-                    response.EnsureSuccessStatusCode();
+                    var content = await GetResponseAsync(json);
 
-                    var content = await response.Content.ReadAsStringAsync();
                     string str = (string) JObject.Parse(content).SelectToken("date");
 
                     time = DateTime.Parse(str);
@@ -276,7 +301,7 @@ namespace eios.Data
                 {
                     Debug.WriteLine("GetDateAsync: " + ex.Message);
                 }
-                catch (HttpRequestException ex)
+                catch (WebException ex)
                 {
                     isResponse = true;
                     throw ex;
@@ -309,19 +334,7 @@ namespace eios.Data
             {
                 try
                 {
-                    HttpClient client = new HttpClient();
-                    client.Timeout = new TimeSpan(0, 0, 7);
-                    var response = await client.PostAsync(
-                        _baseUrl,
-                        new StringContent(
-                            json,
-                            UnicodeEncoding.UTF8,
-                            "application/json"
-                        )
-                    );
-                    response.EnsureSuccessStatusCode();
-
-                    var content = await response.Content.ReadAsStringAsync();
+                    var content = await GetResponseAsync(json);
 
                     attendance = JsonConvert.DeserializeObject<List<StudentAbsent>>(content);
                     foreach (var student in attendance)
@@ -337,7 +350,7 @@ namespace eios.Data
                     Debug.WriteLine("GetAttendanceAsync: " + ex.Message);
                     throw ex;
                 }
-                catch (HttpRequestException)
+                catch (WebException)
                 {
                     isResponse = true;
                 }
@@ -371,17 +384,8 @@ namespace eios.Data
             {
                 try
                 {
-                    HttpClient client = new HttpClient();
-                    client.Timeout = new TimeSpan(0, 0, 7);
-                    var response = await client.PostAsync(
-                        _baseUrl,
-                        new StringContent(
-                            json,
-                            UnicodeEncoding.UTF8,
-                            "application/json"
-                        )
-                    );
-                    response.EnsureSuccessStatusCode();
+                    var content = await GetResponseAsync(json);
+
                     isResponse = true;
                 }
                 catch (TaskCanceledException ex)
@@ -416,24 +420,15 @@ namespace eios.Data
             {
                 try
                 {
-                    HttpClient client = new HttpClient();
-                    client.Timeout = new TimeSpan(0, 0, 7);
-                    var response = await client.PostAsync(
-                        _baseUrl,
-                        new StringContent(
-                            json,
-                            UnicodeEncoding.UTF8,
-                            "application/json"
-                        )
-                    );
-                    response.EnsureSuccessStatusCode();
+                    var content = await GetResponseAsync(json);
+
                     isResponse = true;
                 }
                 catch (TaskCanceledException ex)
                 {
                     Debug.WriteLine("SetNullAttendAsync: " + ex.Message);
                 }
-                catch (HttpRequestException ex)
+                catch (WebException ex)
                 {
                     isResponse = true;
                     throw ex;

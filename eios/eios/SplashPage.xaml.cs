@@ -12,6 +12,7 @@ using eios.Model;
 using System.Net.Http;
 using Plugin.Connectivity;
 using System.Diagnostics;
+using System.Net;
 
 namespace eios
 {
@@ -33,19 +34,22 @@ namespace eios
                 if (App.IsUserLoggedIn && App.Login != null && App.Password != null)
                 {
                     GroupResponse groupResponse = null;
-                    DateTime dateNow;
+                    DateTime dateNow = DateTime.MinValue;
                     try
                     {
                         groupResponse = await WebApi.Instance.GetGroupsAsync();
 
                         dateNow = await WebApi.Instance.GetDateAsync();
                     }
-                    catch (HttpRequestException)
+                    catch (WebException ex)
                     {
-                        Navigation.InsertPageBefore(new LoginPage(), this);
-                        await Navigation.PopAsync();
+                        if ((ex.Response as HttpWebResponse).StatusCode == HttpStatusCode.NotFound)
+                        {
+                            Navigation.InsertPageBefore(new LoginPage(), this);
+                            await Navigation.PopAsync();
 
-                        return;
+                            return;
+                        }
                     }
                     var groups = await App.Database.GetGroups();
                     if (groups != null)

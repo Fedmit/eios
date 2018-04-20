@@ -5,6 +5,7 @@ using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -39,7 +40,7 @@ namespace eios.Tasks
                     await App.Current.SavePropertiesAsync();
                 }
             }
-            catch (HttpRequestException ex)
+            catch (WebException ex)
             {
                 Debug.WriteLine("GetScheduleTask: " + ex.Message);
             }
@@ -71,7 +72,7 @@ namespace eios.Tasks
                         await App.Database.SetOccupations(occupations);
                         return;
                     }
-                    catch (HttpRequestException)
+                    catch (WebException)
                     {
                     }
                 }

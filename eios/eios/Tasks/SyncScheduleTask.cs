@@ -5,6 +5,7 @@ using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -44,7 +45,7 @@ namespace eios.Tasks
                 }
                 isSuccessful = true;
             }
-            catch (HttpRequestException)
+            catch (WebException)
             {
                 isSuccessful = false;
             }
@@ -76,7 +77,7 @@ namespace eios.Tasks
                         await App.Database.SetOccupations(occupations);
                         return;
                     }
-                    catch (HttpRequestException)
+                    catch (WebException)
                     {
                     }
                 }
@@ -97,7 +98,7 @@ namespace eios.Tasks
                         await App.Database.SetStudents(students);
                         return;
                     }
-                    catch (HttpRequestException)
+                    catch (WebException)
                     {
                     }
                 }

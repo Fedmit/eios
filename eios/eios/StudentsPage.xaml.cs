@@ -4,6 +4,7 @@ using eios.Model;
 using eios.ViewModel;
 using Plugin.Connectivity;
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -52,7 +53,7 @@ namespace eios
                 {
                     await WebApi.Instance.SetNullAttendAsync(occupation);
                 }
-                catch (HttpRequestException)
+                catch (WebException)
                 {
                     return;
                 }

@@ -5,7 +5,9 @@ using eios.ViewModel;
 using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -64,12 +66,20 @@ namespace eios
             {
                 response = await WebApi.Instance.GetGroupsAsync();
             }
-            catch (HttpRequestException ex)
+            catch (WebException ex)
             {
                 loginButton.IsEnabled = true;
                 activityIndicator.IsRunning = false;
 
-                await ShowMessage("Ошибка", "Пароль или логин введены неверно!", "OK");
+                if ((ex.Response as HttpWebResponse).StatusCode == HttpStatusCode.NotFound)
+                {
+                    await ShowMessage("Ошибка", "Пароль или логин введены неверно!", "OK");
+                }
+                //else
+                //{
+                //    await ShowMessage("Ошибка", ex.Message, "OK");
+                //}
+                Debug.WriteLine(ex.StackTrace);
                 Console.WriteLine(ex.Message);
 
                 return;
@@ -99,7 +109,7 @@ namespace eios
                     App.DateSelected = dateNow;
                 }
             }
-            catch (HttpRequestException ex)
+            catch (WebException ex)
             {
                 loginButton.IsEnabled = true;
                 activityIndicator.IsRunning = false;
