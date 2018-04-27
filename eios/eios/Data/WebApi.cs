@@ -18,7 +18,7 @@ namespace eios.Data
     {
         public static WebApi Instance { get; } = new WebApi();
 
-        static string _baseUrl { get { return "http://lk.pnzgu.ru/ajax/mobile"; } }
+        static string _baseUrl { get { return "https://lk.pnzgu.ru/ajax/mobile"; } }
 
         public async Task<List<Occupation>> GetOccupationsAsync(int idGroup)
         {
@@ -38,8 +38,10 @@ namespace eios.Data
             {
                 try
                 {
-                    HttpClient client = new HttpClient();
-                    client.Timeout = new TimeSpan(0, 0, 7);
+                    HttpClient client = new HttpClient
+                    {
+                        Timeout = new TimeSpan(0, 0, 7)
+                    };
                     var response = await client.PostAsync(
                         _baseUrl,
                         new StringContent(
@@ -99,8 +101,10 @@ namespace eios.Data
             {
                 try
                 {
-                    HttpClient client = new HttpClient();
-                    client.Timeout = new TimeSpan(0, 0, 7);
+                    HttpClient client = new HttpClient
+                    {
+                        Timeout = new TimeSpan(0, 0, 7)
+                    };
                     var response = await client.PostAsync(
                         _baseUrl,
                         new StringContent(
@@ -145,8 +149,10 @@ namespace eios.Data
             {
                 try
                 {
-                    HttpClient client = new HttpClient();
-                    client.Timeout = new TimeSpan(0, 0, 7);
+                    HttpClient client = new HttpClient
+                    {
+                        Timeout = new TimeSpan(0, 0, 7)
+                    };
                     var response = await client.PostAsync(
                         _baseUrl,
                         new StringContent(
@@ -164,7 +170,7 @@ namespace eios.Data
                 }
                 catch (TaskCanceledException ex)
                 {
-                    Debug.WriteLine("GetGroupsAsync: " + ex.Message);
+                    Debug.WriteLine("GetGroupsAsync(): " + ex.Message);
                 }
                 catch (HttpRequestException ex)
                 {
@@ -175,6 +181,7 @@ namespace eios.Data
                 {
                     isResponse = true;
                     Console.WriteLine("GetGroupsAsync(): " + ex.Message);
+                    throw ex;
                 }
             }
 
@@ -197,8 +204,10 @@ namespace eios.Data
             {
                 try
                 {
-                    HttpClient client = new HttpClient();
-                    client.Timeout = new TimeSpan(0, 0, 7);
+                    HttpClient client = new HttpClient
+                    {
+                        Timeout = new TimeSpan(0, 0, 7)
+                    };
                     var response = await client.PostAsync(
                         _baseUrl,
                         new StringContent(
@@ -254,8 +263,10 @@ namespace eios.Data
             {
                 try
                 {
-                    HttpClient client = new HttpClient();
-                    client.Timeout = new TimeSpan(0, 0, 7);
+                    HttpClient client = new HttpClient
+                    {
+                        Timeout = new TimeSpan(0, 0, 7)
+                    };
                     var response = await client.PostAsync(
                         _baseUrl,
                         new StringContent(
@@ -309,8 +320,10 @@ namespace eios.Data
             {
                 try
                 {
-                    HttpClient client = new HttpClient();
-                    client.Timeout = new TimeSpan(0, 0, 7);
+                    HttpClient client = new HttpClient
+                    {
+                        Timeout = new TimeSpan(0, 0, 7)
+                    };
                     var response = await client.PostAsync(
                         _baseUrl,
                         new StringContent(
@@ -371,8 +384,10 @@ namespace eios.Data
             {
                 try
                 {
-                    HttpClient client = new HttpClient();
-                    client.Timeout = new TimeSpan(0, 0, 7);
+                    HttpClient client = new HttpClient
+                    {
+                        Timeout = new TimeSpan(0, 0, 7)
+                    };
                     var response = await client.PostAsync(
                         _baseUrl,
                         new StringContent(
@@ -416,8 +431,10 @@ namespace eios.Data
             {
                 try
                 {
-                    HttpClient client = new HttpClient();
-                    client.Timeout = new TimeSpan(0, 0, 7);
+                    HttpClient client = new HttpClient
+                    {
+                        Timeout = new TimeSpan(0, 0, 7)
+                    };
                     var response = await client.PostAsync(
                         _baseUrl,
                         new StringContent(

@@ -70,7 +70,19 @@ namespace eios
                 activityIndicator.IsRunning = false;
 
                 await ShowMessage("Ошибка", "Пароль или логин введены неверно!", "OK");
-                Console.WriteLine(ex.Message);
+
+                return;
+            }
+            catch (Exception ex)
+            {
+                loginButton.IsEnabled = true;
+                activityIndicator.IsRunning = false;
+
+#if DEBUG  
+                await ShowMessage("Ошибка", ex.Message, "OK");
+#else
+                await ShowMessage("Ошибка", "Произошла ошибка", "OK");
+#endif
 
                 return;
             }
